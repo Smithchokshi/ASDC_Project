@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'GraphikBold';
+  src: url('fonts/GraphikBold.eot');
+  src: url('fonts/GraphikBold.eot') format('embedded-opentype'),
+    url('fonts/GraphikBold.woff2') format('woff2'), url('fonts/GraphikBold.woff') format('woff'),
+    url('fonts/GraphikBold.ttf') format('truetype'),
+    url('fonts/GraphikBold.svg#GraphikBold') format('svg');
+}
