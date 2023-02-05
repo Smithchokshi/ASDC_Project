@@ -1,6 +1,6 @@
 .DS_Store
 .idea
 Target
-Back-End/HELP.md
-Back-End/mvnw
-Back-End/mvnw.cmd
+!/Back-End/HELP.md
+!/Back-End/mvnw
+!/Back-End/mvnw.cmd
