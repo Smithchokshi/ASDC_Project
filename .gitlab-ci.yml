@@ -1,0 +1,6 @@
+run_test:
+    image: node:18.13.0
+    before_script:
+        - yarn install --cache-folder .yarn
+    script: 
+        - yarn test
