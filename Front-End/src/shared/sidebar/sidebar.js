@@ -47,25 +47,6 @@ const Sidebar = () => {
   const showModal = () => {
     setIscollapsed(true);
   };
-  const raceMenu = (
-    <Menu>
-      <Menu.Item>
-        <a rel="noopener noreferrer" href="/edit-profile">
-          Edit Profile
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a href="/change-password" rel="noopener noreferrer">
-          Change Password
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a rel="noopener noreferrer" href="/login">
-          Logout
-        </a>
-      </Menu.Item>
-    </Menu>
-  );
   return (
     <Sider
       // breakpoint="xxl"
@@ -94,19 +75,19 @@ const Sidebar = () => {
           <img className="sidebar-logo" src="images/top-logo.svg" alt="logo" />
         </Link>
         <div className="full-width profile-section sidebar-profile-section flex-center">
-          <div className="my-profile-menu">
-            <div id="profile_dd" className="default-dropdown top-arrow">
-              <Dropdown
-                overlay={raceMenu}
-                placement="bottomLeft"
-                getPopupContainer={() => document.getElementById('profile_dd')}
-              >
-                <Button className="race">
-                  <i className="fa fa-angle-down" aria-hidden="true" />
-                </Button>
-              </Dropdown>
-            </div>
-          </div>
+          {/*<div className="my-profile-menu">*/}
+          {/*  <div id="profile_dd" className="default-dropdown top-arrow">*/}
+          {/*    <Dropdown*/}
+          {/*      overlay={raceMenu}*/}
+          {/*      placement="bottomLeft"*/}
+          {/*      getPopupContainer={() => document.getElementById('profile_dd')}*/}
+          {/*    >*/}
+          {/*      <Button className="race">*/}
+          {/*        <i className="fa fa-angle-down" aria-hidden="true" />*/}
+          {/*      </Button>*/}
+          {/*    </Dropdown>*/}
+          {/*  </div>*/}
+          {/*</div>*/}
           <div className="title">{user?.data?.fullName}</div>
           <div className="profile-image">
             <img src={user?.data?.avatarUrl} alt="" style={{ borderRadius: '50%' }} />
@@ -124,30 +105,30 @@ const Sidebar = () => {
           </Link>
           {/* </ScrollAnimation> */}
         </Menu.Item>
-        <Menu.Item className="mobile-profile-menu">
-          <Link to="/" className="profile-mobile-icon">
-            <img className="not-hover-show" src="images/sidebar-profile-icon.svg" alt="" />
-            <img className="hover-show" src="images/sidebar-profile-hover-icon.svg" alt="" />
-            <i className="fa fa-angle-right" aria-hidden="true" />
-          </Link>
-          <SubMenu key="7" title={t('Profile')}>
-            <Menu.ItemGroup>
-              <Menu.Item key="1">
-                <Link to="/edit-profile">{t('Edit_profile')}</Link>
-              </Menu.Item>
-            </Menu.ItemGroup>
-          </SubMenu>
-        </Menu.Item>
-        <Menu.Item key="/edit-profile" className="mobile-hide">
-          {/* <ScrollAnimation animateOnce className="full-width" animateIn="fadeInLeft" delay={2100}> */}
-          <Link to="/edit-profile">
-            <img className="not-hover-show" src="images/sidebar-profile-icon.svg" alt="" />
-            <img className="hover-show" src="images/sidebar-profile-hover-icon.svg" alt="" />
-            {t('Profile')}
-            <i className="fa fa-angle-right" aria-hidden="true" />
-          </Link>
-          {/* </ScrollAnimation> */}
-        </Menu.Item>
+        {/*<Menu.Item className="mobile-profile-menu">*/}
+        {/*  <Link to="/" className="profile-mobile-icon">*/}
+        {/*    <img className="not-hover-show" src="images/sidebar-profile-icon.svg" alt="" />*/}
+        {/*    <img className="hover-show" src="images/sidebar-profile-hover-icon.svg" alt="" />*/}
+        {/*    <i className="fa fa-angle-right" aria-hidden="true" />*/}
+        {/*  </Link>*/}
+        {/*  <SubMenu key="7" title={t('Profile')}>*/}
+        {/*    <Menu.ItemGroup>*/}
+        {/*      <Menu.Item key="1">*/}
+        {/*        <Link to="/edit-profile">{t('Edit_profile')}</Link>*/}
+        {/*      </Menu.Item>*/}
+        {/*    </Menu.ItemGroup>*/}
+        {/*  </SubMenu>*/}
+        {/*</Menu.Item>*/}
+        {/*<Menu.Item key="/edit-profile" className="mobile-hide">*/}
+        {/*  /!* <ScrollAnimation animateOnce className="full-width" animateIn="fadeInLeft" delay={2100}> *!/*/}
+        {/*  <Link to="/edit-profile">*/}
+        {/*    <img className="not-hover-show" src="images/sidebar-profile-icon.svg" alt="" />*/}
+        {/*    <img className="hover-show" src="images/sidebar-profile-hover-icon.svg" alt="" />*/}
+        {/*    {t('Profile')}*/}
+        {/*    <i className="fa fa-angle-right" aria-hidden="true" />*/}
+        {/*  </Link>*/}
+        {/*  /!* </ScrollAnimation> *!/*/}
+        {/*</Menu.Item>*/}
       </Menu>
     </Sider>
   );

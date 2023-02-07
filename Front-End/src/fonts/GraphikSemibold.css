@@ -1,9 +1,0 @@
-@font-face {
-  font-family: 'GraphikSemibold';
-  src: url('fonts/GraphikSemibold.eot');
-  src: url('fonts/GraphikSemibold.eot') format('embedded-opentype'),
-    url('fonts/GraphikSemibold.woff2') format('woff2'),
-    url('fonts/GraphikSemibold.woff') format('woff'),
-    url('fonts/GraphikSemibold.ttf') format('truetype'),
-    url('fonts/GraphikSemibold.svg#GraphikSemibold') format('svg');
-}
