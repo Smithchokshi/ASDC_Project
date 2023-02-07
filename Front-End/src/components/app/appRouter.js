@@ -6,7 +6,6 @@ import Sidebar from '../../shared/sidebar/sidebar';
 import TopHeader from '../../shared/top-header/top-header';
 
 const Dashboard = lazy(() => import('../dashboard/dashboard'));
-const EditProfile = lazy(() => import('../edit-profile/edit-profile'));
 const ErrorPage = lazy(() => import('../../shared/404/error-page'));
 
 const Routing = () => {
@@ -22,12 +21,6 @@ const Routing = () => {
       path: '/dashboard',
       component: () => <Dashboard />,
       title: 'Dashboard',
-    },
-    {
-      exact: true,
-      path: '/edit-profile',
-      component: () => <EditProfile />,
-      title: 'Edit Profile',
     },
     {
       exact: true,

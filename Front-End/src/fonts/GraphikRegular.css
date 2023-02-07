@@ -1,9 +1,0 @@
-@font-face {
-  font-family: 'GraphikRegular';
-  src: url('fonts/GraphikRegular.eot');
-  src: url('fonts/GraphikRegular.eot') format('embedded-opentype'),
-    url('fonts/GraphikRegular.woff2') format('woff2'),
-    url('fonts/GraphikRegular.woff') format('woff'),
-    url('fonts/GraphikRegular.ttf') format('truetype'),
-    url('fonts/GraphikRegular.svg#GraphikRegular') format('svg');
-}

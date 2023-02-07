@@ -26,18 +26,6 @@ const ProfileSidebar = () => {
 
   return (
     <ul>
-      <li>
-        <Link
-          to="/edit-profile"
-          className={history.location.pathname === '/edit-profile' ? 'active' : ''}
-        >
-          <span className="icon">
-            <img src="images/edit-pen.svg" alt="" />
-          </span>
-          {t('Edit_profile')}
-          <i className="fa fa-angle-right" aria-hidden="true" />
-        </Link>
-      </li>
     </ul>
   );
 };

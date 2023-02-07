@@ -1,55 +1,8 @@
 {
   "short_name": "Jail Commissary",
   "name": "Jail Commissary",
-  "icons": [
-    {
-      "src": "/images/shutterstock_1133982038-1_64.png",
-      "sizes": "64x64",
-      "type": "image/png"
-    },
-    {
-      "src": "/images/shutterstock_1133982038-1_72.png",
-      "sizes": "72x72",
-      "type": "image/png"
-    },
-    {
-      "src": "/images/shutterstock_1133982038-1_96.png",
-      "sizes": "96x96",
-      "type": "image/png"
-    },
-    {
-      "src": "/images/shutterstock_1133982038-1_144.png",
-      "sizes": "144x144",
-      "type": "image/png"
-    },
-    {
-      "src": "/images/shutterstock_1133982038-1_192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/images/shutterstock_1133982038-1_256.png",
-      "sizes": "256x256",
-      "type": "image/png"
-    },
-    {
-      "src": "/images/shutterstock_1133982038-1_384.png",
-      "sizes": "384x384",
-      "type": "image/png"
-    },
-    {
-      "src": "/images/shutterstock_1133982038-1_512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ],
   "start_url": "/index.html",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff",
-  "intent_filters": {
-    "scope_url_scheme": "https",
-    "scope_url_host": "jail-commissary.openxcell.dev",
-    "scope_url_path": "/"
-  }
+  "background_color": "#ffffff"
 }

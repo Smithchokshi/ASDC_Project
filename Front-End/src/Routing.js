@@ -7,7 +7,6 @@ import Sidebar from './shared/sidebar/sidebar';
 
 const App = lazy(() => import('./components/app/appRouter'));
 const LoginPage = lazy(() => import('./components/authentication/login/login'));
-const Verify = lazy(() => import('./components/verify/verify'));
 
 const { Content } = Layout;
 
@@ -20,11 +19,6 @@ const Routing = () => {
       exact: true,
       path: '/login',
       component: () => <LoginPage />,
-    },
-    {
-      exact: false,
-      path: '/verify',
-      component: () => <Verify />,
     },
   ];
 
