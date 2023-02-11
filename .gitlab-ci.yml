@@ -1,0 +1,16 @@
+default:
+    image: maven:latest
+
+stages:          # List of stages for jobs, and their order of execution
+  - build
+
+build-job:       # This job runs in the build stage, which runs first.
+  stage: build
+  script:
+    - cd datawiz-api
+    - mvn compile
+  rules:
+    - changes:
+        - datawiz-api/*
+  tags:
+      - dalfcs_docker_autoscale
