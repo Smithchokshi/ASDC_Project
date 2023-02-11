@@ -1,10 +1,10 @@
-package backEndApplication;
+package com.groupten.datawiz;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BackEndApplicationTests {
+class DatawizApplicationTests {
 
 	@Test
 	void contextLoads() {
