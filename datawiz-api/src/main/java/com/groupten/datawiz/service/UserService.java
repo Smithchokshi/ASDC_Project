@@ -7,5 +7,5 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService {
     User saveUser(User user);
 
-
+    String generateToken(Authentication authentication);
 }

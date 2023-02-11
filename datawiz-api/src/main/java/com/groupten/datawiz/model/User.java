@@ -19,8 +19,18 @@ public class User {
     @Column(name = "user")
     private String profileName;
 
-    //public User() {}
+    public User() {}
 
+    public User(String profileName, String username) {
+        this.profileName = profileName;
+        this.username = username;
+    }
+
+    public User(String profileName, String username, String password) {
+        this.profileName = profileName;
+        this.username = username;
+        this.password = password;
+    }
 
     public long getUserId() {
         return userId;
