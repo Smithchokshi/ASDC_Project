@@ -20,10 +20,8 @@ USE `BackEndDB` ;
 CREATE TABLE IF NOT EXISTS `BackEndDB`.`users` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  `token` VARCHAR(45) NULL,
-  `first_name` VARCHAR(45) NULL,
-  `last_name` VARCHAR(45) NULL,
+  `password` BINARY(60) NOT NULL,
+  `name` VARCHAR(45) NULL,
   `image_link` LONGTEXT NULL,
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB;

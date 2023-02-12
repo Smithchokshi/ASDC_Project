@@ -16,18 +16,17 @@ public class User {
 
     private String password;
 
-    @Column(name = "user")
-    private String profileName;
+    private String name;
 
     public User() {}
 
-    public User(String profileName, String username) {
-        this.profileName = profileName;
+    public User(String name, String username) {
+        this.name = name;
         this.username = username;
     }
 
-    public User(String profileName, String username, String password) {
-        this.profileName = profileName;
+    public User(String name, String username, String password) {
+        this.name = name;
         this.username = username;
         this.password = password;
     }
@@ -40,12 +39,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getProfileName() {
-        return profileName;
+    public String getName() {
+        return name;
     }
 
-    public void setProfileName(String profileName) {
-        this.profileName = profileName;
+    public void setName(String profileName) {
+        this.name = profileName;
     }
 
     public String getUsername() {
