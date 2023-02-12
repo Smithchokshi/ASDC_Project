@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user) {
-        User UserEncode = new User(user.getProfileName(), user.getUsername(), passwordEncoder.encode(user.getPassword()));
+        User UserEncode = new User(user.getName(), user.getUsername(), passwordEncoder.encode(user.getPassword()));
         return userRepository.save(UserEncode);
     }
 
