@@ -2,6 +2,8 @@ package com.groupten.datawiz.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "user")

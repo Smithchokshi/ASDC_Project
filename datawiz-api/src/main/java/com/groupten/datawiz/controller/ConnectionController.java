@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.*;
 
 @RestController
 @RequestMapping("/connection")
@@ -13,11 +14,6 @@ public class ConnectionController {
 
     @Autowired
     DbConnService dbConnService;
-
-    /*@PostMapping("/save")
-    public DbConn saveConn(@RequestBody DbConn dbConn){
-        return dbConnService.saveConn(dbConn);
-    }*/
 
     @PostMapping("/save")
     public ResponseEntity<DbConn> saveConn(@RequestBody DbConn dbConn) {
@@ -27,5 +23,10 @@ public class ConnectionController {
     @GetMapping("/get/{id}")
     public DbConn getConnById(@PathVariable("id") int id){
         return dbConnService.getConnById(id);
+    }
+
+    @GetMapping("/getAll/{user_id}")
+    public List<DbConn> getAllConnByUserId(@PathVariable("user_id") int user_id){
+        return dbConnService.getAllConnByUserId(user_id);
     }
 }

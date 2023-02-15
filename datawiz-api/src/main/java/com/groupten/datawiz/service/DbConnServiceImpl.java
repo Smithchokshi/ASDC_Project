@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.*;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
@@ -35,5 +35,16 @@ public class DbConnServiceImpl implements DbConnService{
     public DbConn getConnById(int id){
         DbConn conn = connectionRepository.findById(id).orElse(null);
         return conn;
+    }
+
+    @Override
+    public List<DbConn> getAllConnByUserId(int user_id){
+        List<DbConn> allConns = connectionRepository.findByUserId(user_id);
+        if(allConns.isEmpty()){
+            return null;
+        }
+        else{
+            return allConns;
+        }
     }
 }

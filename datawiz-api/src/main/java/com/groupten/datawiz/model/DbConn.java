@@ -15,7 +15,7 @@ public class DbConn {
     private int connectionId;
 
     @Column(name = "user_id")
-    private int conn_user_id;
+    private int userId;
 
     private String url;
 
@@ -25,11 +25,11 @@ public class DbConn {
     @Column(name = "password")
     private String db_password;
 
-    private DateFormat created_at;
+    private String created_at;
 
-    private DateFormat updated_at;
+    private String updated_at;
 
-    private DateFormat deleted_at;
+    private String deleted_at;
 
     @Column(name = "status")
     private boolean connStatus;
@@ -37,13 +37,13 @@ public class DbConn {
     public DbConn(){}
 
     public DbConn(int userId, String url, String username, String password){
-        conn_user_id = userId;
+        this.userId = userId;
         this.url = url;
         db_username = username;
         db_password = password;
-        created_at = new SimpleDateFormat("YYYY-MM-DD hh:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD hh:mm:ss");
         Calendar cal = Calendar.getInstance();
-        created_at.format(cal.getTime());
+        created_at = dateFormat.format(cal.getTime());
         updated_at = null;
         deleted_at = null;
         connStatus = false;
@@ -58,11 +58,11 @@ public class DbConn {
     }
 
     public int getConn_user_id() {
-        return conn_user_id;
+        return userId;
     }
 
     public void setConn_user_id(int conn_user_id) {
-        this.conn_user_id = conn_user_id;
+        this.userId = conn_user_id;
     }
 
     public String getUrl() {
@@ -89,27 +89,27 @@ public class DbConn {
         this.db_password = db_password;
     }
 
-    public DateFormat getCreated_at() {
+    public String getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(DateFormat created_at) {
+    public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
 
-    public DateFormat getUpdated_at() {
+    public String getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(DateFormat updated_at) {
+    public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
     }
 
-    public DateFormat getDeleted_at() {
+    public String getDeleted_at() {
         return deleted_at;
     }
 
-    public void setDeleted_at(DateFormat deleted_at) {
+    public void setDeleted_at(String deleted_at) {
         this.deleted_at = deleted_at;
     }
 
