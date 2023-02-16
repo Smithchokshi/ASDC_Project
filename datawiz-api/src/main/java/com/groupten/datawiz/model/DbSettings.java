@@ -1,7 +1,6 @@
 package com.groupten.datawiz.model;
 
 import jakarta.persistence.*;
-import org.springframework.data.relational.core.mapping.Table;
 
 @Entity
 @Table(name="connections")
