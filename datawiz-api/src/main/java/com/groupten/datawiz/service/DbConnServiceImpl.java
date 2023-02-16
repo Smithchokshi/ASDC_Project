@@ -38,8 +38,8 @@ public class DbConnServiceImpl implements DbConnService{
     }
 
     @Override
-    public List<DbConn> getAllConnByUserId(int user_id){
-        List<DbConn> allConns = connectionRepository.findByUserId(user_id);
+    public List<DbConn> getAllConnByUserId(int userId){
+        List<DbConn> allConns = connectionRepository.findByUserId(userId);
         if(allConns.isEmpty()){
             return null;
         }
