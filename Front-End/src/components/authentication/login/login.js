@@ -35,7 +35,7 @@ const Login = () => {
   const dummy = [
     {
       key: '1',
-      image: `/images/left-auth-image.svg`,
+      image: `/images/DataWiz-Tab-Title-logo.png`,
     },
   ];
 
@@ -115,7 +115,7 @@ const Login = () => {
           <ScrollAnimation animateOnce className="full-width" animateIn="fadeInLeft" delay={500}>
             <div className="full-width auth-top-logo mobile-show">
               <Link to="/">
-                <img className="" src="images/top-logo.svg" alt="logo" />
+                <img className="" src="images/DataWiz-logo.png" alt="logo" />
               </Link>
             </div>
             <h1>{t('Lets_Connect_us')}</h1>
@@ -134,7 +134,7 @@ const Login = () => {
                 animateIn="fadeInLeft"
                 delay={200}
               > */}
-                <img className="" src="images/top-logo.svg" alt="logo" />
+                <img className="" src="images/DataWiz-logo.png" alt="logo" />
                 {/* </ScrollAnimation> */}
               </Link>
             </div>
