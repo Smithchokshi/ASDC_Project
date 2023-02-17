@@ -9,6 +9,6 @@ public interface ConnectionRepository extends CrudRepository<DbConn, Integer>{
 
     //DbConn findDbConnById(int id);
 
-    List<DbConn> findByUserId(int userId);
+//    List<DbConn> findByUserId(int userId);
 
 }
