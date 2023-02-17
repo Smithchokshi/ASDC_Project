@@ -46,7 +46,9 @@ export const changeLanguage = data => async dispatch => {
 
 export const login = data => async dispatch => {
   try {
-    const res = await api.login(data);
+    const registerRes = await api.login(data);
+    console.log(registerRes);
+    // const res = await api.login(data);
     // after successfully login, you will get token on it
     localStorage.setItem('id_token', res?.data?.token);
 

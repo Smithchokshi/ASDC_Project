@@ -73,9 +73,8 @@ const Login = () => {
     if (validator.allValid()) {
       setIsSubmitLoading(true);
       const data = {
-        email: fields?.email,
+        username: fields?.email,
         password: fields?.password,
-        rememberMe: checked,
       };
       const res = await dispatch(login(data));
       console.log('res', res);

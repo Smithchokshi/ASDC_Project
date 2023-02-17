@@ -26,8 +26,8 @@ public class ConnectionController {
         return dbConnService.getConnById(id);
     }
 
-    @GetMapping("/getAll/{user_id}")
-    public List<DbConn> getAllConnByUserId(@PathVariable("user_id") int user_id){
-        return dbConnService.getAllConnByUserId(user_id);
-    }
+//    @GetMapping("/getAll/{user_id}")
+//    public List<DbConn> getAllConnByUserId(@PathVariable("user_id") int user_id){
+//        return dbConnService.getAllConnByUserId(user_id);
+//    }
 }
