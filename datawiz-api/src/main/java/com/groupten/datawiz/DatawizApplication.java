@@ -8,5 +8,6 @@ public class DatawizApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DatawizApplication.class, args);
+		System.out.println("hey hey hey");
 	}
 }

@@ -8,5 +8,9 @@ public interface DbConnService {
 
     DbConn getConnById(int id);
 
-     List<DbConn> getAllConnByUserId(int userId);
+    DbConn deleteConnById(int id);
+
+    List<DbConn> getAllConnByUserId(int user_id);
+
+
 }

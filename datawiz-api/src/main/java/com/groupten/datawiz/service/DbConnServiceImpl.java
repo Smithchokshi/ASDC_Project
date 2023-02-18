@@ -47,4 +47,11 @@ public class DbConnServiceImpl implements DbConnService{
             return allConns;
         }
     }
+
+    @Override
+    public DbConn deleteConnById(int userId){
+        DbConn conn = getConnById(userId);
+        connectionRepository.deleteById(userId);
+        return conn;
+    }
 }

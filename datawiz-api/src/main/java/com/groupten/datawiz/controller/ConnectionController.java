@@ -18,6 +18,12 @@ public class ConnectionController {
 
     @PostMapping("/save")
     public ResponseEntity<DbConn> saveConn(@RequestBody DbConn dbConn) {
+        System.out.println(dbConn.getConn_user_id());
+        System.out.println(dbConn.getConnectionId());
+        System.out.println(dbConn.getUrl());
+        System.out.println(dbConn.getDb_username());
+        System.out.println(dbConn.getDb_password());
+
         return ResponseEntity.status(HttpStatus.CREATED).body(dbConnService.saveConn(dbConn));
     }
 
@@ -30,4 +36,11 @@ public class ConnectionController {
     public List<DbConn> getAllConnByUserId(@PathVariable("user_id") int user_id){
         return dbConnService.getAllConnByUserId(user_id);
     }
+
+    @DeleteMapping("/getAll/{user_id}")
+    public DbConn deleteConnById(@PathVariable("user_id") int user_id){
+        return dbConnService.deleteConnById(user_id);
+    }
+
+
 }
