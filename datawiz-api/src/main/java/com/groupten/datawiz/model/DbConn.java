@@ -40,9 +40,9 @@ public class DbConn {
         this.url = url;
         db_username = username;
         db_password = password;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD hh:mm:ss");
-        Calendar cal = Calendar.getInstance();
-        created_at = dateFormat.format(cal.getTime());
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD hh:mm:ss");
+//        Calendar cal = Calendar.getInstance();
+        created_at = "now";
         updated_at = null;
         deleted_at = null;
         connStatus = false;
@@ -56,11 +56,11 @@ public class DbConn {
         this.id = connectionId;
     }
 
-    public int getConn_user_id() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setConn_user_id(int conn_user_id) {
+    public void setUserId(int conn_user_id) {
         this.userId = conn_user_id;
     }
 

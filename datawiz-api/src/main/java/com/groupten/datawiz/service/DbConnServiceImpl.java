@@ -26,8 +26,17 @@ public class DbConnServiceImpl implements DbConnService{
 
     @Override
     public DbConn saveConn(DbConn dbConn){
-        DbConn conn = new DbConn(dbConn.getConn_user_id(), dbConn.getUrl(), dbConn.getDb_username(), dbConn.getDb_password());
+        DbConn conn = new DbConn(dbConn.getUserId(), dbConn.getUrl(), dbConn.getDb_username(), dbConn.getDb_password());
         return connectionRepository.save(conn);
+    }
+
+
+    //para meters to be passed through dbconn "id", "userId","url","db_username","db_password","created_at"
+    // unlike rest id should be passed to identify and edit the tuple
+    @Override
+    public DbConn editConn(DbConn dbConn){
+
+        return connectionRepository.save(dbConn);
     }
 
 
@@ -48,10 +57,12 @@ public class DbConnServiceImpl implements DbConnService{
         }
     }
 
+
+//    #for this method to work just pass the id  the parameter in link no payload is required
     @Override
-    public DbConn deleteConnById(int userId){
-        DbConn conn = getConnById(userId);
-        connectionRepository.deleteById(userId);
+    public DbConn deleteConnById(int id){
+        DbConn conn = getConnById(id);
+        connectionRepository.deleteById(id);
         return conn;
     }
 }
