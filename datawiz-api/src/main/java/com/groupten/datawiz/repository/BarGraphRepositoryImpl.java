@@ -1,10 +1,8 @@
 package com.groupten.datawiz.repository;
 
 import com.groupten.datawiz.model.BarGraphInt;
-import com.groupten.datawiz.model.DbSettings;
 import com.groupten.datawiz.model.Request;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

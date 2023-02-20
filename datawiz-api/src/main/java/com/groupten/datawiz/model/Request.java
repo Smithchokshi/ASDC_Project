@@ -5,13 +5,13 @@ public class Request {
     private String tableName;
     private String xColumn;
     private String yColumn;
-    private Long connectionId;
+    private int connectionId;
 
-    public Long getConnectionId() {
+    public int getConnectionId() {
         return connectionId;
     }
 
-    public void setConnectionId(Long connectionId) {
+    public void setConnectionId(int connectionId) {
         this.connectionId = connectionId;
     }
 

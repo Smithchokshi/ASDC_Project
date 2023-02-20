@@ -2,7 +2,7 @@ package com.groupten.datawiz.service;
 
 import com.groupten.datawiz.config.DbConfig;
 import com.groupten.datawiz.model.BarGraphInt;
-import com.groupten.datawiz.model.DbSettings;
+import com.groupten.datawiz.model.DbConn;
 import com.groupten.datawiz.model.Request;
 import com.groupten.datawiz.repository.BarGraphRepository;
 import com.groupten.datawiz.repository.ConnectionRepository;
@@ -24,7 +24,7 @@ public class BarGraphServiceImpl implements BarGraphService {
 
     @Override
     public List<BarGraphInt> getValues(Request request) {
-        DbSettings dbSettings= connectRepository.findById(request.getConnectionId()).get();
-        return barGraphRepository.getValues(request, new JdbcTemplate(dbConfig.DbConnection(dbSettings)));
+        DbConn dbConn= connectRepository.findById(request.getConnectionId()).get();
+        return barGraphRepository.getValues(request, new JdbcTemplate(dbConfig.DbConnection(dbConn)));
     }
 }
