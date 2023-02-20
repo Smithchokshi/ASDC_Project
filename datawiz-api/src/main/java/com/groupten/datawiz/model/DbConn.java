@@ -40,9 +40,9 @@ public class DbConn {
         this.url = url;
         db_username = username;
         db_password = password;
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD hh:mm:ss");
-//        Calendar cal = Calendar.getInstance();
-        created_at = "now";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD hh:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        created_at = dateFormat.format(cal.getTime());
         updated_at = null;
         deleted_at = null;
         connStatus = false;
