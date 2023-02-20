@@ -5,6 +5,6 @@ build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
     - cd datawiz-api
-    - mvn $MAVEN_CLI_OPTS compile
+    - mvn compile
   tags:
       - dalfcs_docker_autoscale
