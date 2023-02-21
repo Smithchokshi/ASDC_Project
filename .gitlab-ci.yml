@@ -17,7 +17,7 @@ build-job:       # This job runs in the build stage, which runs first.
     
 front-build-job:
   image: node:18.13.0
-  tags: ugrad
+  tags: dalfcs_docker_autoscale
   stage: build
   before_script:
     - cd Front-End
