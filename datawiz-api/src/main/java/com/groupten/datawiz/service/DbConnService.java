@@ -6,7 +6,13 @@ public interface DbConnService {
 
     DbConn saveConn(DbConn dbConn);
 
+    DbConn editConn(DbConn dbConn);
+
     DbConn getConnById(int id);
 
-//    List<DbConn> getAllConnByUserId(int user_id);
+    DbConn deleteConnById(int id);
+
+    List<DbConn> getAllConnByUserId(int user_id);
+
+
 }

@@ -2,7 +2,6 @@ package com.groupten.datawiz.model;
 
 import jakarta.persistence.*;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -12,10 +11,12 @@ public class DbConn {
     @Id
     @Column(name = "connection_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int connectionId;
+    private int id;
 
     @Column(name = "user_id")
     private int userId;
+
+    private String name;
 
     private String url;
 
@@ -36,9 +37,10 @@ public class DbConn {
 
     public DbConn(){}
 
-    public DbConn(int userId, String url, String username, String password){
+    public DbConn(int userId, String url, String name, String username, String password){
         this.userId = userId;
         this.url = url;
+        this.name = name;
         db_username = username;
         db_password = password;
         SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD hh:mm:ss");
@@ -49,19 +51,27 @@ public class DbConn {
         connStatus = false;
     }
 
-    public int getConnectionId() {
-        return connectionId;
+    public String getName() {
+        return name;
     }
 
-    public void setConnectionId(int connectionId) {
-        this.connectionId = connectionId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getConn_user_id() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int connectionId) {
+        this.id = connectionId;
+    }
+
+    public int getUserId() {
         return userId;
     }
 
-    public void setConn_user_id(int conn_user_id) {
+    public void setUserId(int conn_user_id) {
         this.userId = conn_user_id;
     }
 

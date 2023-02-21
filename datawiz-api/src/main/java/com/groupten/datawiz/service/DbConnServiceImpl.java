@@ -12,6 +12,8 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -26,8 +28,35 @@ public class DbConnServiceImpl implements DbConnService{
 
     @Override
     public DbConn saveConn(DbConn dbConn){
-        DbConn conn = new DbConn(dbConn.getConn_user_id(), dbConn.getUrl(), dbConn.getDb_username(), dbConn.getDb_password());
+        DbConn conn = new DbConn(dbConn.getUserId(), dbConn.getUrl(), dbConn.getName(), dbConn.getDb_username(), dbConn.getDb_password());
         return connectionRepository.save(conn);
+    }
+
+
+    /*
+    Body should provide existing connection_id and edited fields like so:
+    {
+    "id": 252,
+    "userId": 52,
+    "name": "updated",
+    "url": "updated",
+    "db_username": "updated",
+    "db_password": "updated"
+    }
+     */
+    @Override
+    public DbConn editConn(DbConn dbConn){
+        DbConn originalConn = getConnById(dbConn.getId());
+        originalConn.setUrl(dbConn.getUrl());
+        originalConn.setName(dbConn.getName());
+        originalConn.setDb_username(dbConn.getDb_username());
+        originalConn.setDb_password(dbConn.getDb_password());
+        String created_at = getConnById(dbConn.getId()).getCreated_at();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD hh:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        String updated_at = dateFormat.format(cal.getTime());
+        originalConn.setUpdated_at(updated_at);
+        return connectionRepository.save(originalConn);
     }
 
 
@@ -46,5 +75,14 @@ public class DbConnServiceImpl implements DbConnService{
         else{
             return allConns;
         }
+    }
+
+
+    //for this method to work just pass the id the parameter in link no payload is required
+    @Override
+    public DbConn deleteConnById(int id){
+        DbConn conn = getConnById(id);
+        connectionRepository.deleteById(id);
+        return conn;
     }
 }
