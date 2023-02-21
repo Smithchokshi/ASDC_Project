@@ -23,6 +23,7 @@ front-build-job:
     - cd Front-End
     - npx yarn
   script:
+    - cd Front-End
     - npx yarn build
   rules:
     - changes:
