@@ -2,6 +2,8 @@ package com.groupten.datawiz.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "user")
@@ -10,7 +12,7 @@ public class User {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long userId;
+    private int userId;
 
     private String username;
 
@@ -31,11 +33,11 @@ public class User {
         this.password = password;
     }
 
-    public long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

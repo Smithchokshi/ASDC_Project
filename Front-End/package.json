@@ -9,7 +9,7 @@
   "homepage": ".",
   "scripts": {
     "dev": "react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts build",
+    "build": "react-scripts --openssl-legacy-provider build",
     "start": "serve -s build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

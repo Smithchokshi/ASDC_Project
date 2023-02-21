@@ -1,10 +1,14 @@
 package com.groupten.datawiz.repository;
-
-import com.groupten.datawiz.model.DbSettings;
+import com.groupten.datawiz.model.DbConn;
+import com.groupten.datawiz.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import java.util.*;
 
-import java.util.Optional;
+public interface ConnectionRepository extends CrudRepository<DbConn, Integer>{
 
-public interface ConnectionRepository extends JpaRepository<DbSettings, Long> {
-    Optional<DbSettings> findByConnectionId(Long Id);
+    DbConn findDbConnById(int id);
+
+    List<DbConn> findByUserId(int userId);
+
 }
