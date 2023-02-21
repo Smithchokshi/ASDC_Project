@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `DataWiz`.`connections` (
   `connection_id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `url` LONGTEXT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   `created_at` VARCHAR(45) NOT NULL,
