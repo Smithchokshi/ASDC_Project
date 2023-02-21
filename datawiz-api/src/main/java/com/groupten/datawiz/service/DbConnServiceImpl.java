@@ -28,7 +28,7 @@ public class DbConnServiceImpl implements DbConnService{
 
     @Override
     public DbConn saveConn(DbConn dbConn){
-        DbConn conn = new DbConn(dbConn.getUserId(), dbConn.getUrl(), dbConn.getDb_username(), dbConn.getDb_password());
+        DbConn conn = new DbConn(dbConn.getUserId(), dbConn.getUrl(), dbConn.getName(), dbConn.getDb_username(), dbConn.getDb_password());
         return connectionRepository.save(conn);
     }
 
@@ -38,6 +38,7 @@ public class DbConnServiceImpl implements DbConnService{
     {
     "id": 252,
     "userId": 52,
+    "name": "updated",
     "url": "updated",
     "db_username": "updated",
     "db_password": "updated"
@@ -47,6 +48,7 @@ public class DbConnServiceImpl implements DbConnService{
     public DbConn editConn(DbConn dbConn){
         DbConn originalConn = getConnById(dbConn.getId());
         originalConn.setUrl(dbConn.getUrl());
+        originalConn.setName(dbConn.getName());
         originalConn.setDb_username(dbConn.getDb_username());
         originalConn.setDb_password(dbConn.getDb_password());
         String created_at = getConnById(dbConn.getId()).getCreated_at();

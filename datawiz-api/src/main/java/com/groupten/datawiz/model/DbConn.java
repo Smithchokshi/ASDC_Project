@@ -16,6 +16,8 @@ public class DbConn {
     @Column(name = "user_id")
     private int userId;
 
+    private String name;
+
     private String url;
 
     @Column(name = "username")
@@ -35,9 +37,10 @@ public class DbConn {
 
     public DbConn(){}
 
-    public DbConn(int userId, String url, String username, String password){
+    public DbConn(int userId, String url, String name, String username, String password){
         this.userId = userId;
         this.url = url;
+        this.name = name;
         db_username = username;
         db_password = password;
         SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD hh:mm:ss");
@@ -46,6 +49,14 @@ public class DbConn {
         updated_at = null;
         deleted_at = null;
         connStatus = false;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {
