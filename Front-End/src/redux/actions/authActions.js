@@ -46,6 +46,11 @@ export const changeLanguage = data => async dispatch => {
 
 export const login = data => async dispatch => {
   try {
+    const regi = {
+      name: 'smith',
+      username: 'smithTest',
+      password: '12345'
+    }
     const registerRes = await api.login(data);
     console.log(registerRes);
     // const res = await api.login(data);
