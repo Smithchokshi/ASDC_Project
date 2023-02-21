@@ -14,3 +14,16 @@ build-job:       # This job runs in the build stage, which runs first.
         - datawiz-api/*
   tags:
       - dalfcs_docker_autoscale
+    
+front-build-job:
+  image: node:18.13.0
+  tags: ugrad
+  stage: build
+  before_script:
+    - cd Front-End
+    - npx yarn
+  script:
+    - npx yarn build
+  rules:
+    - changes:
+        - Front-End/*
