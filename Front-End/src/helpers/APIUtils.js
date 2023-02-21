@@ -84,14 +84,14 @@ class ApiUtils {
     register = data =>
         this.axios({
             method: 'POST',
-            url: '/save',
+            url: '/user/save',
             data
         })
 
     login = ({username, password}) =>
         this.axios({
-            method: 'POST',
-            url: '/login',
+            method: 'GET',
+            url: '/user/login',
             username,
             password
         });
@@ -100,17 +100,24 @@ class ApiUtils {
     getDashboard = data =>
         this.axios({
             method: 'GET',
-            url: '/dashboard/lists',
-            // FOR LOCAL url: '/api/users/:id' ( dont forget to change response in loadUser )
+            url: '/connection/getAll/1',
             data,
         });
 
-    getTodaysEarning = ({...data}) =>
+    addDBConfig = data =>
         this.axios({
             method: 'POST',
-            url: '/orders/today-earnings',
-            ...data,
-        });
+            url: '/connection/save',
+            data
+        })
+
+    editDBConfig = data =>
+        this.axios({
+            method: 'POST',
+            url: '/connection/edit',
+            data
+        })
+
 
 }
 export default ApiUtils;
