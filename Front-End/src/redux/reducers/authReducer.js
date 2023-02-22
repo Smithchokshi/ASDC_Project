@@ -1,6 +1,6 @@
 const initialState = {
-  isAuthenticated: true,
-  token: "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoic21pdGhUZXN0IiwiZXhwIjoxNjc2OTQ2NDY1LCJpYXQiOjE2NzY5NDI4NjUsInNjb3BlIjoiIn0.sE9EUYJjpGxC0XIT5gXfX4EZi3b2l28Gp7g5d_HQZ2Y",
+  isAuthenticated: false,
+  token: null,
   user: {},
   language: 'en',
   sidebarKey: '/',

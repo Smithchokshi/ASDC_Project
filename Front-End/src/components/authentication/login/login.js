@@ -117,8 +117,6 @@ const Login = () => {
                 <img className="" src="images/DataWiz-logo.png" alt="logo" />
               </Link>
             </div>
-            <h1>{t('Lets_Connect_us')}</h1>
-            {t('Lorem')}
           </ScrollAnimation>
         </div>
       </div>
@@ -143,11 +141,7 @@ const Login = () => {
                 <div className="full-width flex-center my-lang-switch">
                   <h2 className="auth-head full-width">{t('Login')}</h2>
                 </div>
-                <div className="full-width auth-subtitle border">
-                  <h6>{t('Login_to_your_account')}</h6>
-                  {t('Enter_your_email_and_password_to_connect')}
-                  <br /> {t('with_Jail_connect')}
-                </div>
+
                 <FormMain onSubmit={submit} className="global-form full-width">
                   {/* Email */}
                   <div className="full-width form-field">
