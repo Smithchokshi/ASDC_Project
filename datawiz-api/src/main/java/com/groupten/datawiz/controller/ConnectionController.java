@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/connection")
 public class ConnectionController {
@@ -27,8 +26,8 @@ public class ConnectionController {
     }
 
     @GetMapping("/get/{id}")
-    public DbConn getConnById(@PathVariable("id") int id){
-        return dbConnService.getConnById(id);
+    public List<DbConn> getConnById(@PathVariable("id") int id){
+        return dbConnService.findDbConnById(id);
     }
 
     @GetMapping("/getAll/{user_id}")

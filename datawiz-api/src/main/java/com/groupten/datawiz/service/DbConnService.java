@@ -14,5 +14,6 @@ public interface DbConnService {
 
     List<DbConn> getAllConnByUserId(int user_id);
 
+    public List<DbConn> findDbConnById(int id);
 
 }

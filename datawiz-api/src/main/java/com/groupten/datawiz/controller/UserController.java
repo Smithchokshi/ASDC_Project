@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -27,8 +26,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(user));
     }
 
-    @CrossOrigin
-    @PostMapping("/login")
+    @GetMapping("/login")
     public ResponseEntity<String> token(Authentication authentication) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.generateToken(authentication));
     }
