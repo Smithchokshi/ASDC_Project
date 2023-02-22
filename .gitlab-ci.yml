@@ -13,7 +13,7 @@ build-job:       # This job runs in the build stage, which runs first.
     - changes:
         - datawiz-api/*
   tags:
-      - dalfcs_docker_autoscale
+      - ugrad
     
 front-job:
   stage: build
@@ -26,5 +26,5 @@ front-job:
     - changes:
         - Front-End/*
   tags:
-      - dalfcs_docker_autoscale
+      - ugrad
 
