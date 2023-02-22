@@ -145,12 +145,12 @@ const Login = () => {
                 <FormMain onSubmit={submit} className="global-form full-width">
                   {/* Email */}
                   <div className="full-width form-field">
-                    <div className="label">{t('Email_address')}</div>
+                    <div className="label">Email address</div>
                     <Input
                       type="text"
                       value={fields?.email}
                       onChange={e => handleChange('email', e)}
-                      placeholder={t('Email_address')}
+                      placeholder={'Email_address'}
                       className={errors?.email ? 'invalid' : ''}
                     />
                     {validator.message(t('Email_address'), fields?.email, `required|email`, {
@@ -172,10 +172,10 @@ const Login = () => {
                   </div>
                   <div className="full-width form-field text-checkbox top-margin flex-center">
                     <Checkbox onChange={e => setChecked(e.target.checked)} checked={checked}>
-                      {t('Remember_me')}
+                      {t('Remember me')}
                     </Checkbox>
                     <Link className="recovery-text" to="/forgot-password">
-                      {t('Forgot_password')}?
+                      {'Forgot password'}?
                     </Link>
                   </div>
                   <div className="full-width form-field flex-center">
