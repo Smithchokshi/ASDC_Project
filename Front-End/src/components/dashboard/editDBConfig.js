@@ -9,143 +9,137 @@ import ApiUtils from '../../helpers/APIUtils';
 const api = msg => new ApiUtils(msg);
 
 const EditDBConfig = ({ visible, onCancel, getData, data }) => {
+  const history = useHistory();
 
+  const [fields, setFields] = useState({});
+  const [isSubmitLoading, setIsSubmitLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
-    const history = useHistory();
+  const [validator, showValidationMessage] = useSimpleReactValidator({}, {});
 
-    const [fields, setFields] = useState({});
-    const [isSubmitLoading, setIsSubmitLoading] = useState(false);
-    const [isLoading, setLoading] = useState(false);
+  useEffect(() => {
+    setFields(prev => ({
+      ...prev,
+      id: data.id,
+      userId: data.userId,
+      db_username: data.db_username,
+      db_password: data.db_password,
+      url: data.url,
+      name: data.name,
+    }));
+  }, [data]);
 
+  const handleChange = field => e => {
+    setFields(prev => ({
+      ...prev,
+      [field]: e.target.value,
+    }));
+  };
 
-    const [validator, showValidationMessage] = useSimpleReactValidator(
-        {},
-        {}
-    );
-
-    useEffect(() => {
-        setFields(prev => ({
-            ...prev,
-            id: data.id,
-            userId: data.userId,
-            db_username: data.db_username,
-            db_password: data.db_password,
-            url: data.url,
-            name: data.name
-        }))
-    },[data])
-
-    const handleChange = (field) => e => {
-        setFields(prev => ({
-            ...prev,
-            [field]: e.target.value,
-        }));
+  const testDBConnection = () => {
+    const data = {
+      url: fields.url,
+      db_username: fields.db_username,
+      db_password: fields.db_password,
     };
 
-    const submit = async e => {
-        e.preventDefault();
+    const res = api().testDBConfig(data);
+  };
 
-        if (validator.allValid()) {
-            setIsSubmitLoading(true);
+  const submit = async e => {
+    e.preventDefault();
 
-            const res = await api().editDBConfig(fields);
+    if (validator.allValid()) {
+      setIsSubmitLoading(true);
 
-            getData();
+      const res = await api().editDBConfig(fields);
 
-            onCancel(false, 'edit', null);
+      getData();
 
-            try {
-            } catch {
-                setIsSubmitLoading(false);
-            }
-        } else {
-        }
-    };
+      onCancel(false, 'edit', null);
 
-    return (
-        <Modal
-            centered
-            maskClosable={false}
-            open={visible}
-            footer={null}
-            onCancel={() => onCancel(false, 'edit', null)}
-            className="site-modal"
-        >
-            <FormMain onSubmit={submit} className="global-form full-width">
-                <div className="full-width form-field">
-                    <div className="label">DB URL</div>
-                    <Input
-                        placeholder="DB URL"
-                        value={fields?.url ? fields?.url : null}
-                        onChange={handleChange('url')}
-                    />
-                    {validator.message(
-                        `DB URL`,
-                        fields?.url,
-                        `required`
-                    )}
-                </div>
+      try {
+      } catch {
+        setIsSubmitLoading(false);
+      }
+    } else {
+    }
+  };
 
-                <div className="full-width form-field">
-                    <div className="label">DB Name</div>
-                    <Input
-                        placeholder="DB Name"
-                        value={fields?.name ? fields?.name : null}
-                        onChange={handleChange('name')}
-                    />
-                    {validator.message(
-                        `DB Name`,
-                        fields?.name,
-                        `required`
-                    )}
-                </div>
+  return (
+    <Modal
+      centered
+      maskClosable={false}
+      open={visible}
+      footer={null}
+      onCancel={() => onCancel(false, 'edit', null)}
+      className="site-modal"
+    >
+      <FormMain onSubmit={submit} className="global-form full-width">
+        <div className="full-width form-field">
+          <div className="label">DB URL</div>
+          <Input
+            placeholder="DB URL"
+            value={fields?.url ? fields?.url : null}
+            onChange={handleChange('url')}
+          />
+          {validator.message(`DB URL`, fields?.url, `required`)}
+        </div>
 
-                <div className="full-width form-field">
-                    <div className="label">Username</div>
-                    <Input
-                        placeholder="Username"
-                        value={fields?.db_username ? fields?.db_username : null}
-                        onChange={handleChange('db_username')}
-                    />
-                    {validator.message(
-                        `Username`,
-                        fields?.db_username,
-                        `required`
-                    )}
-                </div>
+        <div className="full-width form-field">
+          <div className="label">DB Name</div>
+          <Input
+            placeholder="DB Name"
+            value={fields?.name ? fields?.name : null}
+            onChange={handleChange('name')}
+          />
+          {validator.message(`DB Name`, fields?.name, `required`)}
+        </div>
 
-                <div className="full-width form-field">
-                    <div className="label">Password</div>
-                    <Input.Password
-                        placeholder="Password"
-                        value={fields?.db_password ? fields?.db_password : null}
-                        onChange={handleChange('db_password')}
-                    />
-                    {validator.message(
-                        `Password`,
-                        fields?.db_password,
-                        `required`
-                    )}
-                </div>
+        <div className="full-width form-field">
+          <div className="label">Username</div>
+          <Input
+            placeholder="Username"
+            value={fields?.db_username ? fields?.db_username : null}
+            onChange={handleChange('db_username')}
+          />
+          {validator.message(`Username`, fields?.db_username, `required`)}
+        </div>
 
-                <div className="full-width form-field flex-center mb-0">
-                    <Button type="primary" htmlType="submit" className="submit-btn" loading={isSubmitLoading}>
-                        <span>Test Connection</span>
-                    </Button>
-                    <Button type="primary" htmlType="submit" className="submit-btn" loading={isSubmitLoading}>
-                        <span>Edit</span>
-                    </Button>
-                </div>
-            </FormMain>
-        </Modal>
-    );
+        <div className="full-width form-field">
+          <div className="label">Password</div>
+          <Input.Password
+            placeholder="Password"
+            value={fields?.db_password ? fields?.db_password : null}
+            onChange={handleChange('db_password')}
+          />
+          {validator.message(`Password`, fields?.db_password, `required`)}
+        </div>
+
+        <div className="full-width form-field flex-center mb-0">
+          <Button
+            type="primary"
+            htmlType="button"
+            className="submit-btn"
+            loading={isSubmitLoading}
+            onClick={testDBConnection}
+          >
+            <span>Test Connection</span>
+          </Button>
+          <Button type="primary" htmlType="submit" className="submit-btn" loading={isSubmitLoading}>
+            <span>Edit</span>
+          </Button>
+        </div>
+      </FormMain>
+    </Modal>
+  );
 };
 
 EditDBConfig.propTypes = {
-    visible: PropTypes.bool.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    getData: PropTypes.func.isRequired,
-    data: PropTypes.instanceOf(Object).isRequired
+  visible: PropTypes.bool.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  getData: PropTypes.func.isRequired,
+  data: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default EditDBConfig;

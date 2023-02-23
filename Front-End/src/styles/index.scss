@@ -2528,7 +2528,9 @@ input:-webkit-autofill:active,
 }
 
 .top-boxes {
+  position: relative;
   display: flex;
+  flex-flow: wrap;
   .single-box {
     width: 24%;
     padding: 35px;
@@ -3006,7 +3008,9 @@ margin-right:auto;
 
 .top-boxes.three-boxes .single-box {
   width: 33%;
+  position: relative;
   display: flex;
+  flex-flow: wrap;
   justify-content: space-between;
   align-items: center;
   text-align: left;
