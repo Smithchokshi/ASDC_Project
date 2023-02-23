@@ -1,33 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import { useTranslation, Trans } from 'react-i18next';
 import { Layout, Menu, Table, Button, Dropdown, Switch } from 'antd';
-import ScrollAnimation from 'react-animate-on-scroll';
-import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  MailOutlined,
-} from '@ant-design/icons';
 import { Link, useHistory } from 'react-router-dom';
 import { useStore, useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../redux/actions/authActions';
 
-const { SubMenu } = Menu;
-const { Header, Content, Footer, Sider } = Layout;
-
-function onChange(checked) {
-  // console.log(`switch to ${checked}`);
-}
+const { Sider } = Layout;
 
 const Sidebar = () => {
   const history = useHistory();
-  const [iscollapsed, setIscollapsed] = useState(false);
-  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.user);
+  const dashboard = useSelector(state => state.dashboard.dashboardData);
   const sidebarKey = useSelector(state => state.auth.sidebarKey);
 
   const handleChange = e => {
@@ -44,12 +27,8 @@ const Sidebar = () => {
     }
   };
 
-  const showModal = () => {
-    setIscollapsed(true);
-  };
   return (
     <Sider
-      // breakpoint="xxl"
       collapsible
       collapsedWidth="0"
       width="300"
@@ -91,6 +70,19 @@ const Sidebar = () => {
           </Link>
         </Menu.Item>
       </Menu>
+      {dashboard && dashboard.length > 0 && dashboard.map((data,index) => (
+          <Menu mode="inline" selectedKeys={[sidebarKey]} onClick={e => handleChange(e)}>
+            <Menu.Item key={data.id}>
+              <Link to={`/database/${data.name}`}>
+                <img className="not-hover-show" src="images/sidebar-dashboard-icon.svg" alt="" />
+                <img className="hover-show" src="images/sidebar-dashboard-hover-icon.svg" alt="" />
+                {data.name}
+                <i className="fa fa-angle-right" aria-hidden="true" />
+              </Link>
+            </Menu.Item>
+          </Menu>
+      ))}
+
     </Sider>
   );
 };

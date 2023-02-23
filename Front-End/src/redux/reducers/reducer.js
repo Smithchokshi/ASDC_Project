@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 import AuthReducer from './authReducer';
+import DashboardReducer from './dashboardReducer';
 
 const nonRemovalReducers = [];
 
 const reducer = combineReducers({
   auth: AuthReducer,
+  dashboard: DashboardReducer,
 });
 
 const rootReducer = (state, action) => {

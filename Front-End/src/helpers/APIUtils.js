@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {encode as base64_encode} from 'base-64';
 import { notification } from 'antd';
 import store from '../redux/store';
 import { logout } from '../redux/actions/authActions';
@@ -16,10 +17,9 @@ class ApiUtils {
                 config => {
                     const myConfig = {...config};
                     if (appendAuth) {
-                        console.log('myconfig', myConfig);
                         const {auth} = store.getState();
                         if (auth.isAuthenticated) myConfig.headers.Authorization = `Bearer ${auth.token}`;
-                        else myConfig.headers.Authorization = `Basic ${new Buffer(`${myConfig.username}:${myConfig.password}`).toString('base64')}`;
+                        else myConfig.headers.Authorization = `Basic ${base64_encode('sm714486@dal.ca:12345')}`;
                     }
                     console.debug('Request', config);
                     return myConfig;
@@ -120,4 +120,5 @@ class ApiUtils {
 
 
 }
+
 export default ApiUtils;

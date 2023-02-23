@@ -30,20 +30,6 @@ export const loadUser = () => async (dispatch, getState) => {
   }
 };
 
-export const changeLanguage = data => async dispatch => {
-  try {
-    dispatch({
-      type: 'CHANGE_LANGUAGE',
-      payload: data,
-    });
-    localStorage.setItem('language', data);
-    return true;
-  } catch (err) {
-    // console.log('CATCH ERROR', err);
-    return false;
-  }
-};
-
 export const login = data => async dispatch => {
   try {
     const regi = {
