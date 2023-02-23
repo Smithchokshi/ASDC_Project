@@ -145,6 +145,11 @@ h6 + p {
   float: left;
   width: 100%;
 }
+.logo{
+width:100%;
+height:100%;
+}
+
 .child-triggerm,
 .sub-menu {
   display: none;
@@ -2902,7 +2907,17 @@ html body .edit-image .ant-upload {
 }
 
 .sidebar-logo {
+  width: 100%;
+  height: 100%;
   padding: 0 15px;
+}
+
+.loader-logo{
+margin-left:auto;
+margin-right:auto;
+  width:50%;
+  height:50%;
+
 }
 
 .profile-section {
@@ -4225,7 +4240,7 @@ html body .mobile-profile-menu .ant-menu-sub li {
 
 @media (max-width: 1450px) {
   .default-table .ant-table {
-    width: 1400px !important;
+    width: 140px !important;
   }
 }
 
@@ -5848,6 +5863,8 @@ html .ant-layout {
     font-size: 15px;
   }
   .sidebar-logo {
+    width: 100%;
+    height: 100%;
     padding: 0 10px;
   }
   .top-boxes .single-box .earning-text {

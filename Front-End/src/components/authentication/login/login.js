@@ -35,7 +35,7 @@ const Login = () => {
   const dummy = [
     {
       key: '1',
-      image: `/images/DataWiz-Tab-Title-logo.png`,
+      image: `/images/DataWiz-Tab-Title-logo.svg`,
     },
   ];
 
@@ -114,11 +114,9 @@ const Login = () => {
           <ScrollAnimation animateOnce className="full-width" animateIn="fadeInLeft" delay={500}>
             <div className="full-width auth-top-logo mobile-show">
               <Link to="/">
-                <img className="" src="images/DataWiz-logo.png" alt="logo" />
+                <img className="" src="images/DataWiz-logo.svg" alt="logo" />
               </Link>
             </div>
-            <h1>{t('Lets_Connect_us')}</h1>
-            {t('Lorem')}
           </ScrollAnimation>
         </div>
       </div>
@@ -133,7 +131,7 @@ const Login = () => {
                 animateIn="fadeInLeft"
                 delay={200}
               > */}
-                <img className="" src="images/DataWiz-logo.png" alt="logo" />
+                <img className="logo" src="images/DataWiz-logo.svg" alt="logo" />
                 {/* </ScrollAnimation> */}
               </Link>
             </div>
@@ -143,20 +141,16 @@ const Login = () => {
                 <div className="full-width flex-center my-lang-switch">
                   <h2 className="auth-head full-width">{t('Login')}</h2>
                 </div>
-                <div className="full-width auth-subtitle border">
-                  <h6>{t('Login_to_your_account')}</h6>
-                  {t('Enter_your_email_and_password_to_connect')}
-                  <br /> {t('with_Jail_connect')}
-                </div>
+
                 <FormMain onSubmit={submit} className="global-form full-width">
                   {/* Email */}
                   <div className="full-width form-field">
-                    <div className="label">{t('Email_address')}</div>
+                    <div className="label">Email address</div>
                     <Input
                       type="text"
                       value={fields?.email}
                       onChange={e => handleChange('email', e)}
-                      placeholder={t('Email_address')}
+                      placeholder={'Email address'}
                       className={errors?.email ? 'invalid' : ''}
                     />
                     {validator.message(t('Email_address'), fields?.email, `required|email`, {
@@ -175,14 +169,6 @@ const Login = () => {
                       className={errors?.password ? 'invalid' : ''}
                     />
                     {validator.message(t('Password'), fields?.password, 'required')}
-                  </div>
-                  <div className="full-width form-field text-checkbox top-margin flex-center">
-                    <Checkbox onChange={e => setChecked(e.target.checked)} checked={checked}>
-                      {t('Remember_me')}
-                    </Checkbox>
-                    <Link className="recovery-text" to="/forgot-password">
-                      {t('Forgot_password')}?
-                    </Link>
                   </div>
                   <div className="full-width form-field flex-center">
                     <Button

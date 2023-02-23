@@ -1,52 +1,27 @@
-/* eslint-disable no-shadow */
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import moment from 'moment';
 import { Layout, Menu, Table, Button, Dropdown, Pagination } from 'antd';
-import { useTranslation, Trans } from 'react-i18next';
+import {useDispatch, useSelector} from "react-redux";
 import ScrollAnimation from 'react-animate-on-scroll';
-import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-} from '@ant-design/icons';
-import { Link } from 'react-router-dom';
-import Sidebar from '../../shared/sidebar/sidebar';
 import Loader from '../../shared/loader/Loader';
 import TopHeader from '../../shared/top-header/top-header';
-import Charts from '../../shared/Chart/chart';
 import AddDBConfig from './addDBConfig';
 import EditDBConfig from "./editDBConfig";
-
-import notificationHandler, { openNotificationWithIconError } from '../../constants/notification';
 import ApiUtils from '../../helpers/APIUtils';
+import {storeDashboardData} from "../../redux/actions/dashboardActions";
 
 const api = new ApiUtils();
 
 const { Content } = Layout;
 
-const initialState = {
-  page: '1',
-  limit: '10',
-  search: '',
-  sortCol: '',
-  sortVal: '',
-  pagination: true,
-  startDate: moment().startOf('day').toISOString(),
-  endDate: moment().endOf('day').toISOString(),
-};
-
 const Dashboard = () => {
-  const { t, i18n } = useTranslation();
-  const [iscollapsed, setIscollapsed] = useState(false);
-  const [allData, setAllData] = useState([]);
-  const [forceUpdate, setForceUpdate] = useState(false);
+
+  const dispatch = useDispatch();
+
   const [loader, setLoader] = useState(false);
   const [addModel, setAddModel] = useState(false);
   const [editModel, setEditModel] = useState(false);
   const [editData, setEditData] = useState({});
+  const dashboardData = useSelector(state => state.dashboard.dashboardData);
 
   const handleLoader = bool => {
     setLoader(bool);
@@ -63,8 +38,7 @@ const Dashboard = () => {
   const getData = async () => {
     handleLoader(true);
     try {
-      const { data } = await api.getDashboard();
-      setAllData(data);
+      const res = await dispatch(storeDashboardData());
       handleLoader(false);
     } catch (e) {
       handleLoader(false);
@@ -103,7 +77,7 @@ const Dashboard = () => {
               </div>
             <div className="site-layout-background">
               <div className="top-boxes full-width">
-                {allData.map((element, index) => (
+                {dashboardData.map((element, index) => (
                   <ScrollAnimation
                     animateOnce
                     className="full-width single-box"

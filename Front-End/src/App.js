@@ -5,12 +5,14 @@ import Routing from './Routing';
 import store from './redux/store';
 import Loader from './shared/loader/Loader';
 import { loadUser } from './redux/actions/authActions';
+import { storeDashboardData } from './redux/actions/dashboardActions';
 
 const App = () => {
   const [isLoaded, setLoaded] = useState(false);
 
   useEffect(() => {
     (async () => {
+      if(window.location.pathname !== '/' && window.location.pathname !== '/dashboard') await store.dispatch(storeDashboardData());
       await store.dispatch(loadUser());
       setLoaded(true);
     })();
