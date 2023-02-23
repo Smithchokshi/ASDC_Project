@@ -102,7 +102,8 @@ public class DbConnServiceImpl implements DbConnService{
     }
 
     @Override
-    public boolean testConn(DbConn dbConn){
+    public List<Boolean> testConn(DbConn dbConn){
+        List<Boolean> res = new ArrayList<>();
         String url = dbConn.getUrl();
         String username = dbConn.getDb_username();
         String password = dbConn.getDb_password();
@@ -111,7 +112,8 @@ public class DbConnServiceImpl implements DbConnService{
         }
         catch(ClassNotFoundException e){
             System.out.println(e.getMessage());
-            return false;
+            res.add(false);
+            return res;
         }
         try{
             url = url.split("//")[1];
@@ -122,8 +124,10 @@ public class DbConnServiceImpl implements DbConnService{
             conn.close();
         }
         catch(SQLException e){
-            return false;
+            res.add(false);
+            return res;
         }
-        return true;
+        res.add(true);
+        return res;
     }
 }

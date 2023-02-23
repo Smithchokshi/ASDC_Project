@@ -16,6 +16,6 @@ public interface DbConnService {
 
     public List<DbConn> findDbConnById(int id);
 
-    boolean testConn(DbConn dbConn);
+    List<Boolean> testConn(DbConn dbConn);
 
 }

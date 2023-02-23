@@ -41,7 +41,7 @@ public class ConnectionController {
     }
 
     @PostMapping("/test")
-    public boolean testConnection(@RequestBody DbConn dbConn){
+    public List<Boolean> testConnection(@RequestBody DbConn dbConn){
         return dbConnService.testConn(dbConn);
     }
 
