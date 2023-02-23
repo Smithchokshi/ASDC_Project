@@ -35,7 +35,7 @@ const Login = () => {
   const dummy = [
     {
       key: '1',
-      image: `/images/DataWiz-Tab-Title-logo.png`,
+      image: `/images/DataWiz-Tab-Title-logo.svg`,
     },
   ];
 
@@ -114,7 +114,7 @@ const Login = () => {
           <ScrollAnimation animateOnce className="full-width" animateIn="fadeInLeft" delay={500}>
             <div className="full-width auth-top-logo mobile-show">
               <Link to="/">
-                <img className="" src="images/DataWiz-logo.png" alt="logo" />
+                <img className="" src="images/DataWiz-logo.svg" alt="logo" />
               </Link>
             </div>
           </ScrollAnimation>
@@ -131,7 +131,7 @@ const Login = () => {
                 animateIn="fadeInLeft"
                 delay={200}
               > */}
-                <img className="" src="images/DataWiz-logo.png" alt="logo" />
+                <img className="logo" src="images/DataWiz-logo.svg" alt="logo" />
                 {/* </ScrollAnimation> */}
               </Link>
             </div>
@@ -150,7 +150,7 @@ const Login = () => {
                       type="text"
                       value={fields?.email}
                       onChange={e => handleChange('email', e)}
-                      placeholder={'Email_address'}
+                      placeholder={'Email address'}
                       className={errors?.email ? 'invalid' : ''}
                     />
                     {validator.message(t('Email_address'), fields?.email, `required|email`, {
