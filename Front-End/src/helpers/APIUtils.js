@@ -123,6 +123,12 @@ class ApiUtils {
       url: '/connection/test',
       data,
     });
+
+  deleteDBConfig = ({ id }) =>
+      this.axios({
+          method: 'DELETE',
+          url: `/connection/deleteById/${id}`
+      })
 }
 
 export default ApiUtils;

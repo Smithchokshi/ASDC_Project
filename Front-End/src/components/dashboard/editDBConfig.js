@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Button, Modal, Upload, notification } from 'antd';
+import { Input, Button, Modal, Upload, notification, Tooltip } from 'antd';
+import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import useSimpleReactValidator from '../../shared/hooks/useSimpleReactValidator';
@@ -12,6 +13,7 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
   const history = useHistory();
 
   const [fields, setFields] = useState({});
+  const [isView, setIsView] = useState(true);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
@@ -36,14 +38,30 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
     }));
   };
 
-  const testDBConnection = () => {
+  const handleDelete = async () => {
+    const data = {
+      id: fields.id,
+    };
+
+    try {
+      const res = await api().deleteDBConfig(data);
+
+      getData();
+
+      onCancel(false, 'edit', null);
+    } catch {}
+  };
+
+  const testDBConnection = async () => {
     const data = {
       url: fields.url,
       db_username: fields.db_username,
       db_password: fields.db_password,
     };
 
-    const res = api().testDBConfig(data);
+    try {
+      const res = await api().testDBConfig(data);
+    } catch {}
   };
 
   const submit = async e => {
@@ -52,13 +70,12 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
     if (validator.allValid()) {
       setIsSubmitLoading(true);
 
-      const res = await api().editDBConfig(fields);
-
-      getData();
-
-      onCancel(false, 'edit', null);
-
       try {
+        const res = await api().editDBConfig(fields);
+
+        getData();
+
+        onCancel(false, 'edit', null);
       } catch {
         setIsSubmitLoading(false);
       }
@@ -77,43 +94,81 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
     >
       <FormMain onSubmit={submit} className="global-form full-width">
         <div className="full-width form-field">
+          <div className="icon-class">
+            <Tooltip title="Delete">
+              <DeleteOutlined onClick={handleDelete} />
+            </Tooltip>
+            {!isView ? (
+              <Tooltip title="View">
+                <EyeOutlined onClick={() => setIsView(true)} />
+              </Tooltip>
+            ) : (
+              <Tooltip title="Edit">
+                <EditOutlined onClick={() => setIsView(false)} />
+              </Tooltip>
+            )}
+          </div>
           <div className="label">DB URL</div>
-          <Input
-            placeholder="DB URL"
-            value={fields?.url ? fields?.url : null}
-            onChange={handleChange('url')}
-          />
-          {validator.message(`DB URL`, fields?.url, `required`)}
+          {isView ? (
+            <p>{fields?.url}</p>
+          ) : (
+            <>
+              <Input
+                placeholder="DB URL"
+                value={fields?.url ? fields?.url : null}
+                onChange={handleChange('url')}
+              />
+              {validator.message(`DB URL`, fields?.url, `required`)}
+            </>
+          )}
         </div>
 
         <div className="full-width form-field">
           <div className="label">DB Name</div>
-          <Input
-            placeholder="DB Name"
-            value={fields?.name ? fields?.name : null}
-            onChange={handleChange('name')}
-          />
-          {validator.message(`DB Name`, fields?.name, `required`)}
+          {isView ? (
+            <p>{fields?.name}</p>
+          ) : (
+            <>
+              <Input
+                placeholder="DB Name"
+                value={fields?.name ? fields?.name : null}
+                onChange={handleChange('name')}
+              />
+              {validator.message(`DB Name`, fields?.name, `required`)}
+            </>
+          )}
         </div>
 
         <div className="full-width form-field">
           <div className="label">Username</div>
-          <Input
-            placeholder="Username"
-            value={fields?.db_username ? fields?.db_username : null}
-            onChange={handleChange('db_username')}
-          />
-          {validator.message(`Username`, fields?.db_username, `required`)}
+          {isView ? (
+            <p>{fields?.db_username}</p>
+          ) : (
+            <>
+              <Input
+                placeholder="Username"
+                value={fields?.db_username ? fields?.db_username : null}
+                onChange={handleChange('db_username')}
+              />
+              {validator.message(`Username`, fields?.db_username, `required`)}
+            </>
+          )}
         </div>
 
         <div className="full-width form-field">
           <div className="label">Password</div>
-          <Input.Password
-            placeholder="Password"
-            value={fields?.db_password ? fields?.db_password : null}
-            onChange={handleChange('db_password')}
-          />
-          {validator.message(`Password`, fields?.db_password, `required`)}
+          {isView ? (
+            <p>{fields?.db_password}</p>
+          ) : (
+            <>
+              <Input.Password
+                placeholder="Password"
+                value={fields?.db_password ? fields?.db_password : null}
+                onChange={handleChange('db_password')}
+              />
+              {validator.message(`Password`, fields?.db_password, `required`)}
+            </>
+          )}
         </div>
 
         <div className="full-width form-field flex-center mb-0">
@@ -126,9 +181,26 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
           >
             <span>Test Connection</span>
           </Button>
-          <Button type="primary" htmlType="submit" className="submit-btn" loading={isSubmitLoading}>
-            <span>Edit</span>
-          </Button>
+          {isView ? (
+            <Button
+              type="primary"
+              htmlType="button"
+              className="submit-btn"
+              loading={isSubmitLoading}
+              onClick={() => onCancel(false, 'edit', null)}
+            >
+              <span>Close</span>
+            </Button>
+          ) : (
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="submit-btn"
+              loading={isSubmitLoading}
+            >
+              <span>Edit</span>
+            </Button>
+          )}
         </div>
       </FormMain>
     </Modal>

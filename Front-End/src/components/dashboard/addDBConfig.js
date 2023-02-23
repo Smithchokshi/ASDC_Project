@@ -26,14 +26,16 @@ const AddDBConfig = ({ visible, onCancel, getData }) => {
     }));
   };
 
-  const testDBConnection = () => {
+  const testDBConnection = async () => {
     const data = {
       url: fields.url,
       db_username: fields.db_username,
       db_password: fields.db_password,
     };
 
-    const res = api().testDBConfig(data);
+    try {
+      const res = await api().testDBConfig(data);
+    } catch {}
   };
 
   const submit = async e => {
@@ -42,13 +44,12 @@ const AddDBConfig = ({ visible, onCancel, getData }) => {
     if (validator.allValid()) {
       setIsSubmitLoading(true);
 
-      const res = await api().addDBConfig(fields);
-
-      getData();
-
-      onCancel(false, 'add', null);
-
       try {
+        const res = await api().addDBConfig(fields);
+
+        getData();
+
+        onCancel(false, 'add', null);
       } catch {
         setIsSubmitLoading(false);
       }

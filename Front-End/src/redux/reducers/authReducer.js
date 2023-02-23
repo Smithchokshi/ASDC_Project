@@ -2,7 +2,7 @@ const initialState = {
   // isAuthenticated: false,
   // token: null,
   isAuthenticated: true,
-  token: "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoic203MTQ0ODZAZGFsLmNhIiwiZXhwIjoxNjc3MTg5NDQwLCJpYXQiOjE2NzcxODU4NDAsInNjb3BlIjoiIn0.qwH1uvysQRzHDbZw7nxrkawmTgeKX_2fvj5SWoRjp6I",
+  token: "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoic203MTQ0ODZAZGFsLmNhIiwiZXhwIjoxNjc3MTkzMTIzLCJpYXQiOjE2NzcxODk1MjMsInNjb3BlIjoiIn0.ooWt0qGs3qxsxCQw1AGgkeY7-d-ghBp0a6I9WBwCok8",
   user: {},
   language: 'en',
   sidebarKey: '/',
