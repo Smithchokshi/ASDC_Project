@@ -40,5 +40,9 @@ public class ConnectionController {
         return dbConnService.deleteConnById(id);
     }
 
+    @PostMapping("/test")
+    public boolean testConnection(@RequestBody DbConn dbConn){
+        return dbConnService.testConn(dbConn);
+    }
 
 }

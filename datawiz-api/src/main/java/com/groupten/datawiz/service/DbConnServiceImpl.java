@@ -13,6 +13,10 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.time.Instant;
@@ -95,5 +99,31 @@ public class DbConnServiceImpl implements DbConnService{
         DbConn conn = getConnById(id);
         connectionRepository.deleteById(id);
         return conn;
+    }
+
+    @Override
+    public boolean testConn(DbConn dbConn){
+        String url = dbConn.getUrl();
+        String username = dbConn.getDb_username();
+        String password = dbConn.getDb_password();
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        }
+        catch(ClassNotFoundException e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+        try{
+            url = url.split("//")[1];
+            url = "jdbc:mysql://"+url;
+            Connection conn = DriverManager.getConnection(url, username, password);
+            Statement statement = conn.createStatement();
+            statement.execute("show databases;");
+            conn.close();
+        }
+        catch(SQLException e){
+            return false;
+        }
+        return true;
     }
 }
