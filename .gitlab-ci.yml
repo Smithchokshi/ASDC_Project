@@ -24,7 +24,8 @@ front-job:
     - npx yarn build
   rules:
     - changes:
-        - Front-End/*
+        paths:
+          - Front-End/*
   tags:
       - ugrad
 
