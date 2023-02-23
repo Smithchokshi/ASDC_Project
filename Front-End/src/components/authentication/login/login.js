@@ -170,14 +170,6 @@ const Login = () => {
                     />
                     {validator.message(t('Password'), fields?.password, 'required')}
                   </div>
-                  <div className="full-width form-field text-checkbox top-margin flex-center">
-                    <Checkbox onChange={e => setChecked(e.target.checked)} checked={checked}>
-                      {t('Remember me')}
-                    </Checkbox>
-                    <Link className="recovery-text" to="/forgot-password">
-                      {'Forgot password'}?
-                    </Link>
-                  </div>
                   <div className="full-width form-field flex-center">
                     <Button
                       type="primary"
