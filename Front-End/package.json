@@ -16,7 +16,7 @@
     "prettier": "npx prettier --write . --config ./.prettierrc",
     "lint": "eslint . --ext .js",
     "lint-fix": "eslint . --ext .js --fix",
-    "prepare": "husky install"
+    "prepare": "cd .. && husky install Front-End/.husky"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
