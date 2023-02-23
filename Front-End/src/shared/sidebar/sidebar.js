@@ -51,7 +51,7 @@ const Sidebar = () => {
             })
           }
         >
-          <img className="sidebar-logo" src="images/DataWiz-logo.png" alt="logo" />
+          <img className="sidebar-logo" src="images/DataWiz-logo.svg" alt="logo" />
         </Link>
         <div className="full-width profile-section sidebar-profile-section flex-center">
           <div className="title">{user?.data?.fullName}</div>

@@ -145,6 +145,10 @@ h6 + p {
   float: left;
   width: 100%;
 }
+.logo{
+max-width:40vw;
+}
+
 .child-triggerm,
 .sub-menu {
   display: none;
@@ -4225,7 +4229,7 @@ html body .mobile-profile-menu .ant-menu-sub li {
 
 @media (max-width: 1450px) {
   .default-table .ant-table {
-    width: 1400px !important;
+    width: 140px !important;
   }
 }
 

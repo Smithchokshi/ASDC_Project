@@ -19,6 +19,11 @@ const AuthReducer = (state = initialState, action) => {
         token,
         user: payload,
       };
+    case 'CHANGESIDEBAR':
+      return {
+        ...state,
+        sidebarKey: payload,
+      };
     case 'NEW_USER':
     case 'AUTH_FAILED':
       return initialState;
