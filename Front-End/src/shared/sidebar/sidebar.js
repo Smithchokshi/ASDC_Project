@@ -40,7 +40,7 @@ const Sidebar = () => {
       }}
       className="left-sidebar"
     >
-      <div className="logo sidebar-top full-width">
+      <div className="sidebar-top full-width">
         <Link
           to="/"
           role="presentation"
@@ -53,12 +53,6 @@ const Sidebar = () => {
         >
           <img className="sidebar-logo" src="images/DataWiz-logo.svg" alt="logo" />
         </Link>
-        <div className="full-width profile-section sidebar-profile-section flex-center">
-          <div className="title">{user?.data?.fullName}</div>
-          <div className="profile-image">
-            <img src={user?.data?.avatarUrl} alt="" style={{ borderRadius: '50%' }} />
-          </div>
-        </div>
       </div>
       <Menu mode="inline" selectedKeys={[sidebarKey]} onClick={e => handleChange(e)}>
         <Menu.Item key={sidebarKey === '/' ? '/' : '/dashboard'}>

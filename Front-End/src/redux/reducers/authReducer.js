@@ -1,8 +1,8 @@
 const initialState = {
-   isAuthenticated: false,
-   token: null,
-//  isAuthenticated: true,
-//  token: "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoic21pdGhUZXN0IiwiZXhwIjoxNjc3MTE2NjEzLCJpYXQiOjE2NzcxMTMwMTMsInNjb3BlIjoiIn0.uhzpKCqNBlbqfeD4p_eejfIOo9XVJ98x1GP4ooOQfwo",
+   // isAuthenticated: false,
+  // token: null,
+  isAuthenticated: true,
+  token: "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoic203MTQ0ODZAZGFsLmNhIiwiZXhwIjoxNjc3MTE4MDQ3LCJpYXQiOjE2NzcxMTQ0NDcsInNjb3BlIjoiIn0.D1XF-P9ryEyUSuWkmdYgQuuRuz4Xu70vM4yQe3j5ctQ",
   user: {},
   language: 'en',
   sidebarKey: '/',
