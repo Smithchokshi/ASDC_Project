@@ -39,7 +39,7 @@ const Dashboard = () => {
     handleLoader(true);
     try {
       const res = await dispatch(storeDashboardData());
-      handleLoader(false);
+      handleLoader(true);
     } catch (e) {
       handleLoader(false);
     }
