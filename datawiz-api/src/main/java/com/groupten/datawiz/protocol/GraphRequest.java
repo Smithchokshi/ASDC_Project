@@ -1,6 +1,6 @@
-package com.groupten.datawiz.model;
+package com.groupten.datawiz.protocol;
 
-public class Request {
+public class GraphRequest {
 
     private String tableName;
     private String xColumn;

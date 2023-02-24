@@ -1,6 +1,6 @@
 package com.groupten.datawiz.controller;
 import com.groupten.datawiz.model.DbConn;
-import com.groupten.datawiz.model.User;
+import com.groupten.datawiz.protocol.Response;
 import com.groupten.datawiz.service.DbConnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,39 +10,45 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/connection")
-public class ConnectionController {
+public class ConnectionController extends Handler{
 
     @Autowired
     DbConnService dbConnService;
 
     @PostMapping("/save")
-    public ResponseEntity<DbConn> saveConn(@RequestBody DbConn dbConn) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(dbConnService.saveConn(dbConn));
+    public ResponseEntity<Response> saveConn(@RequestBody DbConn dbConn) {
+        Response response = new Response(dbConnService.saveConn(dbConn),HttpStatus.CREATED.value(), HttpStatus.CREATED.name());
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/edit")
-    public ResponseEntity<DbConn> editConn(@RequestBody DbConn dbConn) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(dbConnService.editConn(dbConn));
+    public ResponseEntity<Response> editConn(@RequestBody DbConn dbConn) {
+        Response response = new Response(dbConnService.editConn(dbConn),HttpStatus.CREATED.value(), HttpStatus.CREATED.name());
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/get/{id}")
-    public List<DbConn> getConnById(@PathVariable("id") int id){
-        return dbConnService.findDbConnById(id);
+    public ResponseEntity<Response> getConnById(@PathVariable("id") int id){
+
+        Response response = new Response(dbConnService.getConnById(id),HttpStatus.FOUND.value(), HttpStatus.FOUND.name());
+        return ResponseEntity.status(HttpStatus.FOUND).body(response);
     }
 
     @GetMapping("/getAll/{user_id}")
-    public List<DbConn> getAllConnByUserId(@PathVariable("user_id") int user_id){
-        return dbConnService.getAllConnByUserId(user_id);
+    public ResponseEntity<Response> getAllConnByUserId(@PathVariable("user_id") int user_id){
+        Response response = new Response(dbConnService.getAllConnByUserId(user_id),HttpStatus.FOUND.value(), HttpStatus.FOUND.name());
+        return ResponseEntity.status(HttpStatus.FOUND).body(response);
     }
 
     @DeleteMapping("/deleteById/{id}")
-    public DbConn deleteConnById(@PathVariable("id") int id){
-        return dbConnService.deleteConnById(id);
+    public ResponseEntity<Response> deleteConnById(@PathVariable("id") int id){
+        Response response = new Response(dbConnService.deleteConnById(id),HttpStatus.OK.value(), HttpStatus.OK.name());
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/test")
-    public List<Boolean> testConnection(@RequestBody DbConn dbConn){
-        return dbConnService.testConn(dbConn);
+    public ResponseEntity<Response> testConnection(@RequestBody DbConn dbConn){
+        Response response = new Response(dbConnService.testConn(dbConn),HttpStatus.OK.value(), HttpStatus.OK.name());
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
 }

@@ -7,7 +7,7 @@ import java.util.*;
 
 public interface ConnectionRepository extends CrudRepository<DbConn, Integer>{
 
-    List<DbConn> findDbConnById(int id);
+    DbConn findDbConnById(int id);
 
     List<DbConn> findByUserId(int userId);
 

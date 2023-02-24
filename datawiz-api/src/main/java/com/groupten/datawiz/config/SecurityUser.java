@@ -1,5 +1,6 @@
-package com.groupten.datawiz.model;
+package com.groupten.datawiz.config;
 
+import com.groupten.datawiz.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

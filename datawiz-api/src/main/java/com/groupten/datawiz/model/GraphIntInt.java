@@ -1,6 +1,6 @@
 package com.groupten.datawiz.model;
 
-public class BarGraphInt {
+public class GraphIntInt {
 
     private int x;
 
