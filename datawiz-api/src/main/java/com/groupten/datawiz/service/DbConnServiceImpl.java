@@ -64,16 +64,16 @@ public class DbConnServiceImpl implements DbConnService{
         return conn;
     }
 
-//    @Override
-//    public List<DbConn> findDbConnById(int id){
-//        DbConn conn = connectionRepository.findById(id).orElse(null);
-//        List<DbConn> resConn = new ArrayList<>();
-//        if(conn==null){
-//            return resConn;
-//        }
-//        resConn.add(conn);
-//        return resConn;
-//    }
+    @Override
+    public List<DbConn> findDbConnById(int id){
+        DbConn conn = connectionRepository.findById(id).orElse(null);
+        List<DbConn> resConn = new ArrayList<>();
+        if(conn==null){
+            return resConn;
+        }
+        resConn.add(conn);
+        return resConn;
+    }
 
     @Override
     public List<DbConn> getAllConnByUserId(int userId){
@@ -86,7 +86,6 @@ public class DbConnServiceImpl implements DbConnService{
         }
     }
 
-    //for this method to work just pass the id the parameter in link no payload is required
     @Override
     public DbConn deleteConnById(int id){
         DbConn conn = getConnById(id);
