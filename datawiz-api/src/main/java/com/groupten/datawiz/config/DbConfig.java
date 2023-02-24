@@ -13,8 +13,8 @@ public class DbConfig {
         DataSourceBuilder<?> connectionBuilder = DataSourceBuilder.create();
         connectionBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
         connectionBuilder.url(dbConn.getUrl());
-        connectionBuilder.username(dbConn.getDb_username());
-        connectionBuilder.password(dbConn.getDb_password());
+        connectionBuilder.username(dbConn.getDbUsername());
+        connectionBuilder.password(dbConn.getDbPassword());
         return connectionBuilder.build();
     }
 

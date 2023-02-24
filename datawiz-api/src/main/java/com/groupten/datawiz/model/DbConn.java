@@ -21,19 +21,19 @@ public class DbConn {
     private String url;
 
     @Column(name = "username")
-    private String db_username;
+    private String dbUsername;
 
     @Column(name = "password")
-    private String db_password;
+    private String dbPassword;
 
-    private String created_at;
+    private String createdAt;
 
-    private String updated_at;
+    private String updatedAt;
 
-    private String deleted_at;
+    private String deletedAt;
 
     @Column(name = "status")
-    private boolean connStatus;
+    private Boolean connStatus;
 
     public DbConn(){}
 
@@ -41,13 +41,13 @@ public class DbConn {
         this.userId = userId;
         this.url = url;
         this.name = name;
-        db_username = username;
-        db_password = password;
+        dbUsername = username;
+        dbPassword = password;
         SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD hh:mm:ss");
         Calendar cal = Calendar.getInstance();
-        created_at = dateFormat.format(cal.getTime());
-        updated_at = null;
-        deleted_at = null;
+        createdAt = dateFormat.format(cal.getTime());
+        updatedAt = null;
+        deletedAt = null;
         connStatus = false;
     }
 
@@ -83,44 +83,44 @@ public class DbConn {
         this.url = url;
     }
 
-    public String getDb_username() {
-        return db_username;
+    public String getDbUsername() {
+        return dbUsername;
     }
 
-    public void setDb_username(String db_username) {
-        this.db_username = db_username;
+    public void setDbUsername(String dbUsername) {
+        this.dbUsername = dbUsername;
     }
 
-    public String getDb_password() {
-        return db_password;
+    public String getDbPassword() {
+        return dbPassword;
     }
 
-    public void setDb_password(String db_password) {
-        this.db_password = db_password;
+    public void setDbPassword(String dbPassword) {
+        this.dbPassword = dbPassword;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
-    public String getDeleted_at() {
-        return deleted_at;
+    public String getDeletedAt() {
+        return deletedAt;
     }
 
-    public void setDeleted_at(String deleted_at) {
-        this.deleted_at = deleted_at;
+    public void setDeletedAt(String deletedAt) {
+        this.deletedAt = deletedAt;
     }
 
     public boolean isConnStatus() {
