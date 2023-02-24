@@ -30,14 +30,14 @@ public class ConnectionController extends Handler{
     @GetMapping("/get/{id}")
     public ResponseEntity<Response> getConnById(@PathVariable("id") int id){
 
-        Response response = new Response(dbConnService.getConnById(id),HttpStatus.FOUND.value(), HttpStatus.FOUND.name());
-        return ResponseEntity.status(HttpStatus.FOUND).body(response);
+        Response response = new Response(dbConnService.getConnById(id),HttpStatus.OK.value(), HttpStatus.OK.name());
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/getAll/{user_id}")
     public ResponseEntity<Response> getAllConnByUserId(@PathVariable("user_id") int user_id){
-        Response response = new Response(dbConnService.getAllConnByUserId(user_id),HttpStatus.FOUND.value(), HttpStatus.FOUND.name());
-        return ResponseEntity.status(HttpStatus.FOUND).body(response);
+        Response response = new Response(dbConnService.getAllConnByUserId(user_id),HttpStatus.OK.value(), HttpStatus.OK.name());
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("/deleteById/{id}")

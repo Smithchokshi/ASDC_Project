@@ -25,6 +25,6 @@ public class GraphServiceImpl implements GraphService {
     @Override
     public List<GraphIntInt> getValues(GraphRequest graphRequest) {
         DbConn dbConn= connectRepository.findDbConnById(graphRequest.getConnectionId());
-        return graphRepository.getValues(graphRequest, new JdbcTemplate(dbConfig.DbConnection(dbConn)));
+        return graphRepository.getIntIntValues(graphRequest, new JdbcTemplate(dbConfig.DbConnection(dbConn)));
     }
 }

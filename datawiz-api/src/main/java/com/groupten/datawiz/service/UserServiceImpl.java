@@ -52,4 +52,9 @@ public class UserServiceImpl implements UserService {
         JwsHeader jwsHeader = JwsHeader.with(() -> "HS256").build();
         return this.jwtEncoder.encode( JwtEncoderParameters.from(jwsHeader,claims)).getTokenValue();
     }
+
+    @Override
+    public int getUserId(String userName) {
+        return userRepository.findByUsername(userName).get().getUserId();
+    }
 }

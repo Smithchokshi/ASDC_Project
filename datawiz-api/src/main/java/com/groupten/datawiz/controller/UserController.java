@@ -33,4 +33,10 @@ public class UserController extends Handler{
         Response response = new Response(userService.generateToken(authentication),HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
+
+    @GetMapping("/me/{userName}")
+    public ResponseEntity<Response> me(@PathVariable("userName") String userName) {
+        Response response = new Response(userService.getUserId(userName),HttpStatus.OK.value(), HttpStatus.OK.name());
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }
