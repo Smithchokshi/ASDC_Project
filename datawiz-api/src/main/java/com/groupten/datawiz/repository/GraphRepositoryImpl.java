@@ -19,7 +19,7 @@ public class GraphRepositoryImpl implements GraphRepository {
     private PreparedStatements preparedStatements;
 
     @Override
-    public List<GraphIntInt> getIntIntValues(GraphRequest graphRequest, JdbcTemplate jdbcTemplate) {
+    public List<Graph> getIntIntValues(GraphRequest graphRequest, JdbcTemplate jdbcTemplate) {
 
         return jdbcTemplate.query(
                 preparedStatements.barGraphCountQuery(
@@ -27,80 +27,10 @@ public class GraphRepositoryImpl implements GraphRepository {
                     graphRequest.getxColumn(),
                     graphRequest.getyColumn()
                 ),
-                new GraphIntIntRowMapper()
+                new GraphRowMapper()
         );
 
 
-    }
-
-    @Override
-    public List<GraphFloatFloat> getFloatFloatValues(GraphRequest graphRequest, JdbcTemplate jdbcTemplate) {
-
-        return jdbcTemplate.query(
-                preparedStatements.barGraphCountQuery(
-                        graphRequest.getTableName(),
-                        graphRequest.getxColumn(),
-                        graphRequest.getyColumn()
-                ),
-                new GraphFloatFloatRowMapper()
-        );
-
-    }
-
-    @Override
-    public List<GraphFloatInt> getFloatIntValues(GraphRequest graphRequest, JdbcTemplate jdbcTemplate) {
-
-
-        return jdbcTemplate.query(
-                preparedStatements.barGraphCountQuery(
-                        graphRequest.getTableName(),
-                        graphRequest.getxColumn(),
-                        graphRequest.getyColumn()
-                ),
-                new GraphFloatIntRowMapper()
-        );
-    }
-
-    @Override
-    public List<GraphIntFloat> getIntFloatValues(GraphRequest graphRequest, JdbcTemplate jdbcTemplate) {
-
-
-        return jdbcTemplate.query(
-                preparedStatements.barGraphCountQuery(
-                        graphRequest.getTableName(),
-                        graphRequest.getxColumn(),
-                        graphRequest.getyColumn()
-                ),
-                new GraphIntFloatRowMapper()
-        );
-    }
-
-    @Override
-    public List<GraphStringFloat> getStringFloatValues(GraphRequest graphRequest, JdbcTemplate jdbcTemplate) {
-
-
-        return jdbcTemplate.query(
-                preparedStatements.barGraphCountQuery(
-                        graphRequest.getTableName(),
-                        graphRequest.getxColumn(),
-                        graphRequest.getyColumn()
-                ),
-                new GraphStringFloatRowMapper()
-        );
-    }
-
-    @Override
-    public List<GraphStringInt> getStringIntValues(GraphRequest graphRequest, JdbcTemplate jdbcTemplate) {
-
-
-        return jdbcTemplate.query(
-                preparedStatements.barGraphCountQuery(
-                        graphRequest.getTableName(),
-                        graphRequest.getxColumn(),
-                        graphRequest.getyColumn()
-                ),
-                new GraphStringIntRowMapper()
-        );
     }
 
     @Override
