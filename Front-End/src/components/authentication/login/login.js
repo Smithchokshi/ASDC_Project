@@ -77,8 +77,8 @@ const Login = () => {
         password: fields?.password,
       };
       const res = await dispatch(login(data));
-      console.log('res', res);
       if (res) {
+        localStorage.setItem('username',fields?.email);
         setIsSubmitLoading(false);
         history.push('/');
       } else {
@@ -91,7 +91,6 @@ const Login = () => {
     } else {
       setIsSubmitLoading(false);
       setErrors(validator.getErrorMessages());
-      // simpleValidator.current.showMessages();
       showValidationMessage(true);
     }
   };

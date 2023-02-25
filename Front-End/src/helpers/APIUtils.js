@@ -46,6 +46,7 @@ class ApiUtils {
           return myConfig;
         },
         error => {
+            console.log(error);
           if (error.response.data.status === 401 || error.response.data.status === 403) {
             const { auth } = store.getState();
             notification.error({
@@ -72,12 +73,10 @@ class ApiUtils {
     }
   }
 
-  loadUser = (data, headers) =>
+  loadUser = (username, headers) =>
     this.axios({
-      method: 'POST',
-      url: '/profile/me',
-      // FOR LOCAL url: '/api/users/:id' ( dont forget to change response in loadUser )
-      data,
+      method: 'GET',
+      url: `/user/me/${username}`,
       headers,
     });
 
@@ -96,11 +95,10 @@ class ApiUtils {
       password,
     });
 
-  getDashboard = data =>
+  getDashboard = id =>
     this.axios({
       method: 'GET',
-      url: '/connection/getAll/1',
-      data,
+      url: `/connection/getAll/${id}`,
     });
 
   addDBConfig = data =>

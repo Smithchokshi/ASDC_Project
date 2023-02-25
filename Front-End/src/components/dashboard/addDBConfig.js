@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Input, Button, Modal, Upload, notification } from 'antd';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import useSimpleReactValidator from '../../shared/hooks/useSimpleReactValidator';
 import { FormMain } from '../authentication/authentication-style';
@@ -10,9 +11,10 @@ const api = msg => new ApiUtils(msg);
 
 const AddDBConfig = ({ visible, onCancel, getData }) => {
   const history = useHistory();
+  const { userId } = useSelector(state => state.auth.user);
 
   const [fields, setFields] = useState({
-    userId: '1',
+    userId: userId.toString(),
   });
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -29,12 +31,27 @@ const AddDBConfig = ({ visible, onCancel, getData }) => {
   const testDBConnection = async () => {
     const data = {
       url: fields.url,
-      db_username: fields.db_username,
-      db_password: fields.db_password,
+      dbUsername: fields.dbUsername,
+      dbPassword: fields.dbPassword,
     };
 
     try {
       const res = await api().testDBConfig(data);
+
+      console.log(res.data.data);
+
+      if(res.data.data) {
+        notification.success({
+          message: 'Success',
+          description: 'Connected'
+        })
+      } else {
+        notification.error({
+          message: 'Error',
+          description: 'Not able to Connect'
+        })
+      }
+
     } catch {}
   };
 
@@ -45,7 +62,7 @@ const AddDBConfig = ({ visible, onCancel, getData }) => {
       setIsSubmitLoading(true);
 
       try {
-        const res = await api().addDBConfig(fields);
+        const res = await api(true).addDBConfig(fields);
 
         getData();
 
@@ -91,21 +108,21 @@ const AddDBConfig = ({ visible, onCancel, getData }) => {
           <div className="label">Username</div>
           <Input
             placeholder="Username"
-            value={fields?.db_username ? fields?.db_username : null}
-            onChange={handleChange('db_username')}
+            value={fields?.dbUsername ? fields?.dbUsername : null}
+            onChange={handleChange('dbUsername')}
           />
-          {validator.message(`Username`, fields?.db_username, `required`)}
+          {validator.message(`Username`, fields?.dbUsername, `required`)}
         </div>
 
         <div className="full-width form-field">
           <div className="label">Password</div>
           <Input.Password
             placeholder="Password"
-            value={fields?.db_password ? fields?.db_password : null}
-            onChange={handleChange('db_password')}
+            value={fields?.dbPassword ? fields?.dbPassword : null}
+            onChange={handleChange('dbPassword')}
             autocomplete="new-password"
           />
-          {validator.message(`Password`, fields?.db_password, `required`)}
+          {validator.message(`Password`, fields?.dbPassword, `required`)}
         </div>
 
         <div className="full-width form-field flex-center mb-0">

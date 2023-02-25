@@ -2,18 +2,25 @@ import ApiUtils from '../../helpers/APIUtils';
 
 const api = new ApiUtils();
 
-export const storeDashboardData = () => async (dispatch) => {
+export const storeDashboardData = () => async (dispatch, getState) => {
     try {
 
-        const res = await api.getDashboard();
+        const { userId } = getState().auth.user;
+
+        const res = await api.getDashboard(userId);
+
+        console.log(res.data.data);
 
         dispatch({
             type: 'DASHBOARD_DATA',
-            payload: res.data,
+            payload: res.data.data,
         });
 
         return true;
     } catch (err) {
+
+
+
         return false;
     }
 };

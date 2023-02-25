@@ -24,8 +24,8 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
       ...prev,
       id: data.id,
       userId: data.userId,
-      db_username: data.db_username,
-      db_password: data.db_password,
+      dbUsername: data.dbUsername,
+      dbPassword: data.dbPassword,
       url: data.url,
       name: data.name,
     }));
@@ -55,12 +55,28 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
   const testDBConnection = async () => {
     const data = {
       url: fields.url,
-      db_username: fields.db_username,
-      db_password: fields.db_password,
+      dbUsername: fields.dbUsername,
+      dbPassword: fields.dbPassword,
     };
 
     try {
       const res = await api().testDBConfig(data);
+
+      console.log(res.data.data);
+
+      if(res.data.data) {
+        notification.success({
+          message: 'Success',
+          description: 'Connected',
+          duration: 10
+        })
+      } else {
+        notification.error({
+          message: 'Error',
+          description: 'Not able to Connect'
+        })
+      }
+
     } catch {}
   };
 
@@ -71,7 +87,7 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
       setIsSubmitLoading(true);
 
       try {
-        const res = await api().editDBConfig(fields);
+        const res = await api(true).editDBConfig(fields);
 
         getData();
 

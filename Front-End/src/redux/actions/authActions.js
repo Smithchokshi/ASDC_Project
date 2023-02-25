@@ -7,19 +7,19 @@ const TOKEN_NAME = process.env.REACT_APP_TOKEN_NAME;
 export const loadUser = () => async (dispatch, getState) => {
   try {
     const token = localStorage.getItem('id_token');
+    const username = localStorage.getItem('username');
 
     if (!token) return dispatch({ type: 'NEW_USER' });
 
-    const res = await api.loadUser(
-      {
-        platform: 1,
-      },
-      { Authorization: `Bearer ${token}` }
-    );
+    const res = await api.loadUser( username , { Authorization: `Bearer ${token}` });
+
+    console.log('res',res);
 
     dispatch({
       type: 'EXISTING_USER',
-      payload: res.data,
+      payload: {
+        userId: res.data.data
+      },
       token,
     });
 
@@ -32,16 +32,9 @@ export const loadUser = () => async (dispatch, getState) => {
 
 export const login = data => async dispatch => {
   try {
-    const regi = {
-      name: 'smith',
-      username: 'smithTest',
-      password: '12345'
-    }
-    const registerRes = await api.login(data);
-    console.log(registerRes);
-    // const res = await api.login(data);
+    const res = await api.login(data);
     // after successfully login, you will get token on it
-    localStorage.setItem('id_token', res?.data?.token);
+    localStorage.setItem('id_token', res?.data?.data);
 
     await dispatch(loadUser());
     dispatch({
@@ -59,13 +52,11 @@ export const login = data => async dispatch => {
 
 export const logout = () => async dispatch => {
   try {
-    await api.logout();
     localStorage.removeItem(TOKEN_NAME);
     dispatch({ type: 'LOGOUT' });
 
     return true;
   } catch (err) {
-    // console.log('CATCH ERROR', err);
     return false;
   }
 };
