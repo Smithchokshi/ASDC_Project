@@ -26,7 +26,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -60,8 +59,8 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(origin));
-        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedOrigins(List.of(origin));
+        configuration.setAllowedMethods(List.of("*"));
         configuration.setAllowedHeaders(List.of("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
@@ -74,10 +73,8 @@ public class SecurityConfig {
                              AuthenticationException authException) throws IOException, ServletException {
             response.setContentType("application/json");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//            ResponseEntity<Response> responseEntity = ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-//                    .body(new Response(null, HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.name()));
             ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(new Response(null, HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.name()));
+            String json = objectMapper.writeValueAsString(new Response(List.of(), HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.name()));
             response.getWriter().write(json);
         }
 
