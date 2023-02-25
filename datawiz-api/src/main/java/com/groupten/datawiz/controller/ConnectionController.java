@@ -29,8 +29,7 @@ public class ConnectionController extends Handler{
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Response> getConnById(@PathVariable("id") int id){
-
-        Response response = new Response(dbConnService.getConnById(id),HttpStatus.OK.value(), HttpStatus.OK.name());
+        Response response = new Response(dbConnService.findDbConnById(id),HttpStatus.OK.value(), HttpStatus.OK.name());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
