@@ -9,7 +9,7 @@ import java.util.List;
 public interface DbInfoService {
 
     List<String> getDatabases(UserDbInfo conn);
-//    List<String> getTables(DbConn conn);
+    List<String> getTables(UserDbInfo conn);
 //    List<String> getColumns(DbConn conn);
 
 

@@ -25,10 +25,10 @@ public class DatabaseInfoController {
         return ResponseEntity.status(HttpStatus.OK).body(dbInfoService.getDatabases(dbinfo));
     }
 
-//    @PostMapping("/getTables")
-//    public ResponseEntity<List<String>> getTables(@RequestBody DbConn conn) {
-//        return ResponseEntity.status(HttpStatus.OK).body(dbInfoService.getTables(conn));
-//    }
+    @PostMapping("/getTables")
+    public ResponseEntity<List<String>> getTables(@RequestBody UserDbInfo dbinfo) {
+        return ResponseEntity.status(HttpStatus.OK).body(dbInfoService.getTables(dbinfo));
+    }
 //
 //    @PostMapping("/getColumns")
 //    public ResponseEntity<List<String>> getColumns (@RequestBody DbConn conn){

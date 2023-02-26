@@ -18,5 +18,17 @@ public class DbInfoRepositoryImpl implements DbInfoRepository{
         return jdbcTemplate.query("show databases;",new DbInfoRowMapper());
     }
 
+    @Override
+    public List<String> getTables(UserDbInfo dbInfo, JdbcTemplate jdbcTemplate){
+
+        return jdbcTemplate.query("show tables;",new DbInfoRowMapper());
+    }
+
+//    @Override
+//    public List<String> getTables(UserDbInfo dbInfo, JdbcTemplate jdbcTemplate){
+//
+//        return jdbcTemplate.query("show tables;",new DbInfoRowMapper());
+//    }
+
 
 }
