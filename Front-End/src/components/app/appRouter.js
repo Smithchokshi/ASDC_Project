@@ -6,6 +6,7 @@ import Sidebar from '../../shared/sidebar/sidebar';
 import TopHeader from '../../shared/top-header/top-header';
 
 const Dashboard = lazy(() => import('../dashboard/dashboard'));
+const VisulizationDashboard = lazy(() => import('../visulizationDashboard/visulizationDashboard'));
 const ErrorPage = lazy(() => import('../../shared/404/error-page'));
 
 const Routing = () => {
@@ -20,6 +21,12 @@ const Routing = () => {
       exact: true,
       path: '/dashboard',
       component: () => <Dashboard />,
+      title: 'Dashboard',
+    },
+    {
+      exact: true,
+      path: '/visualization/:id',
+      component: () => <VisulizationDashboard />,
       title: 'Dashboard',
     },
     {

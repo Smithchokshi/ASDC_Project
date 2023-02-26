@@ -46,7 +46,7 @@ class ApiUtils {
           return myConfig;
         },
         error => {
-            console.log(error);
+          console.log(error);
           if (error.response.data.status === 401 || error.response.data.status === 403) {
             const { auth } = store.getState();
             notification.error({
@@ -123,10 +123,17 @@ class ApiUtils {
     });
 
   deleteDBConfig = ({ id }) =>
-      this.axios({
-          method: 'DELETE',
-          url: `/connection/deleteById/${id}`
-      })
+    this.axios({
+      method: 'DELETE',
+      url: `/connection/deleteById/${id}`,
+    });
+
+  getDatabases = data =>
+    this.axios({
+      method: 'POST',
+      url: '/DbInfo/getDatabases',
+      data,
+    });
 }
 
 export default ApiUtils;

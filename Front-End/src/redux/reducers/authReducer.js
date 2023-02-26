@@ -3,7 +3,10 @@ const initialState = {
   token: null,
   user: {},
   language: 'en',
-  sidebarKey: '/',
+  sidebarKey:
+    window.location.pathname.split('/').length > 2
+      ? window.location.pathname.split('/')[2]
+      : window.location.pathname,
 };
 
 const AuthReducer = (state = initialState, action) => {

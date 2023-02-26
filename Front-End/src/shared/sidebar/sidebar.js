@@ -10,8 +10,8 @@ const Sidebar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.user);
-  const dashboard = useSelector(state => state.dashboard.dashboardData);
   const sidebarKey = useSelector(state => state.auth.sidebarKey);
+  const dashboard = useSelector(state => state.dashboard.dashboardData);
 
   const handleChange = e => {
     dispatch({
@@ -64,10 +64,12 @@ const Sidebar = () => {
           </Link>
         </Menu.Item>
       </Menu>
-      {dashboard && dashboard.length > 0 && dashboard.map((data,index) => (
+      {dashboard &&
+        dashboard.length > 0 &&
+        dashboard.map((data, index) => (
           <Menu mode="inline" selectedKeys={[sidebarKey]} onClick={e => handleChange(e)}>
             <Menu.Item key={data.id}>
-              <Link to={`/database/${data.name}`}>
+              <Link to={`/visualization/${data.id}`}>
                 <img className="not-hover-show" src="images/sidebar-dashboard-icon.svg" alt="" />
                 <img className="hover-show" src="images/sidebar-dashboard-hover-icon.svg" alt="" />
                 {data.name}
@@ -75,8 +77,7 @@ const Sidebar = () => {
               </Link>
             </Menu.Item>
           </Menu>
-      ))}
-
+        ))}
     </Sider>
   );
 };

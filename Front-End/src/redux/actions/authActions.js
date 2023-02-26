@@ -11,14 +11,14 @@ export const loadUser = () => async (dispatch, getState) => {
 
     if (!token) return dispatch({ type: 'NEW_USER' });
 
-    const res = await api.loadUser( username , { Authorization: `Bearer ${token}` });
+    const res = await api.loadUser(username, { Authorization: `Bearer ${token}` });
 
-    console.log('res',res);
+    console.log('res', res, window.location.pathname);
 
     dispatch({
       type: 'EXISTING_USER',
       payload: {
-        userId: res.data.data
+        userId: res.data.data,
       },
       token,
     });

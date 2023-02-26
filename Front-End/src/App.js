@@ -12,13 +12,13 @@ const App = () => {
 
   useEffect(() => {
     (async () => {
+      await store.dispatch(loadUser());
       if (
         window.location.pathname !== '/' &&
         window.location.pathname !== '/dashboard' &&
         window.location.pathname !== '/login'
       )
         await store.dispatch(storeDashboardData());
-      await store.dispatch(loadUser());
       setLoaded(true);
     })();
   }, []);
