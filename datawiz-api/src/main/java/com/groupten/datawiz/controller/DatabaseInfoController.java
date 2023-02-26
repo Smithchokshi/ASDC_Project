@@ -1,6 +1,7 @@
 package com.groupten.datawiz.controller;
 import com.groupten.datawiz.model.DbConn;
 import com.groupten.datawiz.model.UserDbInfo;
+import com.groupten.datawiz.protocol.Response;
 import com.groupten.datawiz.service.DbInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,24 +13,27 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/DbInfo")
-public class DatabaseInfoController {
+public class DatabaseInfoController{
 
     @Autowired
     DbInfoService dbInfoService;
 
     @PostMapping("/getDatabases")
-    public ResponseEntity<List<String>> getDatabases(@RequestBody UserDbInfo dbinfo) {
-        return ResponseEntity.status(HttpStatus.OK).body(dbInfoService.getDatabases(dbinfo));
+    public ResponseEntity<Response> getDatabases(@RequestBody UserDbInfo dbinfo) {
+        Response response=new Response(dbInfoService.getDatabases(dbinfo),HttpStatus.OK.value(), HttpStatus.OK.name());
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/getTables")
-    public ResponseEntity<List<String>> getTables(@RequestBody UserDbInfo dbinfo) {
-        return ResponseEntity.status(HttpStatus.OK).body(dbInfoService.getTables(dbinfo));
+    public ResponseEntity<Response> getTables(@RequestBody UserDbInfo dbinfo) {
+        Response response=new Response(dbInfoService.getTables(dbinfo),HttpStatus.OK.value(), HttpStatus.OK.name());
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/getColumns")
-    public ResponseEntity<List<String>> getColumns (@RequestBody UserDbInfo dbinfo){
-        return ResponseEntity.status(HttpStatus.OK).body(dbInfoService.getColumns(dbinfo));
+    public ResponseEntity<Response> getColumns (@RequestBody UserDbInfo dbinfo){
+        Response response=new Response(dbInfoService.getColumns(dbinfo),HttpStatus.OK.value(), HttpStatus.OK.name());
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
 
