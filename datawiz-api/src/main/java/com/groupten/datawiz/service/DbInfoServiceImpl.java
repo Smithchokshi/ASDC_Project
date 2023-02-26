@@ -38,11 +38,12 @@ public class DbInfoServiceImpl implements  DbInfoService{
 
         return dbInfoRepository.getTables(dbInfo,new JdbcTemplate(dbConfig.DbConnection(conn)));
     }
-//
-//    @Override
-//    List<String> getColumns(DbConn conn){
-// return null;
-//    }
+
+    @Override
+    public List<String> getColumns(UserDbInfo dbInfo){
+        DbConn conn = connService.getConnById(dbInfo.getUserId());
+        return dbInfoRepository.getColumns(dbInfo,new JdbcTemplate(dbConfig.DbConnection(conn)));
+    }
 
 
 }

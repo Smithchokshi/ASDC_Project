@@ -1,6 +1,5 @@
 package com.groupten.datawiz.repository;
 
-import com.groupten.datawiz.model.BarGraphInt;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

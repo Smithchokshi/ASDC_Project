@@ -29,11 +29,11 @@ public class DatabaseInfoController {
     public ResponseEntity<List<String>> getTables(@RequestBody UserDbInfo dbinfo) {
         return ResponseEntity.status(HttpStatus.OK).body(dbInfoService.getTables(dbinfo));
     }
-//
-//    @PostMapping("/getColumns")
-//    public ResponseEntity<List<String>> getColumns (@RequestBody DbConn conn){
-//        return ResponseEntity.status(HttpStatus.OK).body(dbInfoService.getColumns(conn));
-//    }
+
+    @PostMapping("/getColumns")
+    public ResponseEntity<List<String>> getColumns (@RequestBody UserDbInfo dbinfo){
+        return ResponseEntity.status(HttpStatus.OK).body(dbInfoService.getColumns(dbinfo));
+    }
 
 
 }

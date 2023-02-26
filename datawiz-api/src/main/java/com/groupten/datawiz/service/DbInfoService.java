@@ -10,7 +10,7 @@ public interface DbInfoService {
 
     List<String> getDatabases(UserDbInfo conn);
     List<String> getTables(UserDbInfo conn);
-//    List<String> getColumns(DbConn conn);
+    List<String> getColumns(UserDbInfo conn);
 
 
 }
