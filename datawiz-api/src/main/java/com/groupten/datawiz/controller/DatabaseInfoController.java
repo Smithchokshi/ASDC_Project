@@ -1,9 +1,6 @@
 package com.groupten.datawiz.controller;
-import com.groupten.datawiz.model.BarGraphInt;
 import com.groupten.datawiz.model.DbConn;
-import com.groupten.datawiz.model.Request;
 import com.groupten.datawiz.model.UserDbInfo;
-import com.groupten.datawiz.service.BarGraphService;
 import com.groupten.datawiz.service.DbInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
