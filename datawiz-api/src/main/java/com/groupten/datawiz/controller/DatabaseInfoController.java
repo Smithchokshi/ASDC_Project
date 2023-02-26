@@ -13,7 +13,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/DbInfo")
-public class DatabaseInfoController{
+public class DatabaseInfoController extends Handler{
 
     @Autowired
     DbInfoService dbInfoService;
