@@ -26,6 +26,7 @@ const Charts = ({ xaxis, yaxis, type }) => {
   };
 
   useEffect(() => {
+    console.log(xaxis, yaxis);
     handleChartData();
   }, []);
 

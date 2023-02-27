@@ -134,6 +134,27 @@ class ApiUtils {
       url: '/DbInfo/getDatabases',
       data,
     });
+
+  getTables = data =>
+    this.axios({
+      method: 'POST',
+      url: '/DbInfo/getTables',
+      data,
+    });
+
+  getColumns = data =>
+    this.axios({
+      method: 'POST',
+      url: '/DbInfo/getColumns',
+      data,
+    });
+
+  createGraph = data =>
+    this.axios({
+      method: 'POST',
+      url: '/graph/bar/value',
+      data,
+    });
 }
 
 export default ApiUtils;

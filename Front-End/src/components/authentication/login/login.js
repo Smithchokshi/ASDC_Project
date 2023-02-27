@@ -78,7 +78,7 @@ const Login = () => {
       };
       const res = await dispatch(login(data));
       if (res) {
-        localStorage.setItem('username',fields?.email);
+        localStorage.setItem('username', fields?.email);
         setIsSubmitLoading(false);
         history.push('/');
       } else {
@@ -144,17 +144,15 @@ const Login = () => {
                 <FormMain onSubmit={submit} className="global-form full-width">
                   {/* Email */}
                   <div className="full-width form-field">
-                    <div className="label">Email address</div>
+                    <div className="label">Username</div>
                     <Input
                       type="text"
                       value={fields?.email}
                       onChange={e => handleChange('email', e)}
-                      placeholder={'Email address'}
+                      placeholder={'Username'}
                       className={errors?.email ? 'invalid' : ''}
                     />
-                    {validator.message(t('Email_address'), fields?.email, `required|email`, {
-                      messages: { email: t('Email_Validation') },
-                    })}
+                    {validator.message(t('Username'), fields?.email, `required`)}
                   </div>
 
                   {/* password */}

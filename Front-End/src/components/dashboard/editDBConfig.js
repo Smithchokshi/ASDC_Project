@@ -64,19 +64,18 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
 
       console.log(res.data.data);
 
-      if(res.data.data) {
+      if (res.data.data) {
         notification.success({
           message: 'Success',
           description: 'Connected',
-          duration: 10
-        })
+          duration: 10,
+        });
       } else {
         notification.error({
           message: 'Error',
-          description: 'Not able to Connect'
-        })
+          description: 'Not able to Connect',
+        });
       }
-
     } catch {}
   };
 
@@ -158,15 +157,15 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
         <div className="full-width form-field">
           <div className="label">Username</div>
           {isView ? (
-            <p>{fields?.db_username}</p>
+            <p>{fields?.dbUsername}</p>
           ) : (
             <>
               <Input
                 placeholder="Username"
-                value={fields?.db_username ? fields?.db_username : null}
-                onChange={handleChange('db_username')}
+                value={fields?.dbUsername ? fields?.dbUsername : null}
+                onChange={handleChange('dbUsername')}
               />
-              {validator.message(`Username`, fields?.db_username, `required`)}
+              {validator.message(`Username`, fields?.dbUsername, `required`)}
             </>
           )}
         </div>
@@ -174,15 +173,15 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
         <div className="full-width form-field">
           <div className="label">Password</div>
           {isView ? (
-            <p>{fields?.db_password}</p>
+            <p>{fields?.dbPassword}</p>
           ) : (
             <>
               <Input.Password
                 placeholder="Password"
-                value={fields?.db_password ? fields?.db_password : null}
-                onChange={handleChange('db_password')}
+                value={fields?.dbPassword ? fields?.dbPassword : null}
+                onChange={handleChange('dbPassword')}
               />
-              {validator.message(`Password`, fields?.db_password, `required`)}
+              {validator.message(`Password`, fields?.dbPassword, `required`)}
             </>
           )}
         </div>
