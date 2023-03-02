@@ -16,7 +16,8 @@ const App = () => {
       if (
         window.location.pathname !== '/' &&
         window.location.pathname !== '/dashboard' &&
-        window.location.pathname !== '/login'
+        window.location.pathname !== '/login' &&
+        window.location.pathname !== '/signup'
       )
         await store.dispatch(storeDashboardData());
       setLoaded(true);

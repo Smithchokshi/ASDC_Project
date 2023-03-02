@@ -1,8 +1,6 @@
 import ApiUtils from '../../helpers/APIUtils';
 
-const api = new ApiUtils();
-
-const TOKEN_NAME = process.env.REACT_APP_TOKEN_NAME;
+const api = msg => new ApiUtils(msg);
 
 export const loadUser = () => async (dispatch, getState) => {
   try {
@@ -11,7 +9,7 @@ export const loadUser = () => async (dispatch, getState) => {
 
     if (!token) return dispatch({ type: 'NEW_USER' });
 
-    const res = await api.loadUser(username, { Authorization: `Bearer ${token}` });
+    const res = await api().loadUser(username, { Authorization: `Bearer ${token}` });
 
     console.log('res', res, window.location.pathname);
 
@@ -25,16 +23,28 @@ export const loadUser = () => async (dispatch, getState) => {
 
     return true;
   } catch (err) {
+    console.log('error', err);
     dispatch({ type: 'AUTH_FAILED' });
+    return false;
+  }
+};
+
+export const register = data => async dispatch => {
+  try {
+    const res = await api(true).register(data);
+
+    return true;
+  } catch (e) {
     return false;
   }
 };
 
 export const login = data => async dispatch => {
   try {
-    const res = await api.login(data);
+    const res = await api().login(data);
     // after successfully login, you will get token on it
     localStorage.setItem('id_token', res?.data?.data);
+    localStorage.setItem('username', data?.username);
 
     await dispatch(loadUser());
     dispatch({
@@ -44,7 +54,7 @@ export const login = data => async dispatch => {
 
     return true;
   } catch (err) {
-    // console.log('error');
+    console.log('error', err);
     dispatch({ type: 'AUTH_FAILED' });
     return false;
   }
@@ -52,9 +62,10 @@ export const login = data => async dispatch => {
 
 export const logout = () => async dispatch => {
   try {
-    localStorage.removeItem(TOKEN_NAME);
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('username');
+    // window.location.pathname = '/login';
     dispatch({ type: 'LOGOUT' });
-
     return true;
   } catch (err) {
     return false;

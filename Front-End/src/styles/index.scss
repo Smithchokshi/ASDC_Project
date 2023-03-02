@@ -3364,7 +3364,7 @@ html body .edit-image .ant-upload {
   top: 0;
   width: 100%;
   padding: 40px 50px 25px 350px;
-  z-index: 11111;
+  //z-index: 11111;
   background: #191720;
   // border-bottom: 1px solid #2d2f39;
 }
@@ -5913,6 +5913,7 @@ html body .mobile-profile-menu .ant-menu-sub li {
   .page-top-section {
     .title {
       display: none;
+      color: white;
     }
   }
   .chart-box {
@@ -6330,6 +6331,7 @@ html .ant-layout {
   }
   .title {
     font-size: 14px;
+    color: white;
   }
   .page-top-section {
     // padding: 0 0 30px 0;
@@ -7094,4 +7096,16 @@ html .pagination-footer {
 
 .ant-notification {
   z-index: 99999999999;
+}
+
+.ant-dropdown-open {
+  z-index: 99999999999;
+}
+
+.anticon {
+  color: white;
+}
+
+.title {
+  color: white;
 }

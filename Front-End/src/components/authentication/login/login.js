@@ -73,12 +73,11 @@ const Login = () => {
     if (validator.allValid()) {
       setIsSubmitLoading(true);
       const data = {
-        username: fields?.email,
+        username: fields?.username,
         password: fields?.password,
       };
       const res = await dispatch(login(data));
       if (res) {
-        localStorage.setItem('username', fields?.email);
         setIsSubmitLoading(false);
         history.push('/');
       } else {
@@ -124,48 +123,46 @@ const Login = () => {
           <ScrollAnimation animateOnce className="full-width" animateIn="fadeIn" delay={500}>
             <div className="full-width auth-top-logo desktop-show">
               <Link to="/">
-                {/* <ScrollAnimation
-                animateOnce
-                className="full-width"
-                animateIn="fadeInLeft"
-                delay={200}
-              > */}
                 <img className="logo" src="images/DataWiz-logo.svg" alt="logo" />
-                {/* </ScrollAnimation> */}
               </Link>
             </div>
 
             <div className="full-width left-right-auth">
               <div className="right-auth-right">
                 <div className="full-width flex-center my-lang-switch">
-                  <h2 className="auth-head full-width">{t('Login')}</h2>
+                  <h2 className="auth-head full-width">{'Login'}</h2>
                 </div>
 
                 <FormMain onSubmit={submit} className="global-form full-width">
-                  {/* Email */}
+                  {/* Username */}
                   <div className="full-width form-field">
                     <div className="label">Username</div>
                     <Input
                       type="text"
-                      value={fields?.email}
-                      onChange={e => handleChange('email', e)}
+                      value={fields?.username}
+                      onChange={e => handleChange('username', e)}
                       placeholder={'Username'}
-                      className={errors?.email ? 'invalid' : ''}
+                      className={errors?.username ? 'invalid' : ''}
                     />
-                    {validator.message(t('Username'), fields?.email, `required`)}
+                    {validator.message('Username', fields?.username, `required`)}
                   </div>
 
                   {/* password */}
                   <div className="full-width form-field">
-                    <div className="label">{t('Password')}</div>
+                    <div className="label">{'Password'}</div>
                     <Input.Password
                       type="text"
-                      placeholder={t('Password')}
+                      placeholder={'Password'}
                       value={fields?.password}
                       onChange={e => handleChange('password', e)}
                       className={errors?.password ? 'invalid' : ''}
                     />
-                    {validator.message(t('Password'), fields?.password, 'required')}
+                    {validator.message('Password', fields?.password, 'required')}
+                  </div>
+                  <div className="full-width form-field text-checkbox top-margin flex-center">
+                    <Link className="recovery-text" to="/signup">
+                      Don't have account ?
+                    </Link>
                   </div>
                   <div className="full-width form-field flex-center">
                     <Button
@@ -174,7 +171,7 @@ const Login = () => {
                       className="submit-btn full-width"
                       loading={isSubmitLoading}
                     >
-                      <span>{t('Login')}</span>
+                      <span>{'Login'}</span>
                     </Button>
                   </div>
                 </FormMain>

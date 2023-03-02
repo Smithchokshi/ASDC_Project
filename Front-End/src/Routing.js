@@ -7,6 +7,7 @@ import Sidebar from './shared/sidebar/sidebar';
 
 const App = lazy(() => import('./components/app/appRouter'));
 const LoginPage = lazy(() => import('./components/authentication/login/login'));
+const RegisterPage = lazy(() => import('./components/authentication/register/register'));
 
 const { Content } = Layout;
 
@@ -20,6 +21,11 @@ const Routing = () => {
       path: '/login',
       component: () => <LoginPage />,
     },
+      {
+          exact: true,
+          path: '/signup',
+          component: () => <RegisterPage />
+      }
   ];
 
   function PrivateRoute({ children, ...rest }) {

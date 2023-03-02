@@ -2,7 +2,6 @@ const initialState = {
   isAuthenticated: false,
   token: null,
   user: {},
-  language: 'en',
   sidebarKey:
     window.location.pathname.split('/').length > 2
       ? window.location.pathname.split('/')[2]
@@ -24,6 +23,16 @@ const AuthReducer = (state = initialState, action) => {
       return {
         ...state,
         sidebarKey: payload,
+      };
+    case 'LOGOUT':
+      return {
+        isAuthenticated: false,
+        token: null,
+        user: {},
+        sidebarKey:
+          window.location.pathname.split('/').length > 2
+            ? window.location.pathname.split('/')[2]
+            : window.location.pathname,
       };
     case 'NEW_USER':
     case 'AUTH_FAILED':
