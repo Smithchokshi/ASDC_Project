@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Table, Button, Dropdown, Pagination } from 'antd';
+import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ScrollAnimation from 'react-animate-on-scroll';
 import Loader from '../../shared/loader/Loader';
@@ -15,7 +16,9 @@ const { Content } = Layout;
 
 const VisulizationDashboard = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
+  const title = location.state.name;
   const [loader, setLoader] = useState(false);
   const [addModel, setAddModel] = useState(false);
   const [allData, setAllData] = useState([]);
@@ -69,7 +72,7 @@ const VisulizationDashboard = () => {
         <Loader />
       ) : (
         <React.Fragment>
-          <TopHeader title="Dashboard" />
+          <TopHeader title={`${title} Dashboard`} />
           <Content>
             <div>
               <div className="site-layout-background">

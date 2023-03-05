@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Table, Button, Dropdown, Pagination } from 'antd';
+import { Layout, Menu, Table, Button, Dropdown, Pagination, Tooltip } from 'antd';
+import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ScrollAnimation from 'react-animate-on-scroll';
 import Loader from '../../shared/loader/Loader';
@@ -15,6 +17,7 @@ const { Content } = Layout;
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [loader, setLoader] = useState(false);
   const [addModel, setAddModel] = useState(false);
@@ -47,6 +50,8 @@ const Dashboard = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {});
 
   return (
     <Layout>
@@ -89,14 +94,32 @@ const Dashboard = () => {
                           className="full-width"
                           key={element.id}
                           role="presentation"
-                          onClick={() => handleModel(true, 'edit', element)}
+                          onClick={() =>
+                            history.push(`/visualization/${element.id}`, {
+                              name: element.name,
+                            })
+                          }
                         >
-                          <img
-                            className="not-hover-show"
-                            src="images/order-icon.svg"
-                            alt="product"
-                          />
-                          <img className="hover-show" src="images/order-icon.svg" alt="product" />
+                          <div style={{ display: 'flex' }}>
+                            <img
+                              className="not-hover-show"
+                              src="images/order-icon.svg"
+                              alt="product"
+                            />
+                            <img className="hover-show" src="images/order-icon.svg" alt="product" />
+
+                            <span className="full-width icon-class">
+                              <Tooltip title="Delete">
+                                <DeleteOutlined />
+                              </Tooltip>
+                              <Tooltip title="View">
+                                <EyeOutlined />
+                              </Tooltip>
+                              <Tooltip title="Edit">
+                                <EditOutlined />
+                              </Tooltip>
+                            </span>
+                          </div>
                           <div className="earning-text full-width">{element.url}</div>
                           <div className="earning-price full-width">{element.name}</div>
                         </div>

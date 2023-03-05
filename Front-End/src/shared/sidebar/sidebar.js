@@ -11,20 +11,12 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.user);
   const sidebarKey = useSelector(state => state.auth.sidebarKey);
-  const dashboard = useSelector(state => state.dashboard.dashboardData);
 
   const handleChange = e => {
     dispatch({
       type: 'CHANGESIDEBAR',
       payload: e?.key,
     });
-  };
-
-  const handleLogout = async () => {
-    const res = await dispatch(logout());
-    if (res) {
-      history.push('/login');
-    }
   };
 
   return (
@@ -64,20 +56,6 @@ const Sidebar = () => {
           </Link>
         </Menu.Item>
       </Menu>
-      {dashboard &&
-        dashboard.length > 0 &&
-        dashboard.map((data, index) => (
-          <Menu mode="inline" selectedKeys={[sidebarKey]} onClick={e => handleChange(e)}>
-            <Menu.Item key={data.id}>
-              <Link to={`/visualization/${data.id}`}>
-                <img className="not-hover-show" src="images/sidebar-dashboard-icon.svg" alt="" />
-                <img className="hover-show" src="images/sidebar-dashboard-hover-icon.svg" alt="" />
-                {data.name}
-                <i className="fa fa-angle-right" aria-hidden="true" />
-              </Link>
-            </Menu.Item>
-          </Menu>
-        ))}
     </Sider>
   );
 };
