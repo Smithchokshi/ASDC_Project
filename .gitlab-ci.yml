@@ -3,10 +3,10 @@ stages:
 
 build-job:      
   stage: build
-  image: maven:3.3.0
+  image: maven:3-jdk-11
   script:
     - cd datawiz-api
-    - mvn compile
+    - mvn clean
   rules:
     - changes:
         paths:
