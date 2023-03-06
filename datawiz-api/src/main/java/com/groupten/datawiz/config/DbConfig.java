@@ -1,28 +1,19 @@
 package com.groupten.datawiz.config;
 
 import com.groupten.datawiz.model.DbConn;
-import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.stereotype.Service;
+import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.stereotype.Component;
 
-import javax.sql.DataSource;
-
-@Service
+@Component
 public class DbConfig {
 
-    public DataSource DbConnection(DbConn dbConn) {
-        DataSourceBuilder<?> connectionBuilder = DataSourceBuilder.create();
-        connectionBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
-        connectionBuilder.url(dbConn.getUrl());
-        connectionBuilder.username(dbConn.getDbUsername());
-        connectionBuilder.password(dbConn.getDbPassword());
-        return connectionBuilder.build();
+    public HikariDataSource DbConnection(DbConn dbConn) {
+        HikariDataSource dataSource = new HikariDataSource();
+        dataSource.setJdbcUrl(dbConn.getUrl());
+        dataSource.setUsername(dbConn.getDbUsername());
+        dataSource.setPassword(dbConn.getDbPassword());
+        return dataSource;
     }
 
     // TODO try beans
-//    @Lazy
-//    @Qualifier("UserJdbcTemplate")
-//    @Bean
-//    public JdbcTemplate UserJdbcTemplate() {
-//        return new JdbcTemplate(UserDbConnection());
-//    }
 }
