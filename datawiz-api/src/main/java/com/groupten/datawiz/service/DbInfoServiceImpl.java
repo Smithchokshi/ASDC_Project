@@ -27,8 +27,10 @@ public class DbInfoServiceImpl implements  DbInfoService{
     @Override
     public List<String> getDatabases(UserDbInfo dbInfo){
         DbConn conn = connService.getConnById(dbInfo.getUserId());
-
-        return dbInfoRepository.getDatabases(dbInfo,new JdbcTemplate(dbConfig.DbConnection(conn)));
+        var dataSource =  dbConfig.DbConnection(conn);
+        var value = dbInfoRepository.getDatabases(dbInfo,new JdbcTemplate(dataSource));
+        dataSource.close();
+        return value;
     }
 
     @Override
@@ -36,14 +38,19 @@ public class DbInfoServiceImpl implements  DbInfoService{
 
         DbConn conn = connService.getConnById(dbInfo.getUserId());
 
-        return dbInfoRepository.getTables(dbInfo,new JdbcTemplate(dbConfig.DbConnection(conn)));
+        var dataSource =  dbConfig.DbConnection(conn);
+        var value = dbInfoRepository.getTables(dbInfo,new JdbcTemplate(dataSource));
+        dataSource.close();
+        return value;
     }
 
     @Override
     public List<String> getColumns(UserDbInfo dbInfo){
         DbConn conn = connService.getConnById(dbInfo.getUserId());
-        return dbInfoRepository.getColumns(dbInfo,new JdbcTemplate(dbConfig.DbConnection(conn)));
+
+        var dataSource =  dbConfig.DbConnection(conn);
+        var value =  dbInfoRepository.getColumns(dbInfo,new JdbcTemplate(dataSource));
+        dataSource.close();
+        return value;
     }
-
-
 }
