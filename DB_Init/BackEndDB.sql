@@ -51,17 +51,10 @@ CREATE TABLE IF NOT EXISTS `DataWiz`.`visualizations` (
   `x-attribute` VARCHAR(45) NULL,
   `y-table` VARCHAR(45) NULL,
   `y-attribute` VARCHAR(45) NULL,
-  `sql_query` LONGTEXT NULL,
   `created_at` VARCHAR(45) NOT NULL,
   `updated_at` VARCHAR(45) DEFAULT NULL,
   `deleted_at` VARCHAR(45) DEFAULT NULL,
-  PRIMARY KEY (`visualization_id`, `connection_id`, `user_id`),
-  INDEX `fk_visualizations_connections1_idx` (`connection_id` ASC, `user_id` ASC) VISIBLE,
-  CONSTRAINT `fk_visualizations_connections1`
-    FOREIGN KEY (`connection_id` , `user_id`)
-    REFERENCES `mydb`.`connections` (`connection_id` , `user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`visualization_id`))
 ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
