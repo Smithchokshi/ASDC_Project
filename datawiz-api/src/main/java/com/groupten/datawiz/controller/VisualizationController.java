@@ -1,22 +1,19 @@
 package com.groupten.datawiz.controller;
-import com.groupten.datawiz.model.DbConn;
 import com.groupten.datawiz.model.Visualization;
 import com.groupten.datawiz.protocol.Response;
-import com.groupten.datawiz.service.DbConnService;
 import com.groupten.datawiz.service.VisualizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.*;
 
 
 @RestController
 @RequestMapping("/visualization")
-public class VisualizationController extends Handler{
+public class VisualizationController {
 
     @Autowired
-    VisualizationService VS;
+    VisualizationService visualizationService;
 
     /*Example Visualization Save Request JSON:
     {
@@ -33,7 +30,7 @@ public class VisualizationController extends Handler{
 
     @PostMapping("/save")
     public ResponseEntity<Response> saveVisualization(@RequestBody Visualization visualization){
-        Response response = new Response(VS.saveVisualization(visualization), HttpStatus.CREATED.value(), HttpStatus.CREATED.name());
+        Response response = new Response(visualizationService.saveVisualization(visualization), HttpStatus.CREATED.value(), HttpStatus.CREATED.name());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -55,7 +52,13 @@ public class VisualizationController extends Handler{
 
     @PostMapping("/edit")
     public ResponseEntity<Response> previewVisualization(@RequestBody Visualization visualization){
-        Response response = new Response(VS.editVisualization(visualization), HttpStatus.CREATED.value(), HttpStatus.CREATED.name());
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        Response response = new Response(visualizationService.editVisualization(visualization), HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+    }
+
+    @GetMapping("/get/{id}/{page}")
+    public ResponseEntity<Response> getVisualization(@PathVariable("id") int connectionID, @PathVariable("page") int page){
+        Response response = new Response(visualizationService.getVisualizationsByConnectionId(connectionID, page), HttpStatus.OK.value(), HttpStatus.OK.name() );
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

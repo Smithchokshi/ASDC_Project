@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
-@Transactional
 public class DbConnServiceImpl implements DbConnService{
 
     @Autowired

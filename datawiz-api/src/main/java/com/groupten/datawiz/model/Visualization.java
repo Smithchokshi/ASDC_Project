@@ -1,9 +1,7 @@
 package com.groupten.datawiz.model;
 import jakarta.persistence.*;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "visualizations")
@@ -38,15 +36,15 @@ public class Visualization{
     @Column(name = "y-attribute")
     private String yAttribute;
 
-    private String created_at;
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
 
-    private String updated_at;
-
-    private String deleted_at;
+    @Column(name = "deleted_at")
+    private Timestamp deletedAt;
 
     public Visualization(){}
 
-    public Visualization(int connectionId, int userId, String name, String chartType, String xTable, String xAttribute, String yTable, String yAttribute){
+    public Visualization(int connectionId, int userId, String name, String chartType, String xTable, String xAttribute, String yTable, String yAttribute, Timestamp updatedAt) {
         this.connectionId = connectionId;
         this.userId = userId;
         this.name = name;
@@ -55,11 +53,20 @@ public class Visualization{
         this.xAttribute = xAttribute;
         this.yTable = yTable;
         this.yAttribute = yAttribute;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD hh:mm:ss");
-        Calendar cal = Calendar.getInstance();
-        created_at = dateFormat.format(cal.getTime());
-        updated_at = null;
-        deleted_at = null;
+        this.updatedAt = updatedAt;
+    }
+
+    public Visualization(int visualizationId,int connectionId, int userId, String name, String chartType, String xTable, String xAttribute, String yTable, String yAttribute, Timestamp updatedAt) {
+        this.visualizationId = visualizationId;
+        this.connectionId = connectionId;
+        this.userId = userId;
+        this.name = name;
+        this.chartType = chartType;
+        this.xTable = xTable;
+        this.xAttribute = xAttribute;
+        this.yTable = yTable;
+        this.yAttribute = yAttribute;
+        this.updatedAt = updatedAt;
     }
 
     public int getVisualizationId() {
@@ -134,27 +141,19 @@ public class Visualization{
         this.yAttribute = yAttribute;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
+    public Timestamp getDeletedAt() {
+        return deletedAt;
     }
 
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
-    }
-
-    public String getDeleted_at() {
-        return deleted_at;
-    }
-
-    public void setDeleted_at(String deleted_at) {
-        this.deleted_at = deleted_at;
+    public void setDeletedAt(Timestamp deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }
