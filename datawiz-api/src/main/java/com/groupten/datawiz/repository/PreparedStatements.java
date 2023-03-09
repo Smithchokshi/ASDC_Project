@@ -1,8 +1,8 @@
 package com.groupten.datawiz.repository;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class PreparedStatements {
 
     public String barGraphCountQuery(String tableName, String xColumn, String yColumn){

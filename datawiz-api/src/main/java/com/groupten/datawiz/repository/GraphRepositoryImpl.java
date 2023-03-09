@@ -11,10 +11,6 @@ import java.util.List;
 @Repository
 public class GraphRepositoryImpl implements GraphRepository {
 
-    //JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-//    @Autowired
-//    private JdbcTemplate userJdbcTemplate();
-
     @Autowired
     private PreparedStatements preparedStatements;
 

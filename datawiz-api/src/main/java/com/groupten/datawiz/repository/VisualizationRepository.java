@@ -1,9 +1,13 @@
 package com.groupten.datawiz.repository;
+
 import com.groupten.datawiz.model.Visualization;
-import com.groupten.datawiz.service.VisualizationService;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface VisualizationRepository extends CrudRepository<Visualization, Integer> {
+import java.sql.Timestamp;
+import java.util.List;
 
+public interface VisualizationRepository extends JpaRepository<Visualization, Integer> {
 
+    List<Visualization> findByConnectionIdAndDeletedAt(Integer connectionID, Timestamp deletedAt, Pageable pageable);
 }
