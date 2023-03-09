@@ -6,15 +6,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,7 +18,7 @@ public class VisualizationServiceImpl implements VisualizationService{
     VisualizationRepository visualizationRepository;
 
     @Override
-    public Visualization saveVisualization(Visualization visualization){
+    public int saveVisualization(Visualization visualization){
         Visualization visualizationSave = new Visualization(
                 visualization.getConnectionId(),
                 visualization.getUserId(),
@@ -36,11 +30,11 @@ public class VisualizationServiceImpl implements VisualizationService{
                 visualization.getyAttribute(),
                 Timestamp.from(Instant.now())
         );
-        return visualizationRepository.save(visualizationSave);
+        return visualizationRepository.save(visualizationSave).getVisualizationId();
     }
 
     @Override
-    public Visualization editVisualization(Visualization visualization){
+    public int editVisualization(Visualization visualization){
         Visualization visualizationUpdate = new Visualization(
                 visualization.getVisualizationId(),
                 visualization.getConnectionId(),
@@ -53,19 +47,18 @@ public class VisualizationServiceImpl implements VisualizationService{
                 visualization.getyAttribute(),
                 Timestamp.from(Instant.now())
         );
-        return visualizationRepository.save(visualizationUpdate);
+        return visualizationRepository.save(visualizationUpdate).getVisualizationId();
     }
 
     @Override
-    public Visualization getVisById(int id){
-        Visualization vis = visualizationRepository.findById(id).orElse(null);
-        return vis;
+    public Visualization getVisualizationById(int id){
+        return visualizationRepository.findById(id).orElse(null);
     }
 
     @Override
     public List<Visualization> getVisualizationsByConnectionId(int connectionId, int page) {
         Pageable pageable =  PageRequest.of(page, 6, Sort.by("updatedAt"));
-        return visualizationRepository.findByConnectionId(connectionId,pageable);
+        return visualizationRepository.findByConnectionIdAndDeletedAt(connectionId,null,pageable);
     }
 
 }
