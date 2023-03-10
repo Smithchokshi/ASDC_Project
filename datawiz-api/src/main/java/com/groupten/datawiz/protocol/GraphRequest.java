@@ -2,7 +2,9 @@ package com.groupten.datawiz.protocol;
 
 public class GraphRequest {
 
-    private String tableName;
+    private String tableNameOne;
+
+    private String tableNameTwo;
     private String xColumn;
     private String yColumn;
     private int connectionId;
@@ -15,12 +17,12 @@ public class GraphRequest {
         this.connectionId = connectionId;
     }
 
-    public String getTableName() {
-        return tableName;
+    public String getTableNameOne() {
+        return tableNameOne;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
+    public void setTableNameOne(String tableNameOne) {
+        this.tableNameOne = tableNameOne;
     }
 
     public String getxColumn() {
@@ -37,5 +39,12 @@ public class GraphRequest {
 
     public void setyColumn(String yColumn) {
         this.yColumn = yColumn;
+    }
+    public String getTableNameTwo() {
+        return tableNameTwo;
+    }
+
+    public void setTableNameTwo(String tableNameTwo) {
+        this.tableNameTwo = tableNameTwo;
     }
 }

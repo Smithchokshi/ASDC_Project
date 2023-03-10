@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface GraphRepository {
 
-    List<Graph> getIntIntValues(GraphRequest graphRequest, JdbcTemplate jdbcTemplate);
+    List<Object> getGraphValues(String tableName,String columnName, JdbcTemplate jdbcTemplate);
 
 
     Boolean testConnection(JdbcTemplate jdbcTemplate);
