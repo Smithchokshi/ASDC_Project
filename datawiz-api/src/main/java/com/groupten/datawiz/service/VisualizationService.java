@@ -13,4 +13,7 @@ public interface VisualizationService {
     Visualization getVisualizationById(int id);
 
     List<Visualization> getVisualizationsByConnectionId(int connectionId, int page);
+
+    String deleteVisualization(int visualId);
+
 }

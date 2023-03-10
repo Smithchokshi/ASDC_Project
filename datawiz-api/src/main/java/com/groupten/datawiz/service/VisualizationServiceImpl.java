@@ -6,12 +6,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 
 @Service
+@Transactional
 public class VisualizationServiceImpl implements VisualizationService{
 
     @Autowired
@@ -61,4 +63,9 @@ public class VisualizationServiceImpl implements VisualizationService{
         return visualizationRepository.findByConnectionIdAndDeletedAt(connectionId,null,pageable);
     }
 
+    @Override
+    public String deleteVisualization(int visualId) {
+        visualizationRepository.updateDeletedAtTime(visualId, Timestamp.from(Instant.now()));
+        return "Deleted";
+    }
 }

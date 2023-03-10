@@ -38,4 +38,10 @@ public class VisualizationController extends Handler{
         Response response = new Response(visualizationService.getVisualizationById(visualId), HttpStatus.OK.value(), HttpStatus.OK.name());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @DeleteMapping("/remove/{id}")
+    public ResponseEntity<Response> deleteVisualizations(@PathVariable("id") int visualId){
+        Response response = new Response(visualizationService.deleteVisualization(visualId), HttpStatus.OK.value(), HttpStatus.OK.name());
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }
