@@ -11,9 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.sql.DataSource;
-import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class GraphServiceImpl implements GraphService {
@@ -28,12 +27,15 @@ public class GraphServiceImpl implements GraphService {
     public GraphResponse getValues(GraphRequest graphRequest) {
         DbConn dbConn= connectRepository.findDbConnById(graphRequest.getConnectionId());
         var dataSource =  dbConfig.DbConnection(dbConn);
-        var values =graphRepository.getIntIntValues(graphRequest, new JdbcTemplate(dataSource));
+        var xvalues =graphRepository.getGraphValues(graphRequest.getTableNameOne(),graphRequest.getxColumn(), new JdbcTemplate(dataSource));
+
+        var yvalues =graphRepository.getGraphValues(graphRequest.getTableNameTwo(),graphRequest.getyColumn(), new JdbcTemplate(dataSource));
         dataSource.close();
 
-        var valuesFilter = values.stream().filter(s -> s.getX() != null ).filter(s -> s.getY() != null ).toList();
-        List<Object> xList = valuesFilter.stream().map(Graph::getX).toList();
-        List<Object> yList = valuesFilter.stream().map(Graph::getY).toList();
-        return new GraphResponse(xList, yList);
+        var xvaluesFilter = xvalues.stream().filter(Objects::nonNull).toList();
+        var yvaluesFilter = yvalues.stream().filter(Objects::nonNull).toList();
+
+
+        return new GraphResponse(xvaluesFilter,yvaluesFilter);
     }
 }
