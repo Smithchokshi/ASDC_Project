@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Table, Button, Dropdown, Pagination } from 'antd';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ScrollAnimation from 'react-animate-on-scroll';
 import Loader from '../../shared/loader/Loader';
 import TopHeader from '../../shared/top-header/top-header';
-import AddVisulization from './addVisulization';
 import ApiUtils from '../../helpers/APIUtils';
 import Chart from '../../shared/Chart/chart';
-import { storeDashboardData } from '../../redux/actions/dashboardActions';
 
 const api = msg => new ApiUtils(msg);
 
@@ -17,6 +15,7 @@ const { Content } = Layout;
 const VisulizationDashboard = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const history = useHistory();
 
   const title = location.state.name;
   const [loader, setLoader] = useState(false);
@@ -34,14 +33,6 @@ const VisulizationDashboard = () => {
 
   const handleLoader = bool => {
     setLoader(bool);
-  };
-
-  const handleModel = (bool, method, data) => {
-    if (method === 'add') setAddModel(bool);
-    if (method === 'edit') {
-      setEditModel(bool);
-      setEditData(data);
-    }
   };
 
   const getData = async () => {
@@ -63,7 +54,7 @@ const VisulizationDashboard = () => {
   };
 
   useEffect(() => {
-    getData();
+    // getData();
   }, []);
 
   return (
@@ -84,7 +75,10 @@ const VisulizationDashboard = () => {
                 >
                   <div className="search-box full-width category-page date-calender-section calenderWidth large">
                     <div className="flex">
-                      <Button className="reset-btn" onClick={() => handleModel(true, 'add', null)}>
+                      <Button
+                        className="reset-btn"
+                        onClick={() => history.push(`/visualization/add/${payloadObject?.userId}`)}
+                      >
                         {/*<img src={`${S3BucketURL}commissary/add-icon.svg`} alt="Add Category" />{' '}*/}
                         Add DB Config
                       </Button>
@@ -118,16 +112,6 @@ const VisulizationDashboard = () => {
                   {/*    </ScrollAnimation>*/}
                   {/*  ))}*/}
                 </div>
-                {addModel && (
-                  <AddVisulization
-                    visible={addModel}
-                    onCancel={handleModel}
-                    getData={getData}
-                    allData={allData}
-                    payloadObject={payloadObject}
-                    setGraphData={setGraphData}
-                  />
-                )}
               </div>
             </div>
           </Content>
