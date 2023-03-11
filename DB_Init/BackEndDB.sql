@@ -43,9 +43,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DataWiz`.`visualizations` (
   `visualization_id` INT NOT NULL AUTO_INCREMENT,
-  `schema` VARCHAR(45) NOT NULL,
   `connection_id` INT NOT NULL,
   `user_id` INT NOT NULL,
+  `schema` VARCHAR(45) NOT NULL,
   `visualization_name` VARCHAR(45) NOT NULL,
   `chart_type` VARCHAR(45) NOT NULL,
   `x-table` VARCHAR(45) NULL,
