@@ -95,6 +95,9 @@ public class DbConnServiceImpl implements DbConnService{
 
     @Override
     public Boolean testConn(DbConn dbConn){
-        return graphRepository.testConnection(new JdbcTemplate(dbConfig.DbConnection(dbConn)));
+        var dataSource =  dbConfig.DbConnection(dbConn);
+        var value = graphRepository.testConnection(new JdbcTemplate(dataSource));
+        dataSource.close();
+        return value;
     }
 }

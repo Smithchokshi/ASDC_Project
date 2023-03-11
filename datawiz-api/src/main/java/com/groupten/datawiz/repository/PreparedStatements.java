@@ -1,12 +1,12 @@
 package com.groupten.datawiz.repository;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class PreparedStatements {
 
-    public String barGraphCountQuery(String tableName, String xColumn, String yColumn){
-         return "SELECT "+xColumn+","+yColumn+" FROM "+tableName;
+    public String barGraphCountQuery(String tableName, String column){
+         return "SELECT "+column+" FROM "+tableName;
     }
 
     public String testConnection(){

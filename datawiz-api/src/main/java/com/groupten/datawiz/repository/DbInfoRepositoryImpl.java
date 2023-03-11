@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Lazy
 @Repository
 public class DbInfoRepositoryImpl implements DbInfoRepository{
 
