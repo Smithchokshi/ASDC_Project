@@ -35,6 +35,4 @@ public class DatabaseInfoController extends Handler{
         Response response=new Response(dbInfoService.getColumns(dbinfo),HttpStatus.OK.value(), HttpStatus.OK.name());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
-
 }
