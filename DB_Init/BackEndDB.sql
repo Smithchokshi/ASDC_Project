@@ -51,7 +51,6 @@ CREATE TABLE IF NOT EXISTS `DataWiz`.`visualizations` (
   `x-attribute` VARCHAR(45) NULL,
   `y-table` VARCHAR(45) NULL,
   `y-attribute` VARCHAR(45) NULL,
-  `created_at` VARCHAR(45) NOT NULL,
   `updated_at` VARCHAR(45) DEFAULT NULL,
   `deleted_at` VARCHAR(45) DEFAULT NULL,
   PRIMARY KEY (`visualization_id`))
