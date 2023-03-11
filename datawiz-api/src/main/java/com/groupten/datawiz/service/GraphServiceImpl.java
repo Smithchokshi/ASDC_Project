@@ -24,18 +24,82 @@ public class GraphServiceImpl implements GraphService {
     @Autowired
     DbConfig dbConfig;
 
-    public GraphResponse getValues(GraphRequest graphRequest) {
+    @Override
+    public GraphResponse getGraphValues(GraphRequest graphRequest) {
+
+        GraphResponse result;
         DbConn dbConn= connectRepository.findDbConnById(graphRequest.getConnectionId());
         var dataSource =  dbConfig.DbConnection(dbConn);
-        var xvalues =graphRepository.getGraphValues(graphRequest.getTableNameOne(),graphRequest.getxColumn(), new JdbcTemplate(dataSource));
+        var jdbcTemplate = new JdbcTemplate(dataSource);
 
-        var yvalues =graphRepository.getGraphValues(graphRequest.getTableNameTwo(),graphRequest.getyColumn(), new JdbcTemplate(dataSource));
+        if(graphRequest.getTableNameOne().equals(graphRequest.getTableNameTwo())){
+            result = getFromOneTable(graphRequest, jdbcTemplate);
+        }else{
+            result = getFromTwoTables(graphRequest, jdbcTemplate);
+        }
+
         dataSource.close();
 
-        var xvaluesFilter = xvalues.stream().filter(Objects::nonNull).toList();
-        var yvaluesFilter = yvalues.stream().filter(Objects::nonNull).toList();
+        return result;
+    }
 
+    private GraphResponse getFromOneTable(GraphRequest graphRequest, JdbcTemplate jdbcTemplate){
+        var values =graphRepository.getGraphValuesSameTable(
+                graphRequest.getSchemaName(),
+                graphRequest.getTableNameOne(),
+                graphRequest.getxColumn(),
+                graphRequest.getyColumn(),
+                jdbcTemplate
+        );
 
-        return new GraphResponse(xvaluesFilter,yvaluesFilter);
+        var valuesFilter = values.stream().filter(s -> s.getX() != null ).filter(s -> s.getY() != null ).toList();
+        List<Object> xList = valuesFilter.stream().map(Graph::getX).toList();
+        List<Object> yList = valuesFilter.stream().map(Graph::getY).toList();
+        return new GraphResponse(xList, yList);
+    }
+
+    private GraphResponse getFromTwoTablesNoRelation(GraphRequest graphRequest, JdbcTemplate jdbcTemplate){
+        var xValues =graphRepository
+                .getGraphValues(graphRequest.getSchemaName(),graphRequest.getTableNameOne(),graphRequest.getxColumn(), jdbcTemplate)
+                .stream().filter(Objects::nonNull).toList();
+        var yValues =graphRepository
+                .getGraphValues(graphRequest.getSchemaName(), graphRequest.getTableNameTwo(),graphRequest.getyColumn(), jdbcTemplate)
+                .stream().filter(Objects::nonNull).toList();
+
+        return new GraphResponse(xValues,yValues);
+    }
+
+    private GraphResponse getFromTwoTablesRelation(GraphRequest graphRequest,String table, String refTable, JdbcTemplate jdbcTemplate) {
+        var refColumn = graphRepository.getRelatedColumn(graphRequest.getSchemaName(), table, refTable, jdbcTemplate);
+
+        var values = graphRepository.getGraphValuesRelatedTables(
+                graphRequest.getSchemaName(),
+                table,
+                refTable,
+                graphRequest.getxColumn(),
+                graphRequest.getyColumn(),
+                refColumn.get(0).get("COLUMN_NAME").toString(),
+                refColumn.get(0).get("REFERENCED_COLUMN_NAME").toString(),
+                jdbcTemplate
+        );
+
+        var valuesFilter = values.stream().filter(s -> s.getX() != null ).filter(s -> s.getY() != null ).toList();
+        List<Object> xList = valuesFilter.stream().map(Graph::getX).toList();
+        List<Object> yList = valuesFilter.stream().map(Graph::getY).toList();
+        return new GraphResponse(xList, yList);
+    }
+
+    private GraphResponse getFromTwoTables(GraphRequest graphRequest, JdbcTemplate jdbcTemplate){
+        if(graphRepository.checkIfRelated(graphRequest.getTableNameOne() ,graphRequest.getTableNameTwo(), jdbcTemplate)){
+            var table = graphRequest.getTableNameOne();
+            var refTable = graphRequest.getTableNameTwo();
+            return getFromTwoTablesRelation(graphRequest, table, refTable, jdbcTemplate);
+        } else if (graphRepository.checkIfRelated(graphRequest.getTableNameTwo(), graphRequest.getTableNameOne(), jdbcTemplate)){
+            var table = graphRequest.getTableNameTwo();
+            var refTable = graphRequest.getTableNameOne();
+            return getFromTwoTablesRelation(graphRequest, table, refTable, jdbcTemplate);
+        } else {
+            return getFromTwoTablesNoRelation(graphRequest, jdbcTemplate);
+        }
     }
 }

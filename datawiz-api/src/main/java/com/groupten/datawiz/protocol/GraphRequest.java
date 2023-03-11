@@ -2,12 +2,21 @@ package com.groupten.datawiz.protocol;
 
 public class GraphRequest {
 
+    private String schemaName;
     private String tableNameOne;
 
     private String tableNameTwo;
     private String xColumn;
     private String yColumn;
     private int connectionId;
+
+    public String getSchemaName() {
+        return schemaName;
+    }
+
+    public void setSchemaName(String schemaName) {
+        this.schemaName = schemaName;
+    }
 
     public int getConnectionId() {
         return connectionId;
