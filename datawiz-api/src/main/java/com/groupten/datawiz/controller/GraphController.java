@@ -23,4 +23,5 @@ public class GraphController extends Handler {
         Response response = new Response(graphService.getGraphValues(graphRequest),HttpStatus.OK.value(), HttpStatus.OK.name());
         return ResponseEntity.ok(response);
     }
+
 }

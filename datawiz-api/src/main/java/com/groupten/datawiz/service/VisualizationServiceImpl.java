@@ -23,6 +23,7 @@ public class VisualizationServiceImpl implements VisualizationService{
     public int saveVisualization(Visualization visualization){
         Visualization visualizationSave = new Visualization(
                 visualization.getConnectionId(),
+                visualization.getSchemaName(),
                 visualization.getUserId(),
                 visualization.getName(),
                 visualization.getChartType(),
@@ -40,6 +41,7 @@ public class VisualizationServiceImpl implements VisualizationService{
         Visualization visualizationUpdate = new Visualization(
                 visualization.getVisualizationId(),
                 visualization.getConnectionId(),
+                visualization.getSchemaName(),
                 visualization.getUserId(),
                 visualization.getName(),
                 visualization.getChartType(),

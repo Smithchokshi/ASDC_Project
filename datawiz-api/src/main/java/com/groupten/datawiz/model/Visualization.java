@@ -15,6 +15,11 @@ public class Visualization{
     @Column(name = "connection_id")
     private int connectionId;
 
+
+
+    @Column(name = "schemaName")
+    private String schemaName;
+
     @Column(name = "user_id")
     private int userId;
 
@@ -44,8 +49,9 @@ public class Visualization{
 
     public Visualization(){}
 
-    public Visualization(int connectionId, int userId, String name, String chartType, String xTable, String xAttribute, String yTable, String yAttribute, Timestamp updatedAt) {
+    public Visualization(int connectionId,String schemaName, int userId, String name, String chartType, String xTable, String xAttribute, String yTable, String yAttribute, Timestamp updatedAt) {
         this.connectionId = connectionId;
+        this.schemaName=schemaName;
         this.userId = userId;
         this.name = name;
         this.chartType = chartType;
@@ -56,9 +62,10 @@ public class Visualization{
         this.updatedAt = updatedAt;
     }
 
-    public Visualization(int visualizationId,int connectionId, int userId, String name, String chartType, String xTable, String xAttribute, String yTable, String yAttribute, Timestamp updatedAt) {
+    public Visualization(int visualizationId,int connectionId,String schemaName, int userId, String name, String chartType, String xTable, String xAttribute, String yTable, String yAttribute, Timestamp updatedAt) {
         this.visualizationId = visualizationId;
         this.connectionId = connectionId;
+        this.schemaName=schemaName;
         this.userId = userId;
         this.name = name;
         this.chartType = chartType;
@@ -67,6 +74,13 @@ public class Visualization{
         this.yTable = yTable;
         this.yAttribute = yAttribute;
         this.updatedAt = updatedAt;
+    }
+    public String getSchemaName() {
+        return schemaName;
+    }
+
+    public void setSchemaName(String schemaName) {
+        this.schemaName = schemaName;
     }
 
     public int getVisualizationId() {

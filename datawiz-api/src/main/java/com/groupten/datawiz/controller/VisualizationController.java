@@ -17,6 +17,7 @@ public class VisualizationController extends Handler{
 
     @PostMapping("/save")
     public ResponseEntity<Response> saveVisualization(@RequestBody Visualization visualization){
+
         Response response = new Response(visualizationService.saveVisualization(visualization), HttpStatus.CREATED.value(), HttpStatus.CREATED.name());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -44,4 +45,6 @@ public class VisualizationController extends Handler{
         Response response = new Response(visualizationService.deleteVisualization(visualId), HttpStatus.OK.value(), HttpStatus.OK.name());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+
 }
