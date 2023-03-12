@@ -1,5 +1,7 @@
 package com.groupten.datawiz.service;
 import com.groupten.datawiz.model.Visualization;
+import com.groupten.datawiz.protocol.GraphRequest;
+import com.groupten.datawiz.protocol.GraphResponse;
 import com.groupten.datawiz.repository.VisualizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +18,8 @@ import java.util.List;
 @Transactional
 public class VisualizationServiceImpl implements VisualizationService{
 
+    @Autowired
+    GraphService graphService;
     @Autowired
     VisualizationRepository visualizationRepository;
 
@@ -69,5 +73,19 @@ public class VisualizationServiceImpl implements VisualizationService{
     public String deleteVisualization(int visualId) {
         visualizationRepository.updateDeletedAtTime(visualId, Timestamp.from(Instant.now()));
         return "Deleted";
+    }
+
+    @Override
+    public GraphResponse getData(int id){
+
+        Visualization visualization=getVisualizationById(id);
+        GraphRequest graphRequest=new GraphRequest();
+        graphRequest.setConnectionId(visualization.getConnectionId());
+        graphRequest.setSchemaName(visualization.getSchemaName());
+        graphRequest.setTableNameOne(visualization.getxTable());
+        graphRequest.setTableNameTwo(visualization.getyTable());
+        graphRequest.setxColumn(visualization.getxAttribute());
+        graphRequest.setyColumn(visualization.getyAttribute());
+        return graphService.getGraphValues(graphRequest);
     }
 }
