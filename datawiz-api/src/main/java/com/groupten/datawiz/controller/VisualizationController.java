@@ -47,4 +47,11 @@ public class VisualizationController extends Handler{
     }
 
 
+    @GetMapping("/getData/{id}")
+    public ResponseEntity<Response> me(@PathVariable("id") int id) {
+        Response response = new Response(visualizationService.getData(id), HttpStatus.OK.value(), HttpStatus.OK.name());
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+
 }
