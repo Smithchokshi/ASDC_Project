@@ -8,6 +8,8 @@ public class GraphRequest {
     private String tableNameTwo;
     private String xColumn;
     private String yColumn;
+
+    private String calculation;
     private int connectionId;
 
     public String getSchemaName() {
@@ -55,5 +57,13 @@ public class GraphRequest {
 
     public void setTableNameTwo(String tableNameTwo) {
         this.tableNameTwo = tableNameTwo;
+    }
+
+    public String getCalculation() {
+        return calculation;
+    }
+
+    public void setCalculation(String calculation) {
+        this.calculation = calculation;
     }
 }

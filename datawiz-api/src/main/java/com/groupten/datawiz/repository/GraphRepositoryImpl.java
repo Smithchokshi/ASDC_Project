@@ -29,14 +29,15 @@ public class GraphRepositoryImpl implements GraphRepository {
     }
 
     @Override
-    public List<Graph> getGraphValuesSameTable(String schemaName,String tableName, String xColumnName, String yColumnName, JdbcTemplate jdbcTemplate) {
+    public List<Graph> getGraphValuesSameTable(String schemaName,String tableName, String xColumnName, String yColumnName,String calType, JdbcTemplate jdbcTemplate) {
 
         return jdbcTemplate.query(
                 preparedStatements.getQueryForTwoColumn(
                         schemaName,
                         tableName,
                         xColumnName,
-                        yColumnName
+                        yColumnName,
+                        calType
                 ),
                 new GraphRowMapper()
         );
@@ -51,6 +52,7 @@ public class GraphRepositoryImpl implements GraphRepository {
             String yColumnName,
             String relationColumnTableOne,
             String relationColumnTableTwo,
+            String calType,
             JdbcTemplate jdbcTemplate
     ){
         return jdbcTemplate.query(
@@ -61,7 +63,8 @@ public class GraphRepositoryImpl implements GraphRepository {
                         xColumnName,
                         yColumnName,
                         relationColumnTableOne,
-                        relationColumnTableTwo
+                        relationColumnTableTwo,
+                        calType
                 ),
                 new GraphRowMapper()
         );

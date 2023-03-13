@@ -49,6 +49,7 @@ public class GraphServiceImpl implements GraphService {
                 graphRequest.getTableNameOne(),
                 graphRequest.getxColumn(),
                 graphRequest.getyColumn(),
+                graphRequest.getCalculation(),
                 jdbcTemplate
         );
 
@@ -80,6 +81,7 @@ public class GraphServiceImpl implements GraphService {
                 graphRequest.getyColumn(),
                 refColumn.get(0).get("COLUMN_NAME").toString(),
                 refColumn.get(0).get("REFERENCED_COLUMN_NAME").toString(),
+                graphRequest.getCalculation(),
                 jdbcTemplate
         );
 
