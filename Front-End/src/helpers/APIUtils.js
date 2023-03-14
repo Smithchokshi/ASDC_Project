@@ -152,7 +152,7 @@ class ApiUtils {
   createGraph = data =>
     this.axios({
       method: 'POST',
-      url: '/graph/bar/value',
+      url: '/visualization/save',
       data,
     });
 }

@@ -24,12 +24,33 @@ const AddVisulization = () => {
   const [isLoading, setLoading] = useState(false);
   const [allSchemaOptions, setAllSchemaOptions] = useState([]);
   const [tableOptions, setTableOptions] = useState([]);
-  const [columnOptions, setColumnOptions] = useState([]);
+  const [columnXOptions, setColumnXOptions] = useState([]);
+  const [columnYOptions, setColumnYOptions] = useState([]);
+  const [typeOption, setTypeOption] = useState([
+    {
+      id: 1,
+      label: 'Bar',
+      value: 'bar',
+    },
+    {
+      id: 2,
+      label: 'Pie',
+      value: 'pie',
+    },
+    {
+      id: 3,
+      label: 'Line',
+      value: 'line',
+    },
+  ]);
+  const [selectedType, setSelectedType] = useState(null);
   const [selectedDatabase, setSelectedDatabase] = useState(null);
-  const [selectedTable, setSelectedTable] = useState(null);
+  const [selectedXTable, setSelectedXTable] = useState(null);
+  const [selectedYTable, setSelectedYTable] = useState(null);
   const [selectedColumn, setSelectedColumn] = useState(null);
   const [xColumn, setXColumn] = useState(null);
   const [yColumn, setYColumn] = useState(null);
+  const [name, setName] = useState(null);
   const [payloadObject, setPayloadObject] = useState({
     userId: window.location.pathname.split('/')[3],
     database: null,
@@ -38,14 +59,7 @@ const AddVisulization = () => {
 
   const [validator, showValidationMessage] = useSimpleReactValidator({}, {});
 
-  const handleChange = field => e => {
-    setFields(prev => ({
-      ...prev,
-      [field]: e.target.value,
-    }));
-  };
-
-  const createSelectObject = (res, keyword) => {
+  const createSelectObject = (res, keyword, column = null) => {
     const optionData = [];
 
     res?.data?.data.map((e, index) =>
@@ -57,7 +71,10 @@ const AddVisulization = () => {
     );
 
     if (keyword === 'table') setTableOptions(optionData);
-    if (keyword === 'column') setColumnOptions(optionData);
+    if (keyword === 'column') {
+      if (column === 'x') setColumnXOptions(optionData);
+      else setColumnYOptions(optionData);
+    }
   };
 
   const submit = async e => {
@@ -68,21 +85,25 @@ const AddVisulization = () => {
 
       try {
         const data = {
-          tableName: selectedTable,
-          xColumn: xColumn,
-          yColumn: yColumn,
-          connectionId: payloadObject.userId,
+          connectionId: parseInt(payloadObject.userId),
+          userId: parseInt(fields.userId),
+          name: name,
+          chartType: selectedType,
+          xTable: selectedXTable,
+          xAttribute: xColumn,
+          yTable: selectedYTable,
+          yAttribute: yColumn,
         };
 
         const res = await api(true).createGraph(data);
 
         console.log(res.data.data);
 
-        setGraphData(res.data.data);
+        // setGraphData(res.data.data);
 
         // getData();
         //
-        onCancel(false, 'add', null);
+        // onCancel(false, 'add', null);
       } catch {
         setIsSubmitLoading(false);
       }
@@ -106,8 +127,9 @@ const AddVisulization = () => {
     } catch {}
   };
 
-  const getAllColumns = async value => {
-    setSelectedTable(value);
+  const getAllColumns = async (value, column) => {
+    if (column === 'x') setSelectedXTable(value);
+    else setSelectedYTable(value);
 
     try {
       const data = payloadObject;
@@ -117,7 +139,7 @@ const AddVisulization = () => {
 
       const res = await api().getColumns(data);
 
-      createSelectObject(res, 'column');
+      createSelectObject(res, 'column', column);
     } catch {}
   };
 
@@ -153,7 +175,18 @@ const AddVisulization = () => {
           <div>
             <div className="site-layout-background">
               <div className="top-boxes full-width">
-                <FormMain onSubmit={submit} className="global-form full-width add-graph-form">
+                <FormMain className="global-form full-width add-graph-form">
+                  <div className="full-width form-field">
+                    <div className="label">Name</div>
+                    <Input
+                      placeholder="Name"
+                      value={name}
+                      onChange={e => setName(e.target.value)}
+                      style={{ width: '50%' }}
+                    />
+                    {validator.message(`Name`, name, `required`)}
+                  </div>
+
                   <div className="full-width form-field">
                     <div className="label">Select Scheme</div>
                     <Select
@@ -178,7 +211,31 @@ const AddVisulization = () => {
                   </div>
 
                   <div className="full-width form-field">
-                    <div className="label">Select Table</div>
+                    <div className="label">Select Type</div>
+                    <Select
+                      style={{
+                        width: 200,
+                      }}
+                      placeholder={'Select Type'}
+                      optionFilterProp="children"
+                      filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                      filterSort={(optionA, optionB) =>
+                        (optionA?.label ?? '')
+                          .toLowerCase()
+                          .localeCompare((optionB?.label ?? '').toLowerCase())
+                      }
+                      onChange={newValue => {
+                        setSelectedType(newValue);
+                      }}
+                      options={typeOption}
+                    />
+                    {validator.message(`Type`, selectedType, `required`)}
+                  </div>
+                </FormMain>
+
+                <FormMain onSubmit={submit} className="global-form full-width add-graph-form">
+                  <div className="full-width form-field">
+                    <div className="label">Select X Table</div>
                     <Select
                       showSearch
                       style={{
@@ -194,11 +251,11 @@ const AddVisulization = () => {
                           .localeCompare((optionB?.label ?? '').toLowerCase())
                       }
                       onChange={newValue => {
-                        getAllColumns(newValue);
+                        getAllColumns(newValue, 'x');
                       }}
                       options={tableOptions}
                     />
-                    {validator.message(`Table`, selectedTable, `required`)}
+                    {validator.message(`Table`, selectedXTable, `required`)}
                   </div>
 
                   <div className="full-width form-field">
@@ -208,7 +265,7 @@ const AddVisulization = () => {
                       style={{
                         width: 200,
                       }}
-                      disabled={selectedTable == null}
+                      disabled={selectedXTable == null}
                       placeholder="Search to Select"
                       optionFilterProp="children"
                       filterOption={(input, option) => (option?.label ?? '').includes(input)}
@@ -220,9 +277,33 @@ const AddVisulization = () => {
                       onChange={newValue => {
                         setXColumn(newValue);
                       }}
-                      options={columnOptions}
+                      options={columnXOptions}
                     />
                     {validator.message(`XColumn`, xColumn, `required`)}
+                  </div>
+
+                  <div className="full-width form-field">
+                    <div className="label">Select Y Table</div>
+                    <Select
+                      showSearch
+                      style={{
+                        width: 200,
+                      }}
+                      disabled={selectedDatabase == null}
+                      placeholder="Search to Select"
+                      optionFilterProp="children"
+                      filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                      filterSort={(optionA, optionB) =>
+                        (optionA?.label ?? '')
+                          .toLowerCase()
+                          .localeCompare((optionB?.label ?? '').toLowerCase())
+                      }
+                      onChange={newValue => {
+                        getAllColumns(newValue, 'y');
+                      }}
+                      options={tableOptions}
+                    />
+                    {validator.message(`Table`, selectedYTable, `required`)}
                   </div>
 
                   <div className="full-width form-field">
@@ -232,7 +313,7 @@ const AddVisulization = () => {
                       style={{
                         width: 200,
                       }}
-                      disabled={selectedTable == null}
+                      disabled={selectedYTable == null}
                       placeholder="Search to Select"
                       optionFilterProp="children"
                       filterOption={(input, option) => (option?.label ?? '').includes(input)}
@@ -244,7 +325,7 @@ const AddVisulization = () => {
                       onChange={newValue => {
                         setYColumn(newValue);
                       }}
-                      options={columnOptions}
+                      options={columnYOptions}
                     />
                     {validator.message(`YColumn`, yColumn, `required`)}
                   </div>
