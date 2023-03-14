@@ -1,5 +1,6 @@
 stages:         
   - build
+  - smells
 
 build-job:      
   stage: build
@@ -28,3 +29,8 @@ front-job:
   tags:
       - ugrad
 
+smell-backend-job:
+    stage: smells
+    image: openjdk:11
+    script:
+      - java -jar $CI_PROJECT_DIR/DesignateJava/DesigniteJava.jar -i $CI_PROJECT_DIR -o $CI_PROJECT_DIR/DesignateJava/DesignateOutput
