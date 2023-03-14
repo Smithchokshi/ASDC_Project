@@ -2,7 +2,7 @@ package com.groupten.datawiz.model;
 
 public class UserDbInfo {
     private int userId;
-    private String database;
+    private String schema;
     private String table;
 
     public int getUserId() {
@@ -15,12 +15,12 @@ public class UserDbInfo {
 
 
 
-    public String getDatabase() {
-        return database;
+    public String getSchema() {
+        return schema;
     }
 
-    public void setDatabase(String database) {
-        this.database = database;
+    public void setSchema(String schema) {
+        this.schema = schema;
     }
 
     public String getTable() {
