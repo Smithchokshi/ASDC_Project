@@ -39,4 +39,4 @@ smell-backend-job:
     artifacts:
       paths:
         - back_end_smells/
-        - $CI_PROJECT_DIR/DesignateJava/DesignateOutput
+        - $CI_PROJECT_DIR/DesignateJava/DesignateOutput/
