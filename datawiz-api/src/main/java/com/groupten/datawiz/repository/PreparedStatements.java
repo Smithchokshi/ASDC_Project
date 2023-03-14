@@ -9,8 +9,8 @@ public class PreparedStatements {
          return "SELECT "+column+" FROM "+schemaName+"."+tableName;
     }
 
-    public String getQueryForTwoColumn(String schemaName,String tableName, String xColumn, String yColumn){
-        return "SELECT "+xColumn+","+yColumn+" FROM "+schemaName+"."+tableName;
+    public String getQueryForTwoColumn(String schemaName,String tableName, String xColumn, String yColumn, String calType){
+        return "SELECT "+xColumn+","+calType+"("+yColumn+") FROM "+schemaName+"."+tableName + " GROUP BY "+ xColumn;
     }
 
     public String getQueryForRelatedTablesJoin(
@@ -20,12 +20,15 @@ public class PreparedStatements {
             String xColumnName,
             String yColumnName,
             String relationColumnTableOne,
-            String relationColumnTableTwo
+            String relationColumnTableTwo,
+            String  calType
     ){
-        return "SELECT " +xColumnName+", "+yColumnName+
-                " FROM " +schemaName+"."+ tableNameOne +
+        return "SELECT " +xColumnName+", "+calType+"("+yColumnName+
+                ") FROM " +schemaName+"."+ tableNameOne +
                 " JOIN " +schemaName+"."+ tableNameTwo +
-                " ON " + tableNameOne + "." + relationColumnTableOne + " = " + tableNameTwo + "." + relationColumnTableTwo;
+                " ON " + tableNameOne + "." + relationColumnTableOne + " = " + tableNameTwo + "." + relationColumnTableTwo+
+                " GROUP BY " + xColumnName;
+
     }
 
 

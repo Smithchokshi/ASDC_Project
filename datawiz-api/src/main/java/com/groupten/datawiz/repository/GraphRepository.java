@@ -12,7 +12,7 @@ public interface GraphRepository {
 
     Boolean testConnection(JdbcTemplate jdbcTemplate);
 
-    List<Graph> getGraphValuesSameTable(String schemaName,String tableName, String xColumnName, String yColumnName, JdbcTemplate jdbcTemplate);
+    List<Graph> getGraphValuesSameTable(String schemaName,String tableName, String xColumnName, String yColumnName, String calType, JdbcTemplate jdbcTemplate);
 
     List<Graph> getGraphValuesRelatedTables(
             String schemaName,
@@ -22,6 +22,7 @@ public interface GraphRepository {
             String yColumnName,
             String relationColumnTableOne,
             String relationColumnTableTwo,
+            String calType,
             JdbcTemplate jdbcTemplate
     );
 
