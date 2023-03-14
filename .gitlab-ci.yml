@@ -33,10 +33,9 @@ smell-backend-job:
     stage: smells
     image: openjdk:11
     script:
-      - java -jar $CI_PROJECT_DIR/DesignateJava/DesigniteJava.jar -i $CI_PROJECT_DIR/datawiz-api -o back_end_smells
+      - java -jar $CI_PROJECT_DIR/DesignateJava/DesigniteJava.jar -i $CI_PROJECT_DIR/datawiz-api -o smells/
     tags:
       - ugrad
     artifacts:
       paths:
-        - back_end_smells/
-        - $CI_PROJECT_DIR/DesignateJava/DesignateOutput/
+        - DesigniteJava_Output
