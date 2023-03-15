@@ -11,9 +11,11 @@
   --site-font-family: 'Rubik', sans-serif;
   --site-font-size: 16px;
   --site-primary-color: #000; /*Titles*/
-  --site-secondary-color: #aaaaaa; /*body font*/
+  --site-secondary-color: #2b2836; /*body font*/
   --site-line-height: 24px;
-  --site-Bgcolor: #191720;
+
+//   --site-Bgcolor: #e6e6e6;
+  --site-Bgcolor: #eee;
   --section-padding: 110px 0px 118px;
   --h1-font-size: 34px;
   --h2-font-size: 30px;
@@ -21,7 +23,10 @@
   --h4-font-size: 22px;
   --h5-font-size: 21px;
   --h6-font-size: 20px;
-  --theme-color: #25b28f;
+  --theme-color: #2474f5    ;
+  --translucent-line:rgb(43, 40, 54,0.5);
+  --button-color:#fff;
+//   --theme-color: #25b28f   ;
 }
 
 * {
@@ -169,9 +174,10 @@ h6 + p {
 }
 
 .bgimg-main {
-  background-size: cover !important;
+  background-size: 90% !important;
   background-position: center center !important;
   background-repeat: no-repeat !important;
+  padding: 0px 10px;
 }
 
 .bg-img {
@@ -1454,7 +1460,7 @@ ul li a.remove-data-hover:before {
   border: 0 !important;
   height: 45px !important;
   padding: 4px 20px;
-  background: #2d2f39 !important;
+  background: var(--site-Bgcolor) !important;
   border: 1px solid #3b3e4c !important;
 }
 
@@ -1518,14 +1524,12 @@ html body .global-form .recovery-text {
 }
 
 .global-form .ant-input-password {
-  border: 0;
   border-radius: 7px;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
-  border: 0 !important;
   height: 47px;
   padding: 4px 15px;
-  background: #2d2f39 !important;
-  border: 1px solid #3b3e4c !important;
+  background-color: #fff !important;
+      border: 1px solid  rgba(43, 40, 54,0.2) !important;
+      box-shadow: 0px -2px 20px 2px #cccccc;
 }
 
 .global-form .ant-input-password .ant-input {
@@ -1711,7 +1715,7 @@ html body .title-section h2 + p {
 }
 
 .global-form .label {
-  color: #fff !important;
+  color: var(--site-secondary-color) !important;
   margin-bottom: 4px;
   font-size: 15px;
   font-weight: 600;
@@ -2431,7 +2435,9 @@ ul.before-login li a.default-cta {
 }
 
 .form-field .ant-input {
-  border: 1px solid #ccc;
+    background-color: #fff !important;
+    border: 1px solid  rgba(43, 40, 54,0.2) !important;
+    box-shadow: 0px -2px 20px 2px #cccccc;
   padding: 7px 14px 9px;
   transition: 0.4s;
 }
@@ -2726,10 +2732,13 @@ html .title-section .user-image {
   color: #fff;
 }
 
-html .global-form .submit-btn,
+html .global-form ,
 .auth-head,
 .auth-subtitle h6 {
-  color: #fff !important;
+  color:var(--site-secondary-color);
+}
+.submit-btn{
+color:var(--button-color) !important;
 }
 
 .right-auth-inner {
@@ -3140,7 +3149,8 @@ html body .edit-image .ant-upload {
 }
 
 .left-sidebar {
-  background: #2b2836;
+//   background: #2b2836;
+  background: var(--site-Bgcolor);
   padding: 20px;
 
   ul.ant-menu {
@@ -3233,6 +3243,7 @@ html body .edit-image .ant-upload {
   top: 0;
   height: 100%;
   z-index: 111111;
+  border-right: 1px solid var(--translucent-line);
 
   .ant-layout-sider-children {
     overflow-y: auto;
@@ -3254,7 +3265,7 @@ html body .edit-image .ant-upload {
   height: auto;
 
   h2 {
-    color: #fff;
+    color: var(--site-secondary-color);
     padding: 0 !important;
     margin: 0 !important;
   }
@@ -3364,9 +3375,10 @@ html body .edit-image .ant-upload {
   top: 0;
   width: 100%;
   padding: 40px 50px 25px 350px;
-  //z-index: 11111;
-  background: #191720;
-  // border-bottom: 1px solid #2d2f39;
+//   z-index: 11111;
+//   background: #191720;
+  background: var(--site--bgcolor);
+  border-bottom: 1px solid var(--translucent-line);
 }
 
 .top-boxes.three-boxes .single-box {
@@ -3393,10 +3405,10 @@ html body .edit-image .ant-upload {
     margin-left: 10px;
     height: 40px;
     padding: 0;
-    background: #696c7b !important;
+    background: var( --theme-color) !important;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
     border-radius: 5px !important;
-    color: #fff !important;
+    color: var(--button-color) !important;
     border: 0 !important;
     font-weight: 600;
     min-width: 150px;
@@ -5753,6 +5765,7 @@ html body .mobile-profile-menu .ant-menu-sub li {
     height: 40px;
   }
   .page-top-section h2 {
+  color:var(--site-secondary-color) !important;
     font-size: 19px;
   }
   .tottal-earning-title {
@@ -5913,7 +5926,7 @@ html body .mobile-profile-menu .ant-menu-sub li {
   .page-top-section {
     .title {
       display: none;
-      color: white;
+      color: var(--site-secondary-color);
     }
   }
   .chart-box {
@@ -6331,7 +6344,7 @@ html .ant-layout {
   }
   .title {
     font-size: 14px;
-    color: white;
+    color: var(--site-secondary-color);
   }
   .page-top-section {
     // padding: 0 0 30px 0;
@@ -7103,9 +7116,9 @@ html .pagination-footer {
 }
 
 .anticon {
-  color: white;
+  color: var(--site-secondary-color);
 }
 
 .title {
-  color: white;
+  color: var(--site-secondary-color);
 }
