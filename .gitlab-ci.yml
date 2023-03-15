@@ -41,7 +41,7 @@ smell-backend-job:
         - back_end_smells/
 
 smell-frontend-job:
-  stage: build
+  stage: smells
   image: node:18.13.0
   script:
     - cd Front-End
