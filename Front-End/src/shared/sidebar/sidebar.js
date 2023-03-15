@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Table, Button, Dropdown, Switch } from 'antd';
-import { Link, useHistory } from 'react-router-dom';
-import { useStore, useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../redux/actions/authActions';
+import React from 'react';
+import { Layout, Menu } from 'antd';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 const { Sider } = Layout;
 
 const Sidebar = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector(state => state.auth.user);
   const sidebarKey = useSelector(state => state.auth.sidebarKey);
-  const dashboard = useSelector(state => state.dashboard.dashboardData);
 
   const handleChange = e => {
     dispatch({
@@ -20,26 +16,8 @@ const Sidebar = () => {
     });
   };
 
-  const handleLogout = async () => {
-    const res = await dispatch(logout());
-    if (res) {
-      history.push('/login');
-    }
-  };
-
   return (
-    <Sider
-      collapsible
-      collapsedWidth="0"
-      width="300"
-      onBreakpoint={broken => {
-        // console.log(broken);
-      }}
-      onCollapse={(collapsed, type) => {
-        // console.log(collapsed, type);
-      }}
-      className="left-sidebar"
-    >
+    <Sider collapsible collapsedWidth="0" width="300" className="left-sidebar">
       <div className="sidebar-top full-width">
         <Link
           to="/"
@@ -64,20 +42,6 @@ const Sidebar = () => {
           </Link>
         </Menu.Item>
       </Menu>
-      {dashboard &&
-        dashboard.length > 0 &&
-        dashboard.map((data, index) => (
-          <Menu mode="inline" selectedKeys={[sidebarKey]} onClick={e => handleChange(e)}>
-            <Menu.Item key={data.id}>
-              <Link to={`/visualization/${data.id}`}>
-                <img className="not-hover-show" src="images/sidebar-dashboard-icon.svg" alt="" />
-                <img className="hover-show" src="images/sidebar-dashboard-hover-icon.svg" alt="" />
-                {data.name}
-                <i className="fa fa-angle-right" aria-hidden="true" />
-              </Link>
-            </Menu.Item>
-          </Menu>
-        ))}
     </Sider>
   );
 };

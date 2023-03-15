@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Table, Button, Dropdown, Pagination } from 'antd';
+import { Button, Layout, Tooltip } from 'antd';
+import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ScrollAnimation from 'react-animate-on-scroll';
 import Loader from '../../shared/loader/Loader';
 import TopHeader from '../../shared/top-header/top-header';
 import AddDBConfig from './addDBConfig';
 import EditDBConfig from './editDBConfig';
-import ApiUtils from '../../helpers/APIUtils';
 import { storeDashboardData } from '../../redux/actions/dashboardActions';
-
-const api = new ApiUtils();
 
 const { Content } = Layout;
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [loader, setLoader] = useState(false);
   const [addModel, setAddModel] = useState(false);
@@ -37,7 +37,7 @@ const Dashboard = () => {
   const getData = async () => {
     handleLoader(true);
     try {
-      const res = await dispatch(storeDashboardData());
+      await dispatch(storeDashboardData());
       handleLoader(false);
     } catch (e) {
       handleLoader(false);
@@ -47,6 +47,8 @@ const Dashboard = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {});
 
   return (
     <Layout>
@@ -67,7 +69,7 @@ const Dashboard = () => {
                   <div className="search-box full-width category-page date-calender-section calenderWidth large">
                     <div className="flex">
                       <Button className="reset-btn" onClick={() => handleModel(true, 'add', null)}>
-                        {/*<img src={`${S3BucketURL}commissary/add-icon.svg`} alt="Add Category" />{' '}*/}
+                        {/* <img src={`${S3BucketURL}commissary/add-icon.svg`} alt="Add Category" />{' '} */}
                         Add DB Config
                       </Button>
                     </div>
@@ -89,14 +91,32 @@ const Dashboard = () => {
                           className="full-width"
                           key={element.id}
                           role="presentation"
-                          onClick={() => handleModel(true, 'edit', element)}
+                          onClick={() =>
+                            history.push(`/visualization/${element.id}`, {
+                              name: element.name,
+                            })
+                          }
                         >
-                          <img
-                            className="not-hover-show"
-                            src="images/order-icon.svg"
-                            alt="product"
-                          />
-                          <img className="hover-show" src="images/order-icon.svg" alt="product" />
+                          <div style={{ display: 'flex' }}>
+                            <img
+                              className="not-hover-show"
+                              src="images/order-icon.svg"
+                              alt="product"
+                            />
+                            <img className="hover-show" src="images/order-icon.svg" alt="product" />
+
+                            <span className="full-width icon-class">
+                              <Tooltip title="Delete">
+                                <DeleteOutlined />
+                              </Tooltip>
+                              <Tooltip title="View">
+                                <EyeOutlined />
+                              </Tooltip>
+                              <Tooltip title="Edit">
+                                <EditOutlined />
+                              </Tooltip>
+                            </span>
+                          </div>
                           <div className="earning-text full-width">{element.url}</div>
                           <div className="earning-price full-width">{element.name}</div>
                         </div>

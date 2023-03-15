@@ -1,12 +1,12 @@
-import React, { Suspense, lazy, useEffect } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Layout } from 'antd';
 import Loader from '../../shared/loader/Loader';
 import Sidebar from '../../shared/sidebar/sidebar';
-import TopHeader from '../../shared/top-header/top-header';
 
 const Dashboard = lazy(() => import('../dashboard/dashboard'));
 const VisulizationDashboard = lazy(() => import('../visulizationDashboard/visulizationDashboard'));
+const AddVisulization = lazy(() => import('../visulizationDashboard/addVisulization'));
 const ErrorPage = lazy(() => import('../../shared/404/error-page'));
 
 const Routing = () => {
@@ -28,6 +28,12 @@ const Routing = () => {
       path: '/visualization/:id',
       component: () => <VisulizationDashboard />,
       title: 'Dashboard',
+    },
+    {
+      exact: true,
+      path: '/visualization/add/:id',
+      component: () => <AddVisulization />,
+      title: 'Add Visualization',
     },
     {
       exact: true,

@@ -2,7 +2,7 @@ import ApiUtils from '../../helpers/APIUtils';
 
 const api = msg => new ApiUtils(msg);
 
-export const loadUser = () => async (dispatch, getState) => {
+export const loadUser = () => async dispatch => {
   try {
     const token = localStorage.getItem('id_token');
     const username = localStorage.getItem('username');
@@ -29,10 +29,9 @@ export const loadUser = () => async (dispatch, getState) => {
   }
 };
 
-export const register = data => async dispatch => {
+export const register = data => async () => {
   try {
-    const res = await api(true).register(data);
-
+    await api(true).register(data);
     return true;
   } catch (e) {
     return false;

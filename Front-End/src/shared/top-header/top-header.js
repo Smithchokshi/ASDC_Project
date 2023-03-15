@@ -1,26 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Layout, Menu, Dropdown, Button, Space } from 'antd';
-import { DownOutlined, SmileOutlined } from '@ant-design/icons';
+import { Layout, Dropdown, Space } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { logout } from '../../redux/actions/authActions';
 
 const { Header } = Layout;
 
 const TopHeader = ({ title }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const handleLogout = async () => {
-    const res = await dispatch(logout());
+    await dispatch(logout());
   };
 
   const items = [
     {
       key: '1',
       label: (
-        <Link to={'/login'} onClick={() => handleLogout()}>
+        <Link to="/login" onClick={() => handleLogout()}>
           Logout
         </Link>
       ),
@@ -32,10 +31,10 @@ const TopHeader = ({ title }) => {
       <h2>{title}</h2>
 
       <div className="flex-center topbar-switch">
-        <Dropdown menu={{ items }} placement={'bottomLeft'}>
-          <a onClick={e => e.preventDefault()}>
+        <Dropdown menu={{ items }} placement="bottomLeft">
+          <a role="presentation" onClick={e => e.preventDefault()}>
             <Space>
-              <div className="title">{'Smith'}</div>
+              <div className="title">Smith</div>
               <DownOutlined />
             </Space>
           </a>

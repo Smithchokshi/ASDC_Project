@@ -1,4 +1,5 @@
 import axios from 'axios';
+// eslint-disable-next-line camelcase
 import { encode as base64_encode } from 'base-64';
 import { notification } from 'antd';
 import store from '../redux/store';
@@ -152,7 +153,7 @@ class ApiUtils {
   createGraph = data =>
     this.axios({
       method: 'POST',
-      url: '/graph/bar/value',
+      url: '/visualization/save',
       data,
     });
 }
