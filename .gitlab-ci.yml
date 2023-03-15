@@ -45,6 +45,7 @@ smell-frontend-job:
   image: node:18.13.0
   script:
     - cd Front-End
+    - npx yarn
     - npx yarn run lint
   rules:
     - changes:
