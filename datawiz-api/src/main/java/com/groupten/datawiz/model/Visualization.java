@@ -15,8 +15,6 @@ public class Visualization{
     @Column(name = "connection_id")
     private int connectionId;
 
-
-
     @Column(name = "schemaName")
     private String schemaName;
 
@@ -29,17 +27,19 @@ public class Visualization{
     @Column(name = "chart_type")
     private String chartType;
 
-    @Column(name = "x-table")
+    @Column(name = "x_table")
     private String xTable;
 
-    @Column(name = "x-attribute")
+    @Column(name = "x_attribute")
     private String xAttribute;
 
-    @Column(name = "y-table")
+    @Column(name = "y_table")
     private String yTable;
 
-    @Column(name = "y-attribute")
+    @Column(name = "y_attribute")
     private String yAttribute;
+
+    private String calculation;
 
     @Column(name = "updated_at")
     private Timestamp updatedAt;
@@ -49,7 +49,7 @@ public class Visualization{
 
     public Visualization(){}
 
-    public Visualization(int connectionId,String schemaName, int userId, String name, String chartType, String xTable, String xAttribute, String yTable, String yAttribute, Timestamp updatedAt) {
+    public Visualization(int connectionId,String schemaName, int userId, String name, String chartType, String xTable, String xAttribute, String yTable, String yAttribute, String calculation, Timestamp updatedAt) {
         this.connectionId = connectionId;
         this.schemaName=schemaName;
         this.userId = userId;
@@ -59,10 +59,11 @@ public class Visualization{
         this.xAttribute = xAttribute;
         this.yTable = yTable;
         this.yAttribute = yAttribute;
+        this.calculation = calculation;
         this.updatedAt = updatedAt;
     }
 
-    public Visualization(int visualizationId,int connectionId,String schemaName, int userId, String name, String chartType, String xTable, String xAttribute, String yTable, String yAttribute, Timestamp updatedAt) {
+    public Visualization(int visualizationId,int connectionId,String schemaName, int userId, String name, String chartType, String xTable, String xAttribute, String yTable, String yAttribute, String calculation, Timestamp updatedAt) {
         this.visualizationId = visualizationId;
         this.connectionId = connectionId;
         this.schemaName=schemaName;
@@ -73,6 +74,7 @@ public class Visualization{
         this.xAttribute = xAttribute;
         this.yTable = yTable;
         this.yAttribute = yAttribute;
+        this.calculation = calculation;
         this.updatedAt = updatedAt;
     }
     public String getSchemaName() {
@@ -169,5 +171,13 @@ public class Visualization{
 
     public void setDeletedAt(Timestamp deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public String getCalculation() {
+        return calculation;
+    }
+
+    public void setCalculation(String calculation) {
+        this.calculation = calculation;
     }
 }
