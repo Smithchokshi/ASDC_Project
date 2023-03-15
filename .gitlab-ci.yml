@@ -21,7 +21,6 @@ front-job:
   script:
     - cd Front-End
     - npx yarn
-    - npx yarn run lint-fix
     - npx yarn build
   rules:
     - changes:
