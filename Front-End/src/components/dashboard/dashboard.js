@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Table, Button, Dropdown, Pagination, Tooltip } from 'antd';
+import { Button, Layout, Tooltip } from 'antd';
 import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,10 +8,7 @@ import Loader from '../../shared/loader/Loader';
 import TopHeader from '../../shared/top-header/top-header';
 import AddDBConfig from './addDBConfig';
 import EditDBConfig from './editDBConfig';
-import ApiUtils from '../../helpers/APIUtils';
 import { storeDashboardData } from '../../redux/actions/dashboardActions';
-
-const api = new ApiUtils();
 
 const { Content } = Layout;
 
@@ -40,7 +37,7 @@ const Dashboard = () => {
   const getData = async () => {
     handleLoader(true);
     try {
-      const res = await dispatch(storeDashboardData());
+      await dispatch(storeDashboardData());
       handleLoader(false);
     } catch (e) {
       handleLoader(false);

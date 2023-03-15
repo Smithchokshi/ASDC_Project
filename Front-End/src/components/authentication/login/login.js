@@ -1,12 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import Slider from 'react-slick';
 import { Link, useHistory } from 'react-router-dom';
-import { useTranslation, Trans } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { Input, Button, Checkbox, Switch } from 'antd';
+import { useDispatch } from 'react-redux';
+import { Input, Button } from 'antd';
 import ScrollAnimation from 'react-animate-on-scroll';
 import useSimpleReactValidator from '../../../shared/hooks/useSimpleReactValidator';
-import { loadUser, login } from '../../../redux/actions/authActions';
+import { login } from '../../../redux/actions/authActions';
 import { AuthenticationManin, FormMain } from '../authentication-style';
 
 const settings = {
@@ -24,11 +23,8 @@ const settings = {
 
 const Login = () => {
   const [errors, setErrors] = useState({});
-  const { t, i18n } = useTranslation();
   const [fields, setFields] = useState({});
-  const [notification, setNotification] = useState({});
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
-  const [checked, setChecked] = useState(true);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -51,12 +47,7 @@ const Login = () => {
       },
       matchPassword: {
         message: 'New password & Confirm password does not match',
-        rule: val => {
-          if (fields.password === val) {
-            return true;
-          }
-          return false;
-        },
+        rule: val => fields.password === val,
       },
     },
   });

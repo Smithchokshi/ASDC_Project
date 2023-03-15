@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Table, Button, Dropdown, Switch } from 'antd';
-import { Link, useHistory } from 'react-router-dom';
-import { useStore, useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../redux/actions/authActions';
+import React from 'react';
+import { Layout, Menu } from 'antd';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 const { Sider } = Layout;
 
 const Sidebar = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector(state => state.auth.user);
   const sidebarKey = useSelector(state => state.auth.sidebarKey);
 
   const handleChange = e => {
@@ -20,18 +17,7 @@ const Sidebar = () => {
   };
 
   return (
-    <Sider
-      collapsible
-      collapsedWidth="0"
-      width="300"
-      onBreakpoint={broken => {
-        // console.log(broken);
-      }}
-      onCollapse={(collapsed, type) => {
-        // console.log(collapsed, type);
-      }}
-      className="left-sidebar"
-    >
+    <Sider collapsible collapsedWidth="0" width="300" className="left-sidebar">
       <div className="sidebar-top full-width">
         <Link
           to="/"

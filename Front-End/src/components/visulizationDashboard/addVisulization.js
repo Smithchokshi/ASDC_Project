@@ -15,17 +15,16 @@ const AddVisulization = () => {
   useHistory();
   const { userId } = useSelector(state => state.auth.user);
 
-  const [fields, setFields] = useState({
+  const fields = {
     userId: userId.toString(),
-  });
-  const [allSchema, setAllSchema] = useState([]);
+  };
+  const [errors, setErrors] = useState({});
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
-  const [isLoading, setLoading] = useState(false);
   const [allSchemaOptions, setAllSchemaOptions] = useState([]);
   const [tableOptions, setTableOptions] = useState([]);
   const [columnXOptions, setColumnXOptions] = useState([]);
   const [columnYOptions, setColumnYOptions] = useState([]);
-  const [typeOption, setTypeOption] = useState([
+  const typeOption = [
     {
       id: 1,
       label: 'Bar',
@@ -41,20 +40,19 @@ const AddVisulization = () => {
       label: 'Line',
       value: 'line',
     },
-  ]);
+  ];
   const [selectedType, setSelectedType] = useState(null);
   const [selectedDatabase, setSelectedDatabase] = useState(null);
   const [selectedXTable, setSelectedXTable] = useState(null);
   const [selectedYTable, setSelectedYTable] = useState(null);
-  const [selectedColumn, setSelectedColumn] = useState(null);
   const [xColumn, setXColumn] = useState(null);
   const [yColumn, setYColumn] = useState(null);
   const [name, setName] = useState(null);
-  const [payloadObject, setPayloadObject] = useState({
+  const payloadObject = {
     userId: window.location.pathname.split('/')[3],
     database: null,
     table: null,
-  });
+  };
 
   const [validator, showValidationMessage] = useSimpleReactValidator({}, {});
 
@@ -108,6 +106,8 @@ const AddVisulization = () => {
       }
     } else {
       setIsSubmitLoading(false);
+      setErrors(validator.getErrorMessages());
+      showValidationMessage(true);
     }
   };
 
@@ -151,8 +151,6 @@ const AddVisulization = () => {
     try {
       const res = await api().getDatabases(payloadObject);
 
-      setAllSchema(res?.data?.data);
-
       const data = [];
 
       // eslint-disable-next-line array-callback-return
@@ -190,6 +188,7 @@ const AddVisulization = () => {
                       value={name}
                       onChange={e => setName(e.target.value)}
                       style={{ width: '50%' }}
+                      classname={errors?.name ? 'invalid' : ''}
                     />
                     {validator.message(`Name`, name, `required`)}
                   </div>
@@ -213,6 +212,7 @@ const AddVisulization = () => {
                         getAllTables(newValue);
                       }}
                       options={allSchemaOptions}
+                      classname={errors?.selectedDatabase ? 'invalid' : ''}
                     />
                     {validator.message(`Scheme`, selectedDatabase, `required`)}
                   </div>
@@ -235,6 +235,7 @@ const AddVisulization = () => {
                         setSelectedType(newValue);
                       }}
                       options={typeOption}
+                      classname={errors?.selectedType ? 'invalid' : ''}
                     />
                     {validator.message(`Type`, selectedType, `required`)}
                   </div>
@@ -261,6 +262,7 @@ const AddVisulization = () => {
                         getAllColumns(newValue, 'x');
                       }}
                       options={tableOptions}
+                      classname={errors?.selectedXTable ? 'invalid' : ''}
                     />
                     {validator.message(`Table`, selectedXTable, `required`)}
                   </div>
@@ -285,6 +287,7 @@ const AddVisulization = () => {
                         setXColumn(newValue);
                       }}
                       options={columnXOptions}
+                      classname={errors?.xColumn ? 'invalid' : ''}
                     />
                     {validator.message(`XColumn`, xColumn, `required`)}
                   </div>
@@ -309,6 +312,7 @@ const AddVisulization = () => {
                         getAllColumns(newValue, 'y');
                       }}
                       options={tableOptions}
+                      classname={errors?.selectedYTable ? 'invalid' : ''}
                     />
                     {validator.message(`Table`, selectedYTable, `required`)}
                   </div>
@@ -333,6 +337,7 @@ const AddVisulization = () => {
                         setYColumn(newValue);
                       }}
                       options={columnYOptions}
+                      classname={errors?.yColumn ? 'invalid' : ''}
                     />
                     {validator.message(`YColumn`, yColumn, `required`)}
                   </div>

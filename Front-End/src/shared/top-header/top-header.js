@@ -1,19 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Layout, Menu, Dropdown, Button, Space } from 'antd';
-import { DownOutlined, SmileOutlined } from '@ant-design/icons';
+import { Layout, Dropdown, Space } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { logout } from '../../redux/actions/authActions';
 
 const { Header } = Layout;
 
 const TopHeader = ({ title }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const handleLogout = async () => {
-    const res = await dispatch(logout());
+    await dispatch(logout());
   };
 
   const items = [
@@ -33,7 +32,6 @@ const TopHeader = ({ title }) => {
 
       <div className="flex-center topbar-switch">
         <Dropdown menu={{ items }} placement="bottomLeft">
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a role="presentation" onClick={e => e.preventDefault()}>
             <Space>
               <div className="title">Smith</div>

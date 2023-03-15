@@ -3,7 +3,7 @@ const initialState = {
 };
 
 const DashboardReducer = (state = initialState, action) => {
-  const { type, payload, token } = action;
+  const { type, payload } = action;
 
   switch (type) {
     case 'DASHBOARD_DATA':

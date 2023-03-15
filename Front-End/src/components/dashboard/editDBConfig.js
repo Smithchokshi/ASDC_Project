@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Button, Modal, Upload, notification, Tooltip } from 'antd';
+import { Input, Button, Modal, notification, Tooltip } from 'antd';
 import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
 import useSimpleReactValidator from '../../shared/hooks/useSimpleReactValidator';
 import { FormMain } from '../authentication/authentication-style';
 import ApiUtils from '../../helpers/APIUtils';
@@ -10,12 +9,10 @@ import ApiUtils from '../../helpers/APIUtils';
 const api = msg => new ApiUtils(msg);
 
 const EditDBConfig = ({ visible, onCancel, getData, data }) => {
-  const history = useHistory();
-
   const [fields, setFields] = useState({});
+  const [errors, setErrors] = useState({});
   const [isView, setIsView] = useState(true);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
-  const [isLoading, setLoading] = useState(false);
 
   const [validator, showValidationMessage] = useSimpleReactValidator({}, {});
 
@@ -44,8 +41,7 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
     };
 
     try {
-      const res = await api().deleteDBConfig(bodyData);
-
+      await api().deleteDBConfig(bodyData);
       getData();
 
       onCancel(false, 'edit', null);
@@ -55,31 +51,36 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
   };
 
   const testDBConnection = async () => {
-    const bodyData = {
-      url: fields.url,
-      dbUsername: fields.dbUsername,
-      dbPassword: fields.dbPassword,
-    };
+    if (validator.allValid()) {
+      const bodyData = {
+        url: fields.url,
+        dbUsername: fields.dbUsername,
+        dbPassword: fields.dbPassword,
+      };
 
-    try {
-      const res = await api().testDBConfig(bodyData);
+      try {
+        const res = await api().testDBConfig(bodyData);
 
-      console.log(res.data.data);
+        console.log(res.data.data);
 
-      if (res.data.data) {
-        notification.success({
-          message: 'Success',
-          description: 'Connected',
-          duration: 10,
-        });
-      } else {
-        notification.error({
-          message: 'Error',
-          description: 'Not able to Connect',
-        });
+        if (res.data.data) {
+          notification.success({
+            message: 'Success',
+            description: 'Connected',
+            duration: 10,
+          });
+        } else {
+          notification.error({
+            message: 'Error',
+            description: 'Not able to Connect',
+          });
+        }
+      } catch (e) {
+        console.log(e);
       }
-    } catch (e) {
-      console.log(e);
+    } else {
+      setErrors(validator.getErrorMessages());
+      showValidationMessage(true);
     }
   };
 
@@ -90,8 +91,7 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
       setIsSubmitLoading(true);
 
       try {
-        const res = await api(true).editDBConfig(fields);
-
+        await api(true).editDBConfig(fields);
         getData();
 
         onCancel(false, 'edit', null);
@@ -100,6 +100,8 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
       }
     } else {
       setIsSubmitLoading(false);
+      setErrors(validator.getErrorMessages());
+      showValidationMessage(true);
     }
   };
 
@@ -137,6 +139,7 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
                 placeholder="DB URL"
                 value={fields?.url ? fields?.url : null}
                 onChange={handleChange('url')}
+                classname={errors?.url ? 'invalid' : ''}
               />
               {validator.message(`DB URL`, fields?.url, `required`)}
             </React.Fragment>
@@ -153,6 +156,7 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
                 placeholder="DB Name"
                 value={fields?.name ? fields?.name : null}
                 onChange={handleChange('name')}
+                classname={errors?.name ? 'invalid' : ''}
               />
               {validator.message(`DB Name`, fields?.name, `required`)}
             </React.Fragment>
@@ -169,6 +173,7 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
                 placeholder="Username"
                 value={fields?.dbUsername ? fields?.dbUsername : null}
                 onChange={handleChange('dbUsername')}
+                classname={errors?.dbUsername ? 'invalid' : ''}
               />
               {validator.message(`Username`, fields?.dbUsername, `required`)}
             </React.Fragment>
@@ -185,6 +190,7 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
                 placeholder="Password"
                 value={fields?.dbPassword ? fields?.dbPassword : null}
                 onChange={handleChange('dbPassword')}
+                classname={errors?.dbPassword ? 'invalid' : ''}
               />
               {validator.message(`Password`, fields?.dbPassword, `required`)}
             </React.Fragment>

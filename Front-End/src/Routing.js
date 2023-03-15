@@ -1,18 +1,13 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter, Route, Redirect, Switch, useHistory } from 'react-router-dom';
-import { useStore, useSelector } from 'react-redux';
-import { Layout, Menu, Table, Button, Dropdown, Input, Space } from 'antd';
+import { Route, Redirect, Switch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Loader from './shared/loader/Loader';
-import Sidebar from './shared/sidebar/sidebar';
 
 const App = lazy(() => import('./components/app/appRouter'));
 const LoginPage = lazy(() => import('./components/authentication/login/login'));
 const RegisterPage = lazy(() => import('./components/authentication/register/register'));
 
-const { Content } = Layout;
-
 const Routing = () => {
-  const history = useHistory();
   // const { isAuthenticated } = useStore().getState().auth;
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const PublicRoutes = [

@@ -1,9 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import Slider from 'react-slick';
 import { Link, useHistory } from 'react-router-dom';
-import { useTranslation, Trans } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { Input, Button, Checkbox, Switch } from 'antd';
+import { useDispatch } from 'react-redux';
+import { Input, Button } from 'antd';
 import ScrollAnimation from 'react-animate-on-scroll';
 import useSimpleReactValidator from '../../../shared/hooks/useSimpleReactValidator';
 import { register } from '../../../redux/actions/authActions';
@@ -24,11 +23,13 @@ const settings = {
 
 const Register = () => {
   const [errors, setErrors] = useState({});
-  const { t, i18n } = useTranslation();
-  const [fields, setFields] = useState({});
-  const [notification, setNotification] = useState({});
+  const [fields, setFields] = useState({
+    name: undefined,
+    username: undefined,
+    password: undefined,
+    confirmPassword: undefined,
+  });
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
-  const [checked, setChecked] = useState(true);
   const history = useHistory();
   const dispatch = useDispatch();
 

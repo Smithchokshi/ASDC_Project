@@ -1,9 +1,8 @@
-import React, { Suspense, lazy, useEffect } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Layout } from 'antd';
 import Loader from '../../shared/loader/Loader';
 import Sidebar from '../../shared/sidebar/sidebar';
-import TopHeader from '../../shared/top-header/top-header';
 
 const Dashboard = lazy(() => import('../dashboard/dashboard'));
 const VisulizationDashboard = lazy(() => import('../visulizationDashboard/visulizationDashboard'));
