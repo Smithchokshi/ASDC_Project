@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Button, Modal, Upload, notification, Select, Layout } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { Input, Button, Select, Layout } from 'antd';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import useSimpleReactValidator from '../../shared/hooks/useSimpleReactValidator';
 import { FormMain } from '../authentication/authentication-style';
 import ApiUtils from '../../helpers/APIUtils';
 import TopHeader from '../../shared/top-header/top-header';
-import ScrollAnimation from 'react-animate-on-scroll';
 
 const api = msg => new ApiUtils(msg);
 
 const { Content } = Layout;
 
 const AddVisulization = () => {
-  const history = useHistory();
+  useHistory();
   const { userId } = useSelector(state => state.auth.user);
 
   const [fields, setFields] = useState({
@@ -85,9 +84,9 @@ const AddVisulization = () => {
 
       try {
         const data = {
-          connectionId: parseInt(payloadObject.userId),
-          userId: parseInt(fields.userId),
-          name: name,
+          connectionId: parseInt(payloadObject.userId, 10),
+          userId: parseInt(fields.userId, 10),
+          name,
           chartType: selectedType,
           xTable: selectedXTable,
           xAttribute: xColumn,
@@ -108,6 +107,7 @@ const AddVisulization = () => {
         setIsSubmitLoading(false);
       }
     } else {
+      setIsSubmitLoading(false);
     }
   };
 
@@ -124,7 +124,9 @@ const AddVisulization = () => {
       console.log('res', res.data);
 
       createSelectObject(res, 'table');
-    } catch {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const getAllColumns = async (value, column) => {
@@ -140,7 +142,9 @@ const AddVisulization = () => {
       const res = await api().getColumns(data);
 
       createSelectObject(res, 'column', column);
-    } catch {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const getData = async () => {
@@ -151,6 +155,7 @@ const AddVisulization = () => {
 
       const data = [];
 
+      // eslint-disable-next-line array-callback-return
       res?.data?.data.map((e, index) => {
         data.push({
           id: index,
@@ -160,7 +165,9 @@ const AddVisulization = () => {
       });
 
       setAllSchemaOptions(data);
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
@@ -170,7 +177,7 @@ const AddVisulization = () => {
   return (
     <Layout>
       <React.Fragment>
-        <TopHeader title={`Add Dashboard`} />
+        <TopHeader title="Add Dashboard" />
         <Content>
           <div>
             <div className="site-layout-background">
@@ -216,7 +223,7 @@ const AddVisulization = () => {
                       style={{
                         width: 200,
                       }}
-                      placeholder={'Select Type'}
+                      placeholder="Select Type"
                       optionFilterProp="children"
                       filterOption={(input, option) => (option?.label ?? '').includes(input)}
                       filterSort={(optionA, optionB) =>

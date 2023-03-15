@@ -24,10 +24,7 @@ const ProfileSidebar = () => {
     }
   };
 
-  return (
-    <ul>
-    </ul>
-  );
+  return <ul />;
 };
 
 export default ProfileSidebar;

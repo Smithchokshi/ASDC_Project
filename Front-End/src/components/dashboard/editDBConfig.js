@@ -39,28 +39,30 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
   };
 
   const handleDelete = async () => {
-    const data = {
+    const bodyData = {
       id: fields.id,
     };
 
     try {
-      const res = await api().deleteDBConfig(data);
+      const res = await api().deleteDBConfig(bodyData);
 
       getData();
 
       onCancel(false, 'edit', null);
-    } catch {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const testDBConnection = async () => {
-    const data = {
+    const bodyData = {
       url: fields.url,
       dbUsername: fields.dbUsername,
       dbPassword: fields.dbPassword,
     };
 
     try {
-      const res = await api().testDBConfig(data);
+      const res = await api().testDBConfig(bodyData);
 
       console.log(res.data.data);
 
@@ -76,7 +78,9 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
           description: 'Not able to Connect',
         });
       }
-    } catch {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const submit = async e => {
@@ -95,6 +99,7 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
         setIsSubmitLoading(false);
       }
     } else {
+      setIsSubmitLoading(false);
     }
   };
 
@@ -127,14 +132,14 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
           {isView ? (
             <p>{fields?.url}</p>
           ) : (
-            <>
+            <React.Fragment>
               <Input
                 placeholder="DB URL"
                 value={fields?.url ? fields?.url : null}
                 onChange={handleChange('url')}
               />
               {validator.message(`DB URL`, fields?.url, `required`)}
-            </>
+            </React.Fragment>
           )}
         </div>
 
@@ -143,14 +148,14 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
           {isView ? (
             <p>{fields?.name}</p>
           ) : (
-            <>
+            <React.Fragment>
               <Input
                 placeholder="DB Name"
                 value={fields?.name ? fields?.name : null}
                 onChange={handleChange('name')}
               />
               {validator.message(`DB Name`, fields?.name, `required`)}
-            </>
+            </React.Fragment>
           )}
         </div>
 
@@ -159,14 +164,14 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
           {isView ? (
             <p>{fields?.dbUsername}</p>
           ) : (
-            <>
+            <React.Fragment>
               <Input
                 placeholder="Username"
                 value={fields?.dbUsername ? fields?.dbUsername : null}
                 onChange={handleChange('dbUsername')}
               />
               {validator.message(`Username`, fields?.dbUsername, `required`)}
-            </>
+            </React.Fragment>
           )}
         </div>
 
@@ -175,14 +180,14 @@ const EditDBConfig = ({ visible, onCancel, getData, data }) => {
           {isView ? (
             <p>{fields?.dbPassword}</p>
           ) : (
-            <>
+            <React.Fragment>
               <Input.Password
                 placeholder="Password"
                 value={fields?.dbPassword ? fields?.dbPassword : null}
                 onChange={handleChange('dbPassword')}
               />
               {validator.message(`Password`, fields?.dbPassword, `required`)}
-            </>
+            </React.Fragment>
           )}
         </div>
 

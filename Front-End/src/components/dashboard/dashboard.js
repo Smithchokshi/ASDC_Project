@@ -72,7 +72,7 @@ const Dashboard = () => {
                   <div className="search-box full-width category-page date-calender-section calenderWidth large">
                     <div className="flex">
                       <Button className="reset-btn" onClick={() => handleModel(true, 'add', null)}>
-                        {/*<img src={`${S3BucketURL}commissary/add-icon.svg`} alt="Add Category" />{' '}*/}
+                        {/* <img src={`${S3BucketURL}commissary/add-icon.svg`} alt="Add Category" />{' '} */}
                         Add DB Config
                       </Button>
                     </div>

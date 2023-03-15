@@ -20,7 +20,7 @@ const TopHeader = ({ title }) => {
     {
       key: '1',
       label: (
-        <Link to={'/login'} onClick={() => handleLogout()}>
+        <Link to="/login" onClick={() => handleLogout()}>
           Logout
         </Link>
       ),
@@ -32,10 +32,11 @@ const TopHeader = ({ title }) => {
       <h2>{title}</h2>
 
       <div className="flex-center topbar-switch">
-        <Dropdown menu={{ items }} placement={'bottomLeft'}>
-          <a onClick={e => e.preventDefault()}>
+        <Dropdown menu={{ items }} placement="bottomLeft">
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <a role="presentation" onClick={e => e.preventDefault()}>
             <Space>
-              <div className="title">{'Smith'}</div>
+              <div className="title">Smith</div>
               <DownOutlined />
             </Space>
           </a>

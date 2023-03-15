@@ -130,7 +130,7 @@ const Login = () => {
             <div className="full-width left-right-auth">
               <div className="right-auth-right">
                 <div className="full-width flex-center my-lang-switch">
-                  <h2 className="auth-head full-width">{'Login'}</h2>
+                  <h2 className="auth-head full-width">Login</h2>
                 </div>
 
                 <FormMain onSubmit={submit} className="global-form full-width">
@@ -141,7 +141,7 @@ const Login = () => {
                       type="text"
                       value={fields?.username}
                       onChange={e => handleChange('username', e)}
-                      placeholder={'Username'}
+                      placeholder="Username"
                       className={errors?.username ? 'invalid' : ''}
                     />
                     {validator.message('Username', fields?.username, `required`)}
@@ -149,10 +149,10 @@ const Login = () => {
 
                   {/* password */}
                   <div className="full-width form-field">
-                    <div className="label">{'Password'}</div>
+                    <div className="label">Password</div>
                     <Input.Password
                       type="text"
-                      placeholder={'Password'}
+                      placeholder="Password"
                       value={fields?.password}
                       onChange={e => handleChange('password', e)}
                       className={errors?.password ? 'invalid' : ''}
@@ -161,6 +161,7 @@ const Login = () => {
                   </div>
                   <div className="full-width form-field text-checkbox top-margin flex-center">
                     <Link className="recovery-text" to="/signup">
+                      {/* eslint-disable-next-line react/no-unescaped-entities */}
                       Don't have account ?
                     </Link>
                   </div>
@@ -171,7 +172,7 @@ const Login = () => {
                       className="submit-btn full-width"
                       loading={isSubmitLoading}
                     >
-                      <span>{'Login'}</span>
+                      <span>Login</span>
                     </Button>
                   </div>
                 </FormMain>

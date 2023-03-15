@@ -40,19 +40,20 @@ const AddDBConfig = ({ visible, onCancel, getData }) => {
 
       console.log(res.data.data);
 
-      if(res.data.data) {
+      if (res.data.data) {
         notification.success({
           message: 'Success',
-          description: 'Connected'
-        })
+          description: 'Connected',
+        });
       } else {
         notification.error({
           message: 'Error',
-          description: 'Not able to Connect'
-        })
+          description: 'Not able to Connect',
+        });
       }
-
-    } catch {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const submit = async e => {
@@ -71,6 +72,7 @@ const AddDBConfig = ({ visible, onCancel, getData }) => {
         setIsSubmitLoading(false);
       }
     } else {
+      setIsSubmitLoading(false);
     }
   };
 

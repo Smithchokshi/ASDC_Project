@@ -79,7 +79,7 @@ const VisulizationDashboard = () => {
                         className="reset-btn"
                         onClick={() => history.push(`/visualization/add/${payloadObject?.userId}`)}
                       >
-                        {/*<img src={`${S3BucketURL}commissary/add-icon.svg`} alt="Add Category" />{' '}*/}
+                        {/* <img src={`${S3BucketURL}commissary/add-icon.svg`} alt="Add Category" />{' '} */}
                         Add DB Config
                       </Button>
                     </div>
@@ -91,26 +91,26 @@ const VisulizationDashboard = () => {
                   {xAxis.length > 0 && yAxis.length > 0 && (
                     <Chart xaxis={xAxis} yaxis={yAxis} type="bar" />
                   )}
-                  {/*  {dashboardData.map((element, index) => (*/}
-                  {/*    <ScrollAnimation*/}
-                  {/*      animateOnce*/}
-                  {/*      className="full-width single-box"*/}
-                  {/*      animateIn="fadeInUp"*/}
-                  {/*      delay={index * 300}*/}
-                  {/*    >*/}
-                  {/*      <div*/}
-                  {/*        className="full-width"*/}
-                  {/*        key={element.id}*/}
-                  {/*        role="presentation"*/}
-                  {/*        onClick={() => handleModel(true, 'edit', element)}*/}
-                  {/*      >*/}
-                  {/*        <img className="not-hover-show" src="images/order-icon.svg" alt="product" />*/}
-                  {/*        <img className="hover-show" src="images/order-icon.svg" alt="product" />*/}
-                  {/*        <div className="earning-text full-width">{element.url}</div>*/}
-                  {/*        <div className="earning-price full-width">{element.name}</div>*/}
-                  {/*      </div>*/}
-                  {/*    </ScrollAnimation>*/}
-                  {/*  ))}*/}
+                  {/*  {dashboardData.map((element, index) => ( */}
+                  {/*    <ScrollAnimation */}
+                  {/*      animateOnce */}
+                  {/*      className="full-width single-box" */}
+                  {/*      animateIn="fadeInUp" */}
+                  {/*      delay={index * 300} */}
+                  {/*    > */}
+                  {/*      <div */}
+                  {/*        className="full-width" */}
+                  {/*        key={element.id} */}
+                  {/*        role="presentation" */}
+                  {/*        onClick={() => handleModel(true, 'edit', element)} */}
+                  {/*      > */}
+                  {/*        <img className="not-hover-show" src="images/order-icon.svg" alt="product" /> */}
+                  {/*        <img className="hover-show" src="images/order-icon.svg" alt="product" /> */}
+                  {/*        <div className="earning-text full-width">{element.url}</div> */}
+                  {/*        <div className="earning-price full-width">{element.name}</div> */}
+                  {/*      </div> */}
+                  {/*    </ScrollAnimation> */}
+                  {/*  ))} */}
                 </div>
               </div>
             </div>

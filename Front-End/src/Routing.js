@@ -21,11 +21,11 @@ const Routing = () => {
       path: '/login',
       component: () => <LoginPage />,
     },
-      {
-          exact: true,
-          path: '/signup',
-          component: () => <RegisterPage />
-      }
+    {
+      exact: true,
+      path: '/signup',
+      component: () => <RegisterPage />,
+    },
   ];
 
   function PrivateRoute({ children, ...rest }) {

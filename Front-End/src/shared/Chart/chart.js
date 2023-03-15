@@ -2,6 +2,7 @@ import ReactApexChart from 'react-apexcharts';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
+// eslint-disable-next-line react/prop-types
 const Charts = ({ xaxis, yaxis, type }) => {
   const [options, setOptions] = useState({});
   const [series, setSeries] = useState([]);
