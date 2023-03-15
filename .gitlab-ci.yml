@@ -39,3 +39,17 @@ smell-backend-job:
     artifacts:
       paths:
         - back_end_smells/
+
+smell-frontend-job:
+  stage: smells
+  image: node:18.13.0
+  script:
+    - cd Front-End
+    - npx yarn
+    - npx yarn run lint
+  rules:
+    - changes:
+        paths:
+          - Front-End/*
+  tags:
+      - ugrad
