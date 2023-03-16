@@ -1,16 +1,16 @@
-package com.groupten.datawiz.model;
+package com.groupten.datawiz.protocol;
 
-public class UserDbInfo {
-    private int userId;
+public class DbInfoRequest {
+    private int connectionId;
     private String schema;
     private String table;
 
-    public int getUserId() {
-        return userId;
+    public int getConnectionId() {
+        return connectionId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setConnectionId(int connectionId) {
+        this.connectionId = connectionId;
     }
 
 

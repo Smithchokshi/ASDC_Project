@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/graph/bar")
+@RequestMapping("/graph")
 public class GraphController extends Handler {
 
     @Autowired
@@ -20,6 +20,4 @@ public class GraphController extends Handler {
         Response response = new Response(graphService.getGraphValues(graphRequest),HttpStatus.OK.value(), HttpStatus.OK.name());
         return ResponseEntity.ok(response);
     }
-
-
 }

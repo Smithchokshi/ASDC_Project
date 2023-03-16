@@ -2,7 +2,7 @@ package com.groupten.datawiz.service;
 
 import com.groupten.datawiz.config.DbConfig;
 import com.groupten.datawiz.model.DbConn;
-import com.groupten.datawiz.model.Graph;
+import com.groupten.datawiz.repository.GraphRow;
 import com.groupten.datawiz.protocol.GraphRequest;
 import com.groupten.datawiz.protocol.GraphResponse;
 import com.groupten.datawiz.repository.GraphRepository;
@@ -54,8 +54,8 @@ public class GraphServiceImpl implements GraphService {
         );
 
         var valuesFilter = values.stream().filter(s -> s.getX() != null ).filter(s -> s.getY() != null ).toList();
-        List<Object> xList = valuesFilter.stream().map(Graph::getX).toList();
-        List<Object> yList = valuesFilter.stream().map(Graph::getY).toList();
+        List<Object> xList = valuesFilter.stream().map(GraphRow::getX).toList();
+        List<Object> yList = valuesFilter.stream().map(GraphRow::getY).toList();
         return new GraphResponse(xList, yList);
     }
 
@@ -86,8 +86,8 @@ public class GraphServiceImpl implements GraphService {
         );
 
         var valuesFilter = values.stream().filter(s -> s.getX() != null ).filter(s -> s.getY() != null ).toList();
-        List<Object> xList = valuesFilter.stream().map(Graph::getX).toList();
-        List<Object> yList = valuesFilter.stream().map(Graph::getY).toList();
+        List<Object> xList = valuesFilter.stream().map(GraphRow::getX).toList();
+        List<Object> yList = valuesFilter.stream().map(GraphRow::getY).toList();
         return new GraphResponse(xList, yList);
     }
 

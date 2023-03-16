@@ -4,11 +4,9 @@ public class GraphRequest {
 
     private String schemaName;
     private String tableNameOne;
-
     private String tableNameTwo;
     private String xColumn;
     private String yColumn;
-
     private String calculation;
     private int connectionId;
 

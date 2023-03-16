@@ -1,6 +1,5 @@
 package com.groupten.datawiz.repository;
 
-import com.groupten.datawiz.model.Graph;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
@@ -12,9 +11,9 @@ public interface GraphRepository {
 
     Boolean testConnection(JdbcTemplate jdbcTemplate);
 
-    List<Graph> getGraphValuesSameTable(String schemaName,String tableName, String xColumnName, String yColumnName, String calType, JdbcTemplate jdbcTemplate);
+    List<GraphRow> getGraphValuesSameTable(String schemaName, String tableName, String xColumnName, String yColumnName, String calType, JdbcTemplate jdbcTemplate);
 
-    List<Graph> getGraphValuesRelatedTables(
+    List<GraphRow> getGraphValuesRelatedTables(
             String schemaName,
             String tableNameOne,
             String tableNameTwo,
