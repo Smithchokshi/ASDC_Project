@@ -7159,3 +7159,8 @@ color:var(--button-color);
   background: transparent;
   box-shadow: 0px -2px 20px 14px #cccccc !important;
 }
+
+.link:hover {
+  cursor: pointer;
+  color: #1890ff;
+}

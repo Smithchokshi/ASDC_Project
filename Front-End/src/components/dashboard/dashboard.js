@@ -62,7 +62,7 @@ const Dashboard = () => {
         <Loader />
       ) : (
         <React.Fragment>
-          <TopHeader title="Dashboard" />
+          <TopHeader title="Dashboard" link={false} name={undefined} />
           <Content>
             <div>
               <div className="site-layout-background">

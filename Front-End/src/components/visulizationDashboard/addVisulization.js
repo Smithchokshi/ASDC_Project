@@ -19,6 +19,7 @@ const AddVisulization = () => {
 
   const fields = {
     userId: userId.toString(),
+    link: true,
   };
   const [errors, setErrors] = useState({});
   const [xAxis, setXAxis] = useState([]);
@@ -69,6 +70,8 @@ const AddVisulization = () => {
   const [selectedYTable, setSelectedYTable] = useState(null);
   const [xColumn, setXColumn] = useState(null);
   const [yColumn, setYColumn] = useState(null);
+  const [allColumnXOptions, setAllColumnXOptions] = useState([]);
+  const [allColumnYOptions, setAllColumnYOptions] = useState([]);
   const [name, setName] = useState(null);
   const payloadObject = {
     connectionId: window.location.pathname.split('/')[3],
@@ -91,8 +94,13 @@ const AddVisulization = () => {
 
     if (keyword === 'table') setTableOptions(optionData);
     if (keyword === 'column') {
-      if (column === 'x') setColumnXOptions(optionData);
-      else setColumnYOptions(optionData);
+      if (column === 'x') {
+        setAllColumnXOptions(optionData);
+        setColumnXOptions(optionData.filter(e => e.value !== yColumn));
+      } else {
+        setAllColumnYOptions(optionData);
+        setColumnYOptions(optionData.filter(e => e.value !== xColumn));
+      }
     }
   };
 
@@ -242,7 +250,7 @@ const AddVisulization = () => {
   return (
     <Layout>
       <React.Fragment>
-        <TopHeader title="Add Dashboard" />
+        <TopHeader title="Add Dashboard" link={fields?.link} name={location.state.name} />
         <Content>
           <div>
             <div className="site-layout-background">
@@ -387,6 +395,7 @@ const AddVisulization = () => {
                         setXAxis([]);
                         setYAxis([]);
                         setXColumn(newValue);
+                        setColumnYOptions(allColumnYOptions.filter(e => e.value !== newValue));
                       }}
                       options={columnXOptions}
                       classname={errors?.xColumn ? 'invalid' : ''}
@@ -441,6 +450,7 @@ const AddVisulization = () => {
                         setXAxis([]);
                         setYAxis([]);
                         setYColumn(newValue);
+                        setColumnXOptions(allColumnXOptions.filter(e => e.value !== newValue));
                       }}
                       options={columnYOptions}
                       classname={errors?.yColumn ? 'invalid' : ''}

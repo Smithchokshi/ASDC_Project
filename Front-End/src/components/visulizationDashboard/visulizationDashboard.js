@@ -54,7 +54,7 @@ const VisulizationDashboard = () => {
         <Loader />
       ) : (
         <React.Fragment>
-          <TopHeader title={`${title} Dashboard`} />
+          <TopHeader title={`${title} Dashboard`} link={false} name={undefined} />
           <Content>
             <div>
               <div className="site-layout-background">
@@ -75,7 +75,7 @@ const VisulizationDashboard = () => {
                         }
                       >
                         {/* <img src={`${S3BucketURL}commissary/add-icon.svg`} alt="Add Category" />{' '} */}
-                        Add DB Config
+                        Add Graph
                       </Button>
                     </div>
                   </div>
@@ -91,7 +91,19 @@ const VisulizationDashboard = () => {
                       delay={index * 300}
                       style={{ width: 'auto', paddingBottom: '50px' }}
                     >
-                      <div className="full-width" key={element.visualizationId}>
+                      <div
+                        className="full-width"
+                        key={element.visualizationId}
+                        role="presentation"
+                        onClick={() =>
+                          history.push(
+                            `/visualization/edit/${payloadObject?.connectionId}/${element.visualizationId}`,
+                            {
+                              name: title,
+                            }
+                          )
+                        }
+                      >
                         <div className="earning-text full-width">{element.name}</div>
                         <Chart xaxis={element.x} yaxis={element.y} type={element.graphType} />
                       </div>

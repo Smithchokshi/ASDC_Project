@@ -173,6 +173,19 @@ class ApiUtils {
       method: 'GET',
       url: `/visualization/get/${id}/${pageNumber}`,
     });
+
+  getGraphDataByID = id =>
+    this.axios({
+      method: 'GET',
+      url: `/visualization/values/${id}`,
+    });
+
+  editGraph = data =>
+    this.axios({
+      method: 'POST',
+      url: `/visualization/edit`,
+      data,
+    });
 }
 
 export default ApiUtils;
