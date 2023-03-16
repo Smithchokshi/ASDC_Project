@@ -35,7 +35,7 @@ const TopHeader = ({ title }) => {
           <a role="presentation" onClick={e => e.preventDefault()}>
             <Space>
               <div className="title">Smith</div>
-              <DownOutlined />
+              <DownOutlined style={{ color: '#2b2836' }} />
             </Space>
           </a>
         </Dropdown>
