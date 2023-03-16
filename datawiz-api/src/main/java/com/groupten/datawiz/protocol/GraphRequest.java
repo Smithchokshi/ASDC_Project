@@ -10,6 +10,16 @@ public class GraphRequest {
     private String calculation;
     private int connectionId;
 
+    public GraphRequest(String schemaName, String tableNameOne, String tableNameTwo, String xColumn, String yColumn, String calculation, int connectionId) {
+        this.schemaName = schemaName;
+        this.tableNameOne = tableNameOne;
+        this.tableNameTwo = tableNameTwo;
+        this.xColumn = xColumn;
+        this.yColumn = yColumn;
+        this.calculation = calculation;
+        this.connectionId = connectionId;
+    }
+
     public String getSchemaName() {
         return schemaName;
     }

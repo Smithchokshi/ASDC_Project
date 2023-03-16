@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -66,9 +68,39 @@ public class VisualizationServiceImpl implements VisualizationService{
     }
 
     @Override
-    public List<Visualization> getVisualizationsByConnectionId(int connectionId, int page) {
+    public List<GraphResponse> getVisualizationsValuesByConnectionId(int connectionId, int page) {
         Pageable pageable =  PageRequest.of(page, 6, Sort.by("updatedAt"));
-        return visualizationRepository.findByConnectionIdAndDeletedAt(connectionId,null,pageable);
+        var visuals = visualizationRepository.findByConnectionIdAndDeletedAt(connectionId,null,pageable);
+
+        List<GraphResponse> responses = new LinkedList<>();
+
+        visuals.forEach(visualization -> {
+            var graphServiceResponse =graphService.getGraphValues(
+                 new GraphRequest(
+                        visualization.getSchemaName(),
+                        visualization.getxTable(),
+                        visualization.getyTable(),
+                        visualization.getxAttribute(),
+                        visualization.getyAttribute(),
+                        visualization.getCalculation(),
+                        visualization.getConnectionId()
+                ));
+
+            var graphResponse = new GraphResponse(
+                    visualization.getVisualizationId(),
+                    visualization.getName(),
+                    visualization.getxTable(),
+                    visualization.getyTable(),
+                    visualization.getxAttribute(),
+                    visualization.getyAttribute(),
+                    visualization.getChartType(),
+                    graphServiceResponse.getX(),
+                    graphServiceResponse.getY()
+            );
+
+            responses.add(graphResponse);
+        });
+        return responses;
     }
 
     @Override
@@ -81,17 +113,29 @@ public class VisualizationServiceImpl implements VisualizationService{
     public GraphResponse getData(int id){
 
         Visualization visualization=getVisualizationById(id);
-        GraphRequest graphRequest=new GraphRequest();
-        graphRequest.setConnectionId(visualization.getConnectionId());
-        graphRequest.setSchemaName(visualization.getSchemaName());
-        graphRequest.setTableNameOne(visualization.getxTable());
-        graphRequest.setTableNameTwo(visualization.getyTable());
-        graphRequest.setxColumn(visualization.getxAttribute());
-        graphRequest.setyColumn(visualization.getyAttribute());
-        graphRequest.setCalculation(visualization.getCalculation());
 
-        GraphResponse graphServiceResponse = graphService.getGraphValues(graphRequest);
+        GraphResponse graphServiceResponse = graphService.getGraphValues(
+                new GraphRequest(
+                        visualization.getSchemaName(),
+                        visualization.getxTable(),
+                        visualization.getyTable(),
+                        visualization.getxAttribute(),
+                        visualization.getyAttribute(),
+                        visualization.getCalculation(),
+                        visualization.getConnectionId()
+                )
+        );
 
-        return new GraphResponse(visualization.getChartType(), graphServiceResponse.getX(), graphServiceResponse.getY());
+        return new GraphResponse(
+                visualization.getName(),
+                visualization.getSchemaName(),
+                visualization.getxTable(),
+                visualization.getyTable(),
+                visualization.getxAttribute(),
+                visualization.getyAttribute(),
+                visualization.getCalculation(),
+                visualization.getChartType(),
+                graphServiceResponse.getX(),
+                graphServiceResponse.getY());
     }
 }

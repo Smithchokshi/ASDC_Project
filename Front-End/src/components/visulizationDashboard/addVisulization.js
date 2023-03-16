@@ -198,6 +198,7 @@ const AddVisulization = () => {
                     <Select
                       showSearch
                       style={{
+                        backgroundColor: '#fff',
                         width: 200,
                       }}
                       placeholder="Search to Select"
@@ -212,7 +213,7 @@ const AddVisulization = () => {
                         getAllTables(newValue);
                       }}
                       options={allSchemaOptions}
-                      classname={errors?.selectedDatabase ? 'invalid' : ''}
+                      classname={errors?.name ? 'invalid' : ''}
                     />
                     {validator.message(`Scheme`, selectedDatabase, `required`)}
                   </div>
