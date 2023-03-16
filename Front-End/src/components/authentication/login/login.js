@@ -147,6 +147,7 @@ const Login = () => {
                       value={fields?.password}
                       onChange={e => handleChange('password', e)}
                       className={errors?.password ? 'invalid' : ''}
+                      autocomplete="new-password"
                     />
                     {validator.message('Password', fields?.password, 'required')}
                   </div>

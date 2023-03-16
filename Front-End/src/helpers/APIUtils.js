@@ -20,7 +20,11 @@ class ApiUtils {
           if (appendAuth) {
             const { auth } = store.getState();
             if (auth.isAuthenticated) myConfig.headers.Authorization = `Bearer ${auth.token}`;
-            else myConfig.headers.Authorization = `Basic ${base64_encode('sm714486@dal.ca:12345')}`;
+            else if (myConfig.username) {
+              myConfig.headers.Authorization = `Basic ${base64_encode(
+                `${myConfig.username}:${myConfig.password}`
+              )}`;
+            }
           }
           console.debug('Request', config);
           return myConfig;

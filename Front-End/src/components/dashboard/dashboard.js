@@ -20,6 +20,7 @@ const Dashboard = () => {
   const [addModel, setAddModel] = useState(false);
   const [editModel, setEditModel] = useState(false);
   const [editData, setEditData] = useState({});
+  const [type, setType] = useState(null);
   const dashboardData = useSelector(state => state.dashboard.dashboardData);
 
   const handleLoader = bool => {
@@ -28,9 +29,14 @@ const Dashboard = () => {
 
   const handleModel = (bool, method, data) => {
     if (method === 'add') setAddModel(bool);
-    if (method === 'edit') {
+    else if (method === 'redirect') {
+      history.push(`/visualization/${data.id}`, {
+        name: data.name,
+      });
+    } else {
       setEditModel(bool);
       setEditData(data);
+      setType(method);
     }
   };
 
@@ -91,11 +97,7 @@ const Dashboard = () => {
                           className="full-width"
                           key={element.id}
                           role="presentation"
-                          onClick={() =>
-                            history.push(`/visualization/${element.id}`, {
-                              name: element.name,
-                            })
-                          }
+                          onClick={() => handleModel(true, 'redirect', element)}
                         >
                           <div style={{ display: 'flex' }}>
                             <img
@@ -104,22 +106,21 @@ const Dashboard = () => {
                               alt="product"
                             />
                             <img className="hover-show" src="images/order-icon.svg" alt="product" />
-
-                            <span className="full-width icon-class">
-                              <Tooltip title="Delete">
-                                <DeleteOutlined />
-                              </Tooltip>
-                              <Tooltip title="View">
-                                <EyeOutlined />
-                              </Tooltip>
-                              <Tooltip title="Edit">
-                                <EditOutlined />
-                              </Tooltip>
-                            </span>
                           </div>
                           <div className="earning-text full-width">{element.url}</div>
                           <div className="earning-price full-width">{element.name}</div>
                         </div>
+                        <span className="full-width icon-class">
+                          <Tooltip title="Delete">
+                            <DeleteOutlined />
+                          </Tooltip>
+                          <Tooltip title="View" onClick={() => handleModel(true, 'view', element)}>
+                            <EyeOutlined />
+                          </Tooltip>
+                          <Tooltip title="Edit" onClick={() => handleModel(true, 'edit', element)}>
+                            <EditOutlined />
+                          </Tooltip>
+                        </span>
                       </ScrollAnimation>
                     ))}
                 </div>
@@ -132,6 +133,7 @@ const Dashboard = () => {
                     data={editData}
                     onCancel={handleModel}
                     getData={getData}
+                    type={type}
                   />
                 )}
               </div>
