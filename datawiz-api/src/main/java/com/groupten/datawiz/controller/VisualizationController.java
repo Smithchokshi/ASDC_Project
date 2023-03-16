@@ -30,7 +30,7 @@ public class VisualizationController extends Handler{
 
     @GetMapping("/get/{id}/{page}")
     public ResponseEntity<Response> getVisualization(@PathVariable("id") int connectionID, @PathVariable("page") int page){
-        Response response = new Response(visualizationService.getVisualizationsByConnectionId(connectionID, page), HttpStatus.OK.value(), HttpStatus.OK.name() );
+        Response response = new Response(visualizationService.getVisualizationsValuesByConnectionId(connectionID, page), HttpStatus.OK.value(), HttpStatus.OK.name() );
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -48,7 +48,7 @@ public class VisualizationController extends Handler{
 
 
     @GetMapping("/values/{id}")
-    public ResponseEntity<Response> me(@PathVariable("id") int id) {
+    public ResponseEntity<Response> getValuesById(@PathVariable("id") int id) {
         Response response = new Response(visualizationService.getData(id), HttpStatus.OK.value(), HttpStatus.OK.name());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

@@ -18,6 +18,6 @@ public class GraphController extends Handler {
     @PostMapping("/value")
     public ResponseEntity<Response> gatValues(@RequestBody GraphRequest graphRequest) {
         Response response = new Response(graphService.getGraphValues(graphRequest),HttpStatus.OK.value(), HttpStatus.OK.name());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

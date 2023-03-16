@@ -27,7 +27,7 @@ public class GraphServiceImpl implements GraphService {
     @Override
     public GraphResponse getGraphValues(GraphRequest graphRequest) {
 
-        GraphResponse result;
+        GraphResponse result ;
         DbConn dbConn= connectRepository.findDbConnById(graphRequest.getConnectionId());
         var dataSource =  dbConfig.DbConnection(dbConn);
         var jdbcTemplate = new JdbcTemplate(dataSource);
@@ -67,7 +67,7 @@ public class GraphServiceImpl implements GraphService {
                 .getGraphValues(graphRequest.getSchemaName(), graphRequest.getTableNameTwo(),graphRequest.getyColumn(), jdbcTemplate)
                 .stream().filter(Objects::nonNull).toList();
 
-        return new GraphResponse(xValues,yValues);
+        return new GraphResponse(xValues, yValues);
     }
 
     private GraphResponse getFromTwoTablesRelation(GraphRequest graphRequest,String table, String refTable, JdbcTemplate jdbcTemplate) {
