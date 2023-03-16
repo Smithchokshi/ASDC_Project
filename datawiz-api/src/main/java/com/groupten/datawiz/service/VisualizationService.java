@@ -13,7 +13,7 @@ public interface VisualizationService {
 
     Visualization getVisualizationById(int id);
 
-    List<Visualization> getVisualizationsByConnectionId(int connectionId, int page);
+    List<GraphResponse> getVisualizationsValuesByConnectionId(int connectionId, int page);
 
     String deleteVisualization(int visualId);
     GraphResponse getData(int id);
