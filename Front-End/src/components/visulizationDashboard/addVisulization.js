@@ -49,8 +49,8 @@ const AddVisulization = () => {
   const [yColumn, setYColumn] = useState(null);
   const [name, setName] = useState(null);
   const payloadObject = {
-    userId: window.location.pathname.split('/')[3],
-    database: null,
+    connectionId: window.location.pathname.split('/')[3],
+    schema: null,
     table: null,
   };
 
@@ -117,7 +117,7 @@ const AddVisulization = () => {
     try {
       const data = payloadObject;
 
-      data.database = value;
+      data.schema = value;
 
       const res = await api().getTables(data);
 
@@ -136,7 +136,7 @@ const AddVisulization = () => {
     try {
       const data = payloadObject;
 
-      data.database = selectedDatabase;
+      data.schema = selectedDatabase;
       data.table = value;
 
       const res = await api().getColumns(data);

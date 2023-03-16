@@ -136,21 +136,21 @@ class ApiUtils {
   getDatabases = data =>
     this.axios({
       method: 'POST',
-      url: '/DbInfo/getDatabases',
+      url: '/database/schemas',
       data,
     });
 
   getTables = data =>
     this.axios({
       method: 'POST',
-      url: '/DbInfo/getTables',
+      url: '/database/schema/tables',
       data,
     });
 
   getColumns = data =>
     this.axios({
       method: 'POST',
-      url: '/DbInfo/getColumns',
+      url: '/database/schema/table/columns',
       data,
     });
 
