@@ -1,30 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { Input, Button, Select, Layout } from 'antd';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import useSimpleReactValidator from '../../shared/hooks/useSimpleReactValidator';
 import { FormMain } from '../authentication/authentication-style';
 import ApiUtils from '../../helpers/APIUtils';
 import TopHeader from '../../shared/top-header/top-header';
+import Chart from '../../shared/Chart/chart';
 
 const api = msg => new ApiUtils(msg);
 
 const { Content } = Layout;
 
 const AddVisulization = () => {
-  useHistory();
+  const history = useHistory();
+  const location = useLocation();
   const { userId } = useSelector(state => state.auth.user);
 
   const fields = {
     userId: userId.toString(),
   };
   const [errors, setErrors] = useState({});
+  const [xAxis, setXAxis] = useState([]);
+  const [yAxis, setYAxis] = useState([]);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [allSchemaOptions, setAllSchemaOptions] = useState([]);
   const [tableOptions, setTableOptions] = useState([]);
   const [columnXOptions, setColumnXOptions] = useState([]);
   const [columnYOptions, setColumnYOptions] = useState([]);
-  const typeOption = [
+  const graphTypeOption = [
     {
       id: 1,
       label: 'Bar',
@@ -41,7 +45,25 @@ const AddVisulization = () => {
       value: 'line',
     },
   ];
-  const [selectedType, setSelectedType] = useState(null);
+  const dataTypeOptions = [
+    {
+      id: 1,
+      label: 'Count',
+      value: 'COUNT',
+    },
+    {
+      id: 2,
+      label: 'Average',
+      value: 'AVG',
+    },
+    {
+      id: 3,
+      label: 'Sum',
+      value: 'SUM',
+    },
+  ];
+  const [selectedGraphType, setSelectedGraphType] = useState(null);
+  const [selectedDataType, setSelectedDataType] = useState(null);
   const [selectedDatabase, setSelectedDatabase] = useState(null);
   const [selectedXTable, setSelectedXTable] = useState(null);
   const [selectedYTable, setSelectedYTable] = useState(null);
@@ -74,33 +96,63 @@ const AddVisulization = () => {
     }
   };
 
-  const submit = async e => {
+  const handleCreateGraph = async data => {
+    try {
+      const res = await api(true).createGraph(data);
+
+      console.log(res?.data?.data);
+
+      history.push(`/visualization/${payloadObject.connectionId}`, {
+        name: location.state.name,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handlePreviewGraph = async data => {
+    try {
+      const res = await api(true).previewGraph(data);
+
+      console.log(res?.data?.data);
+      setXAxis(res?.data?.data?.x);
+      setYAxis(res?.data?.data?.y);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const submit = async (e, type) => {
     e.preventDefault();
 
     if (validator.allValid()) {
       setIsSubmitLoading(true);
 
       try {
-        const data = {
-          connectionId: parseInt(payloadObject.userId, 10),
-          userId: parseInt(fields.userId, 10),
-          name,
-          chartType: selectedType,
-          xTable: selectedXTable,
-          xAttribute: xColumn,
-          yTable: selectedYTable,
-          yAttribute: yColumn,
-        };
+        const data = {};
 
-        const res = await api(true).createGraph(data);
+        data.connectionId = parseInt(payloadObject.connectionId, 10);
+        if (type === 'create') {
+          data.userId = parseInt(fields.userId, 10);
+          data.name = name;
+          data.chartType = selectedGraphType;
+          data.schemaName = selectedDatabase;
+          data.xTable = selectedXTable;
+          data.xAttribute = xColumn;
+          data.yTable = selectedYTable;
+          data.yAttribute = yColumn;
+        } else {
+          data.schemaName = selectedDatabase;
+          data.tableNameOne = selectedXTable;
+          data.tableNameTwo = selectedYTable;
+          data.xColumn = xColumn;
+          data.yColumn = yColumn;
+        }
+        data.calculation = selectedDataType;
 
-        console.log(res.data.data);
-
-        // setGraphData(res.data.data);
-
-        // getData();
-        //
-        // onCancel(false, 'add', null);
+        if (type === 'create') await handleCreateGraph(data);
+        else await handlePreviewGraph(data);
+        setIsSubmitLoading(false);
       } catch {
         setIsSubmitLoading(false);
       }
@@ -113,6 +165,12 @@ const AddVisulization = () => {
 
   const getAllTables = async value => {
     setSelectedDatabase(value);
+    setSelectedXTable(null);
+    setSelectedYTable(null);
+    setXAxis([]);
+    setYAxis([]);
+    setXColumn(null);
+    setYColumn(null);
 
     try {
       const data = payloadObject;
@@ -130,8 +188,17 @@ const AddVisulization = () => {
   };
 
   const getAllColumns = async (value, column) => {
-    if (column === 'x') setSelectedXTable(value);
-    else setSelectedYTable(value);
+    if (column === 'x') {
+      setSelectedXTable(value);
+      setXColumn(null);
+      setXAxis([]);
+      setYAxis([]);
+    } else {
+      setSelectedYTable(value);
+      setYColumn(null);
+      setXAxis([]);
+      setYAxis([]);
+    }
 
     try {
       const data = payloadObject;
@@ -201,6 +268,7 @@ const AddVisulization = () => {
                         backgroundColor: '#fff',
                         width: 200,
                       }}
+                      value={selectedDatabase}
                       placeholder="Search to Select"
                       optionFilterProp="children"
                       filterOption={(input, option) => (option?.label ?? '').includes(input)}
@@ -219,12 +287,13 @@ const AddVisulization = () => {
                   </div>
 
                   <div className="full-width form-field">
-                    <div className="label">Select Type</div>
+                    <div className="label">Select Graph Type</div>
                     <Select
                       style={{
                         width: 200,
                       }}
-                      placeholder="Select Type"
+                      value={selectedGraphType}
+                      placeholder="Select Graph Type"
                       optionFilterProp="children"
                       filterOption={(input, option) => (option?.label ?? '').includes(input)}
                       filterSort={(optionA, optionB) =>
@@ -233,16 +302,44 @@ const AddVisulization = () => {
                           .localeCompare((optionB?.label ?? '').toLowerCase())
                       }
                       onChange={newValue => {
-                        setSelectedType(newValue);
+                        setSelectedGraphType(newValue);
+                        setXAxis([]);
+                        setYAxis([]);
                       }}
-                      options={typeOption}
-                      classname={errors?.selectedType ? 'invalid' : ''}
+                      options={graphTypeOption}
+                      classname={errors?.selectedGraphType ? 'invalid' : ''}
                     />
-                    {validator.message(`Type`, selectedType, `required`)}
+                    {validator.message(`Type`, selectedGraphType, `required`)}
+                  </div>
+
+                  <div className="full-width form-field">
+                    <div className="label">Select Data Type</div>
+                    <Select
+                      style={{
+                        width: 200,
+                      }}
+                      value={selectedDataType}
+                      placeholder="Select Data Type"
+                      optionFilterProp="children"
+                      filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                      filterSort={(optionA, optionB) =>
+                        (optionA?.label ?? '')
+                          .toLowerCase()
+                          .localeCompare((optionB?.label ?? '').toLowerCase())
+                      }
+                      onChange={newValue => {
+                        setSelectedDataType(newValue);
+                        setXAxis([]);
+                        setYAxis([]);
+                      }}
+                      options={dataTypeOptions}
+                      classname={errors?.selectedDataType ? 'invalid' : ''}
+                    />
+                    {validator.message(`Type`, selectedDataType, `required`)}
                   </div>
                 </FormMain>
 
-                <FormMain onSubmit={submit} className="global-form full-width add-graph-form">
+                <FormMain className="global-form full-width add-graph-form">
                   <div className="full-width form-field">
                     <div className="label">Select X Table</div>
                     <Select
@@ -250,6 +347,7 @@ const AddVisulization = () => {
                       style={{
                         width: 200,
                       }}
+                      value={selectedXTable}
                       disabled={selectedDatabase == null}
                       placeholder="Search to Select"
                       optionFilterProp="children"
@@ -275,6 +373,7 @@ const AddVisulization = () => {
                       style={{
                         width: 200,
                       }}
+                      value={xColumn}
                       disabled={selectedXTable == null}
                       placeholder="Search to Select"
                       optionFilterProp="children"
@@ -285,6 +384,8 @@ const AddVisulization = () => {
                           .localeCompare((optionB?.label ?? '').toLowerCase())
                       }
                       onChange={newValue => {
+                        setXAxis([]);
+                        setYAxis([]);
                         setXColumn(newValue);
                       }}
                       options={columnXOptions}
@@ -300,6 +401,7 @@ const AddVisulization = () => {
                       style={{
                         width: 200,
                       }}
+                      value={selectedYTable}
                       disabled={selectedDatabase == null}
                       placeholder="Search to Select"
                       optionFilterProp="children"
@@ -325,6 +427,7 @@ const AddVisulization = () => {
                       style={{
                         width: 200,
                       }}
+                      value={yColumn}
                       disabled={selectedYTable == null}
                       placeholder="Search to Select"
                       optionFilterProp="children"
@@ -335,6 +438,8 @@ const AddVisulization = () => {
                           .localeCompare((optionB?.label ?? '').toLowerCase())
                       }
                       onChange={newValue => {
+                        setXAxis([]);
+                        setYAxis([]);
                         setYColumn(newValue);
                       }}
                       options={columnYOptions}
@@ -342,18 +447,41 @@ const AddVisulization = () => {
                     />
                     {validator.message(`YColumn`, yColumn, `required`)}
                   </div>
+                </FormMain>
+
+                <FormMain className="global-form full-width add-graph-form">
+                  <div className="full-width form-field flex-center mb-0">
+                    <Button
+                      type="primary"
+                      className="submit-btn"
+                      onClick={e => submit(e, 'preview')}
+                      loading={isSubmitLoading}
+                    >
+                      <span>Preview Graph</span>
+                    </Button>
+                  </div>
 
                   <div className="full-width form-field flex-center mb-0">
                     <Button
                       type="primary"
-                      htmlType="submit"
                       className="submit-btn"
+                      onClick={e => submit(e, 'create')}
                       loading={isSubmitLoading}
                     >
                       <span>Create Graph</span>
                     </Button>
                   </div>
                 </FormMain>
+              </div>
+            </div>
+
+            <div className="site-layout-background">
+              <div className="top-boxes full-width" style={{ top: '20px' }}>
+                {xAxis.length > 0 && yAxis.length > 0 && (
+                  <span className="chart">
+                    <Chart xaxis={xAxis} yaxis={yAxis} type={selectedGraphType} />
+                  </span>
+                )}
               </div>
             </div>
           </div>

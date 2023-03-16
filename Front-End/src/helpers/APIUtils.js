@@ -160,6 +160,19 @@ class ApiUtils {
       url: '/visualization/save',
       data,
     });
+
+  previewGraph = data =>
+    this.axios({
+      method: 'POST',
+      url: '/graph/value',
+      data,
+    });
+
+  getAllGraphData = (id, pageNumber) =>
+    this.axios({
+      method: 'GET',
+      url: `/visualization/get/${id}/${pageNumber}`,
+    });
 }
 
 export default ApiUtils;
