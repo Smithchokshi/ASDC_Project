@@ -35,6 +35,7 @@ public class VisualizationServiceImpl implements VisualizationService{
                 visualization.getxAttribute(),
                 visualization.getyTable(),
                 visualization.getyAttribute(),
+                visualization.getCalculation(),
                 Timestamp.from(Instant.now())
         );
         return visualizationRepository.save(visualizationSave).getVisualizationId();
@@ -53,6 +54,7 @@ public class VisualizationServiceImpl implements VisualizationService{
                 visualization.getxAttribute(),
                 visualization.getyTable(),
                 visualization.getyAttribute(),
+                visualization.getCalculation(),
                 Timestamp.from(Instant.now())
         );
         return visualizationRepository.save(visualizationUpdate).getVisualizationId();
@@ -86,6 +88,10 @@ public class VisualizationServiceImpl implements VisualizationService{
         graphRequest.setTableNameTwo(visualization.getyTable());
         graphRequest.setxColumn(visualization.getxAttribute());
         graphRequest.setyColumn(visualization.getyAttribute());
-        return graphService.getGraphValues(graphRequest);
+        graphRequest.setCalculation(visualization.getCalculation());
+
+        GraphResponse graphServiceResponse = graphService.getGraphValues(graphRequest);
+
+        return new GraphResponse(visualization.getChartType(), graphServiceResponse.getX(), graphServiceResponse.getY());
     }
 }
