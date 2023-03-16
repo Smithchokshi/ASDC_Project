@@ -1,6 +1,5 @@
 package com.groupten.datawiz.repository;
 
-import com.groupten.datawiz.model.Graph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -29,7 +28,7 @@ public class GraphRepositoryImpl implements GraphRepository {
     }
 
     @Override
-    public List<Graph> getGraphValuesSameTable(String schemaName,String tableName, String xColumnName, String yColumnName,String calType, JdbcTemplate jdbcTemplate) {
+    public List<GraphRow> getGraphValuesSameTable(String schemaName, String tableName, String xColumnName, String yColumnName, String calType, JdbcTemplate jdbcTemplate) {
 
         return jdbcTemplate.query(
                 preparedStatements.getQueryForTwoColumn(
@@ -44,7 +43,7 @@ public class GraphRepositoryImpl implements GraphRepository {
     }
 
     @Override
-    public List<Graph> getGraphValuesRelatedTables(
+    public List<GraphRow> getGraphValuesRelatedTables(
             String schemaName,
             String tableNameOne,
             String tableNameTwo,
