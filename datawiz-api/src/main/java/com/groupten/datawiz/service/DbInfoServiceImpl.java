@@ -54,4 +54,15 @@ public class DbInfoServiceImpl implements  DbInfoService{
         dataSource.close();
         return value;
     }
+    @Override
+    public List<String> getIntegerColumns(DbInfoRequest dbInfo){
+        DbConn conn = connService.getConnById(dbInfo.getConnectionId());
+
+        var dataSource =  dbConfig.DbConnection(conn);
+        var value =  dbInfoRepository.getIntegerColumns(dbInfo,new JdbcTemplate(dataSource));
+        dataSource.close();
+        return value;
+    }
+
+
 }
