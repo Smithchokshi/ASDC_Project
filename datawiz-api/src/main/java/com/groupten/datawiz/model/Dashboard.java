@@ -11,6 +11,9 @@ public class Dashboard {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int dashboardId;
 
+    @Column(name = "dashboard_name")
+    private String dashboardName;
+
     @Column(name = "user_id")
     private int userId;
 
@@ -26,22 +29,15 @@ public class Dashboard {
     @Column(name = "vis4_id")
     private Integer vis4Id;
 
-    @Column(name = "vis5_id")
-    private Integer vis5Id;
-
-    @Column(name = "vis6_id")
-    private Integer vis6Id;
-
     public Dashboard(){}
 
-    public Dashboard(int userId, int vis1, Integer vis2, Integer vis3, Integer vis4, Integer vis5, Integer vis6){
+    public Dashboard(String dashboardName, int userId, int vis1, Integer vis2, Integer vis3, Integer vis4){
+        this.dashboardName = dashboardName;
         this.userId = userId;
         this.vis1Id = vis1;
         this.vis2Id = vis2;
         this.vis3Id = vis3;
         this.vis4Id = vis4;
-        this.vis5Id = vis5;
-        this.vis6Id = vis6;
     }
 
     public int getDashboardId() {
@@ -92,19 +88,11 @@ public class Dashboard {
         this.vis4Id = vis4Id;
     }
 
-    public Integer getVis5Id() {
-        return vis5Id;
+    public String getDashboardName() {
+        return dashboardName;
     }
 
-    public void setVis5Id(Integer vis5Id) {
-        this.vis5Id = vis5Id;
-    }
-
-    public Integer getVis6Id() {
-        return vis6Id;
-    }
-
-    public void setVis6Id(Integer vis6Id) {
-        this.vis6Id = vis6Id;
+    public void setDashboardName(String dashboardName) {
+        this.dashboardName = dashboardName;
     }
 }

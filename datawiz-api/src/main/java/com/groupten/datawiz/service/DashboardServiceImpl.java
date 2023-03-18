@@ -16,13 +16,12 @@ public class DashboardServiceImpl implements DashboardService{
     @Override
     public Dashboard saveDashboard(Dashboard dashboard){
         Dashboard saveDashboard = new Dashboard(
+                dashboard.getDashboardName(),
                 dashboard.getUserId(),
                 dashboard.getVis1Id(),
                 dashboard.getVis2Id(),
                 dashboard.getVis3Id(),
-                dashboard.getVis4Id(),
-                dashboard.getVis5Id(),
-                dashboard.getVis6Id()
+                dashboard.getVis4Id()
         );
         return DR.save(saveDashboard);
     }
