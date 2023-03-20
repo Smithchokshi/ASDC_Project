@@ -1,28 +1,88 @@
 package com.groupten.datawiz.service;
 
 import com.groupten.datawiz.model.Dashboard;
+import com.groupten.datawiz.model.Visualization;
+import com.groupten.datawiz.protocol.DashboardResponse;
+import com.groupten.datawiz.protocol.GraphRequest;
+import com.groupten.datawiz.protocol.GraphResponse;
 import com.groupten.datawiz.repository.DashboardRepository;
+import com.groupten.datawiz.repository.VisualizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 @Transactional
 public class DashboardServiceImpl implements DashboardService{
 
     @Autowired
-    DashboardRepository DR;
+    DashboardRepository dashboardRepository;
+
+    @Autowired
+    VisualizationRepository visualizationRepository;
+
+    @Autowired
+    GraphService graphService;
 
     @Override
-    public Dashboard saveDashboard(Dashboard dashboard){
-        Dashboard saveDashboard = new Dashboard(
-                dashboard.getDashboardName(),
-                dashboard.getUserId(),
-                dashboard.getVis1Id(),
-                dashboard.getVis2Id(),
-                dashboard.getVis3Id(),
-                dashboard.getVis4Id()
-        );
-        return DR.save(saveDashboard);
+    public Dashboard saveDashboard(Dashboard dashboard) {
+        return dashboardRepository.save(dashboard);
     }
+
+    @Override
+    public DashboardResponse getDashboardGraphs(int id) {
+        Dashboard dashboard = dashboardRepository.findById(id).get();
+
+        List<Integer> visuals = new ArrayList<>();
+        if(dashboard.getVisualOneId()!=null){ visuals.add(dashboard.getVisualOneId()); }
+        if(dashboard.getVisualTwoId()!=null){ visuals.add(dashboard.getVisualTwoId()); }
+        if(dashboard.getVisualThreeId()!=null){ visuals.add(dashboard.getVisualThreeId()); }
+        if(dashboard.getVisualFourId()!=null){ visuals.add(dashboard.getVisualFourId()); }
+
+        List<GraphResponse> responses = new LinkedList<>();
+        if(!visuals.isEmpty()){
+            List<Visualization> visualizations = new ArrayList<>();
+            visuals.forEach(v -> visualizations.add(visualizationRepository.findById(v).get()));
+
+            visualizations.forEach(visualization -> {
+                var graphServiceResponse =graphService.getGraphValues(
+                        new GraphRequest(
+                                visualization.getSchemaName(),
+                                visualization.getxTable(),
+                                visualization.getyTable(),
+                                visualization.getxAttribute(),
+                                visualization.getyAttribute(),
+                                visualization.getCalculation(),
+                                visualization.getConnectionId()
+                        ));
+
+                var graphResponse = new GraphResponse(
+                        visualization.getVisualizationId(),
+                        visualization.getName(),
+                        visualization.getxTable(),
+                        visualization.getyTable(),
+                        visualization.getxAttribute(),
+                        visualization.getyAttribute(),
+                        visualization.getChartType(),
+                        graphServiceResponse.getX(),
+                        graphServiceResponse.getY()
+                );
+
+                responses.add(graphResponse);
+            });
+        }
+
+        return new DashboardResponse(dashboard.getDashboardId(),dashboard.getName(), responses);
+    }
+
+    @Override
+    public void deleteDashboard(int id) {
+        dashboardRepository.deleteById(id);
+    }
+
+
 }
