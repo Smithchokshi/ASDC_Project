@@ -31,8 +31,12 @@ public class DbInfoRepositoryImpl implements DbInfoRepository{
 
     @Override
     public List<String> getIntegerColumns(DbInfoRequest dbInfo, JdbcTemplate jdbcTemplate){
-        List<String> intColumnNames=jdbcTemplate.query("select * from "+dbInfo.getSchema()+"."+dbInfo.getTable()+";",new IntegerColumnRowMapper());
-        return Arrays.asList(intColumnNames.get(0).split("#"));
+        String query="select column_Name " +
+                "from INFORMATION_SCHEMA.COLUMNS " +
+                "where TABLE_NAME='"+dbInfo.getTable()+"' AND TABLE_SCHEMA = '"+dbInfo.getSchema()+"' AND (DATA_TYPE = 'int' " +
+                "or DATA_TYPE = 'smallint' or DATA_TYPE = 'decimal' or DATA_TYPE = 'float' " +
+                "or DATA_TYPE = 'double' or DATA_TYPE = 'bigint' or DATA_TYPE = 'int')  ;";
+        return jdbcTemplate.query(query,new DbInfoRowMapper());
     }
 
 
