@@ -17,4 +17,8 @@ public interface VisualizationRepository extends JpaRepository<Visualization, In
     @Modifying
     @Query("update Visualization v set v.deletedAt = :value where v.visualizationId = :id")
     void updateDeletedAtTime(@Param("id") int id, @Param("value") Timestamp value);
+
+    List<Visualization> findByUserId(Integer userId);
+    List<Visualization> findByUserIdAndSchemaName(Integer userId,String schemaName);
+
 }

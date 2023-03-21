@@ -82,11 +82,34 @@ public class DashboardServiceImpl implements DashboardService{
         return new DashboardResponse(dashboard.getDashboardId(),dashboard.getName(), responses);
     }
 
+    @Autowired
+    VisualizationRepository VR;
+
     @Override
     public void deleteDashboard(int id) {
         dashboardRepository.deleteById(id);
     }
+    public List<String> getSchemas(int userId){
+        List<Visualization> visualizations=VR.findByUserId(userId);
+        List<String> schemas=new ArrayList<String>();
+        for(Visualization x:visualizations){
+            if(!schemas.contains(x.getSchemaName())){
+                schemas.add(x.getSchemaName());
+            }
+        }
+        return schemas;
+    }
 
+    public List<Integer> getVisualisationIds(int userId,String schemaName){
+        List<Visualization> visualizations=VR.findByUserIdAndSchemaName(userId,schemaName);
+        List<Integer> visualisationIds=new ArrayList<Integer>();
+        for(Visualization x:visualizations){
+            if(!visualisationIds.contains(x.getVisualizationId())){
+                visualisationIds.add(x.getVisualizationId());
+            }
+        }
+        return visualisationIds;
+    }
     @Override
     public List<Dashboard> getAllDashboards(int id,int pageNumber) {
         Pageable pageable =  PageRequest.of(pageNumber, 4/*, Sort.by("updatedAt")*/);
