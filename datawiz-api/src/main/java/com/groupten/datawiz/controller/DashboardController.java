@@ -27,6 +27,14 @@ public class DashboardController extends Handler{
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 
+    @GetMapping("/get/{id}/{pageNumber}")
+    public ResponseEntity<Response> getAllDashboards(@PathVariable("id") int id,@PathVariable("pageNumber") int pageNumber){
+        Response response = new Response(dashboardService.getAllDashboards(id, pageNumber), HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+    }
+
+
+
     @DeleteMapping("/delete/{id}")
     public  ResponseEntity<Response> deleteDashboard(@PathVariable("id") int id){
         dashboardService.deleteDashboard(id);

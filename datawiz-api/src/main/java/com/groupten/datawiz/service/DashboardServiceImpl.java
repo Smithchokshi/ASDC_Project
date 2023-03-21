@@ -8,6 +8,9 @@ import com.groupten.datawiz.protocol.GraphResponse;
 import com.groupten.datawiz.repository.DashboardRepository;
 import com.groupten.datawiz.repository.VisualizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,6 +85,12 @@ public class DashboardServiceImpl implements DashboardService{
     @Override
     public void deleteDashboard(int id) {
         dashboardRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Dashboard> getAllDashboards(int id,int pageNumber) {
+        Pageable pageable =  PageRequest.of(pageNumber, 4/*, Sort.by("updatedAt")*/);
+        return dashboardRepository.findByUserId(id, pageable).get();
     }
 
 
