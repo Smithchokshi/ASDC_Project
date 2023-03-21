@@ -7,104 +7,75 @@ import jakarta.persistence.*;
 public class Dashboard {
 
     @Id
-    @Column(name = "dashboard_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int dashboardId;
+    private Integer dashboardId;
 
-    @Column(name = "user_id")
-    private int userId;
+    private Integer userId;
 
-    @Column(name = "vis1_id")
-    private int vis1Id;
+    private String name;
 
-    @Column(name = "vis2_id")
-    private Integer vis2Id;
+    private Integer visualOneId;
 
-    @Column(name = "vis3_id")
-    private Integer vis3Id;
+    private Integer visualTwoId;
 
-    @Column(name = "vis4_id")
-    private Integer vis4Id;
+    private Integer visualThreeId;
 
-    @Column(name = "vis5_id")
-    private Integer vis5Id;
+    private Integer visualFourId;
 
-    @Column(name = "vis6_id")
-    private Integer vis6Id;
 
-    public Dashboard(){}
-
-    public Dashboard(int userId, int vis1, Integer vis2, Integer vis3, Integer vis4, Integer vis5, Integer vis6){
-        this.userId = userId;
-        this.vis1Id = vis1;
-        this.vis2Id = vis2;
-        this.vis3Id = vis3;
-        this.vis4Id = vis4;
-        this.vis5Id = vis5;
-        this.vis6Id = vis6;
+    public String getName() {
+        return name;
     }
 
-    public int getDashboardId() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getDashboardId() {
         return dashboardId;
     }
 
-    public void setDashboardId(int dashboardId) {
+    public void setDashboardId(Integer dashboardId) {
         this.dashboardId = dashboardId;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getVis1Id() {
-        return vis1Id;
+    public Integer getVisualOneId() {
+        return visualOneId;
     }
 
-    public void setVis1Id(int vis1Id) {
-        this.vis1Id = vis1Id;
+    public void setVisualOneId(Integer visualOneId) {
+        this.visualOneId = visualOneId;
     }
 
-    public Integer getVis2Id() {
-        return vis2Id;
+    public Integer getVisualTwoId() {
+        return visualTwoId;
     }
 
-    public void setVis2Id(Integer vis2Id) {
-        this.vis2Id = vis2Id;
+    public void setVisualTwoId(Integer visualTwoId) {
+        this.visualTwoId = visualTwoId;
     }
 
-    public Integer getVis3Id() {
-        return vis3Id;
+    public Integer getVisualThreeId() {
+        return visualThreeId;
     }
 
-    public void setVis3Id(Integer vis3Id) {
-        this.vis3Id = vis3Id;
+    public void setVisualThreeId(Integer visualThreeId) {
+        this.visualThreeId = visualThreeId;
     }
 
-    public Integer getVis4Id() {
-        return vis4Id;
+    public Integer getVisualFourId() {
+        return visualFourId;
     }
 
-    public void setVis4Id(Integer vis4Id) {
-        this.vis4Id = vis4Id;
-    }
-
-    public Integer getVis5Id() {
-        return vis5Id;
-    }
-
-    public void setVis5Id(Integer vis5Id) {
-        this.vis5Id = vis5Id;
-    }
-
-    public Integer getVis6Id() {
-        return vis6Id;
-    }
-
-    public void setVis6Id(Integer vis6Id) {
-        this.vis6Id = vis6Id;
+    public void setVisualFourId(Integer visualFourId) {
+        this.visualFourId = visualFourId;
     }
 }
