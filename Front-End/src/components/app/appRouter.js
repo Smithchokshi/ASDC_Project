@@ -8,6 +8,8 @@ const Dashboard = lazy(() => import('../dashboard/dashboard'));
 const VisulizationDashboard = lazy(() => import('../visulizationDashboard/visulizationDashboard'));
 const AddVisulization = lazy(() => import('../visulizationDashboard/addVisulization'));
 const Editvisulization = lazy(() => import('../visulizationDashboard/editVisuilization'));
+const CustomDashboard = lazy(() => import('../customDashboard/customDashboard'));
+const CustomComparision = lazy(() => import('../customComparison/customComparison'));
 const ErrorPage = lazy(() => import('../../shared/404/error-page'));
 
 const Routing = () => {
@@ -41,6 +43,18 @@ const Routing = () => {
       path: '/visualization/edit/:id/:visulizationId',
       component: () => <Editvisulization />,
       title: 'Edit Visualization',
+    },
+    {
+      exact: true,
+      path: '/customDashboard',
+      component: () => <CustomDashboard />,
+      title: 'Custom Dashboard',
+    },
+    {
+      exact: true,
+      path: '/customComparison/:id',
+      component: () => <CustomComparision />,
+      title: 'Custom Comparison',
     },
     {
       exact: true,

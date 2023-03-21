@@ -186,6 +186,37 @@ class ApiUtils {
       url: `/visualization/edit`,
       data,
     });
+
+  deleteGraph = id =>
+    this.axios({
+      method: 'DELETE',
+      url: `/visualization/remove/${id}`,
+    });
+
+  saveCustomDashboard = data =>
+    this.axios({
+      method: 'POST',
+      url: `/dashboard/save`,
+      data,
+    });
+
+  getCustomDashboardByID = id =>
+    this.axios({
+      method: 'GET',
+      url: `/dashboard/graphs/values/${id}`,
+    });
+
+  deleteCustomDashboard = id =>
+    this.axios({
+      method: 'DELETE',
+      url: `/dashboard/delete/${id}`,
+    });
+
+  getAllCustomDashboards = ({ userId, pageNumber }) =>
+    this.axios({
+      method: 'GET',
+      url: `/dashboard/get/${userId}/${pageNumber}`,
+    });
 }
 
 export default ApiUtils;

@@ -37,7 +37,16 @@ const Sidebar = () => {
           <Link to="/dashboard">
             <img className="not-hover-show" src="images/sidebar-dashboard-icon.svg" alt="" />
             <img className="hover-show" src="images/sidebar-dashboard-hover-icon.svg" alt="" />
-            Dashboard
+            Config Dashboard
+            <i className="fa fa-angle-right" aria-hidden="true" />
+          </Link>
+        </Menu.Item>
+
+        <Menu.Item key="/customDashboard">
+          <Link to="/customDashboard">
+            <img className="not-hover-show" src="images/sidebar-dashboard-icon.svg" alt="" />
+            <img className="hover-show" src="images/sidebar-dashboard-hover-icon.svg" alt="" />
+            Custom Dashboard
             <i className="fa fa-angle-right" aria-hidden="true" />
           </Link>
         </Menu.Item>

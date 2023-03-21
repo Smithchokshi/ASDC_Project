@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Layout, Tooltip } from 'antd';
-import { EditOutlined, EyeOutlined } from '@ant-design/icons';
+import { Button, Layout, Pagination, Tooltip } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ScrollAnimation from 'react-animate-on-scroll';
 import Loader from '../../shared/loader/Loader';
 import TopHeader from '../../shared/top-header/top-header';
-import AddDBConfig from './addDBConfig';
-import EditDBConfig from './editDBConfig';
-import { storeDashboardData } from '../../redux/actions/dashboardActions';
+import AddCustomDashboard from './addCustomDashboard';
+import ApiUtils from '../../helpers/APIUtils';
+
+const api = new ApiUtils();
 
 const { Content } = Layout;
 
-const Dashboard = () => {
-  const dispatch = useDispatch();
+const CustomDashboard = () => {
   const history = useHistory();
 
   const [loader, setLoader] = useState(false);
   const [addModel, setAddModel] = useState(false);
-  const [editModel, setEditModel] = useState(false);
-  const [editData, setEditData] = useState({});
-  const [type, setType] = useState(null);
-  const dashboardData = useSelector(state => state.dashboard.dashboardData);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [allData, setAllData] = useState([]);
+  const { userId } = useSelector(state => state.auth.user);
 
   const handleLoader = bool => {
     setLoader(bool);
@@ -30,20 +29,26 @@ const Dashboard = () => {
   const handleModel = (bool, method, data) => {
     if (method === 'add') setAddModel(bool);
     else if (method === 'redirect') {
-      history.push(`/visualization/${data.id}`, {
+      history.push(`/customComparison/${data.dashboardId}`, {
         name: data.name,
       });
-    } else {
-      setEditModel(bool);
-      setEditData(data);
-      setType(method);
     }
   };
 
   const getData = async () => {
     handleLoader(true);
     try {
-      await dispatch(storeDashboardData());
+      const bodyData = {
+        userId,
+        pageNumber,
+      };
+
+      const res = await api.getAllCustomDashboards(bodyData);
+
+      console.log(res);
+
+      setAllData(res?.data?.data);
+
       handleLoader(false);
     } catch (e) {
       handleLoader(false);
@@ -74,9 +79,13 @@ const Dashboard = () => {
                 >
                   <div className="search-box full-width category-page date-calender-section calenderWidth large">
                     <div className="flex">
-                      <Button className="reset-btn" onClick={() => handleModel(true, 'add', null)}>
+                      <Button
+                        className="reset-btn"
+                        style={{ padding: '10px' }}
+                        onClick={() => handleModel(true, 'add', null)}
+                      >
                         {/* <img src={`${S3BucketURL}commissary/add-icon.svg`} alt="Add Category" />{' '} */}
-                        Add DB Config
+                        Add Custom Dashboard
                       </Button>
                     </div>
                   </div>
@@ -84,9 +93,8 @@ const Dashboard = () => {
               </div>
               <div className="site-layout-background">
                 <div className="top-boxes full-width">
-                  {dashboardData &&
-                    dashboardData.length > 0 &&
-                    dashboardData.map((element, index) => (
+                  {allData.length > 0 &&
+                    allData.map((element, index) => (
                       <ScrollAnimation
                         animateOnce
                         className="full-width single-box"
@@ -95,7 +103,7 @@ const Dashboard = () => {
                       >
                         <div
                           className="full-width"
-                          key={element.id}
+                          key={element.dashboardId}
                           role="presentation"
                           onClick={() => handleModel(true, 'redirect', element)}
                         >
@@ -107,31 +115,27 @@ const Dashboard = () => {
                             />
                             <img className="hover-show" src="images/order-icon.svg" alt="product" />
                           </div>
-                          <div className="earning-text full-width">{element.url}</div>
-                          <div className="earning-price full-width">{element.name}</div>
+                          <div className="earning-text full-width">{element.name}</div>
                         </div>
                         <span className="full-width icon-class">
-                          <Tooltip title="View" onClick={() => handleModel(true, 'view', element)}>
-                            <EyeOutlined />
-                          </Tooltip>
-                          <Tooltip title="Edit" onClick={() => handleModel(true, 'edit', element)}>
-                            <EditOutlined />
+                          <Tooltip title="Delete">
+                            <DeleteOutlined />
                           </Tooltip>
                         </span>
                       </ScrollAnimation>
                     ))}
                 </div>
-                {addModel && (
-                  <AddDBConfig visible={addModel} onCancel={handleModel} getData={getData} />
-                )}
-                {editModel && (
-                  <EditDBConfig
-                    visible={editModel}
-                    data={editData}
-                    onCancel={handleModel}
-                    getData={getData}
-                    type={type}
+
+                <div className="custom-pagination-footer pagination-footer">
+                  <Pagination
+                    style={{ marginTop: '15px' }}
+                    defaultPageSize="6"
+                    defaultCurrent={pageNumber}
+                    onChange={e => setPageNumber(e)}
                   />
+                </div>
+                {addModel && (
+                  <AddCustomDashboard visible={addModel} onCancel={handleModel} getData={getData} />
                 )}
               </div>
             </div>
@@ -142,4 +146,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default CustomDashboard;

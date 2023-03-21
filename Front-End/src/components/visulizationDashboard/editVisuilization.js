@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Button, Select, Layout } from 'antd';
+import { Input, Button, Select, Layout, Table } from 'antd';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import useSimpleReactValidator from '../../shared/hooks/useSimpleReactValidator';
@@ -23,6 +23,7 @@ const EditVisulization = () => {
   };
   const [errors, setErrors] = useState({});
   const [xAxis, setXAxis] = useState([]);
+  const [allData, setAllData] = useState([]);
   const [yAxis, setYAxis] = useState([]);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [allSchemaOptions, setAllSchemaOptions] = useState([]);
@@ -135,6 +136,18 @@ const EditVisulization = () => {
     }
   };
 
+  const handleDelete = async data => {
+    try {
+      await api(true).deleteGraph(data);
+
+      history.push(`/visualization/${payloadObject.connectionId}`, {
+        name: location.state.name,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const submit = async (e, type) => {
     e.preventDefault();
 
@@ -165,6 +178,7 @@ const EditVisulization = () => {
         data.calculation = selectedDataType;
 
         if (type === 'create') await handleCreateGraph(data);
+        else if (type === 'delete') await handleDelete(visuializationID);
         else await handlePreviewGraph(data);
         setIsSubmitLoading(false);
       } catch {
@@ -248,6 +262,20 @@ const EditVisulization = () => {
     }
   };
 
+  const handleCustomTableData = (x, y) => {
+    const tempData = [];
+
+    // eslint-disable-next-line array-callback-return
+    x.map((e, index) => {
+      tempData.push({
+        xData: e,
+        yData: y[index],
+      });
+    });
+
+    setAllData(tempData);
+  };
+
   const getGraphData = async () => {
     try {
       const res = await api(true).getGraphDataByID(visuializationID);
@@ -264,10 +292,22 @@ const EditVisulization = () => {
       setSelectedDataType(res?.data?.data?.calculation);
       setXAxis(res?.data?.data?.x);
       setYAxis(res?.data?.data?.y);
+      handleCustomTableData(res?.data?.data?.x, res?.data?.data?.y);
     } catch (e) {
       console.log(e);
     }
   };
+
+  const columns = [
+    {
+      title: 'X Column',
+      dataIndex: ['xData'],
+    },
+    {
+      title: 'Y Column',
+      dataIndex: ['yData'],
+    },
+  ];
 
   useEffect(() => {
     getData();
@@ -508,10 +548,20 @@ const EditVisulization = () => {
                       <span>Create Graph</span>
                     </Button>
                   </div>
+
+                  <div className="full-width form-field flex-center mb-0">
+                    <Button
+                      type="primary"
+                      className="submit-btn"
+                      onClick={e => submit(e, 'delete')}
+                      loading={isSubmitLoading}
+                    >
+                      <span>Delete Graph</span>
+                    </Button>
+                  </div>
                 </FormMain>
               </div>
             </div>
-
             <div className="site-layout-background">
               <div className="top-boxes full-width" style={{ top: '20px' }}>
                 {xAxis.length > 0 && yAxis.length > 0 && (
@@ -519,6 +569,9 @@ const EditVisulization = () => {
                     <Chart xaxis={xAxis} yaxis={yAxis} type={selectedGraphType} />
                   </span>
                 )}
+              </div>
+              <div className="full-width default-table mt-20">
+                <Table columns={columns} dataSource={allData} pagination={false} />
               </div>
             </div>
           </div>
