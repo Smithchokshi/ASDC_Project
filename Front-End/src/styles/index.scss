@@ -1908,6 +1908,7 @@ html body .title-section h2 + p {
 
 .white-bg .ant-pagination-next,
 .white-bg .ant-pagination-prev {
+
   margin: 0 10px !important;
 }
 
@@ -1925,6 +1926,7 @@ html body .title-section h2 + p {
 }
 
 html .white-bg .ant-pagination .ant-pagination-prev + li a {
+
   border-left: 1px solid #027fc5 !important;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
@@ -2858,7 +2860,9 @@ input:-webkit-autofill:active,
   .single-box {
     width: 24%;
     padding: 35px;
-    background: #2b2836;
+    background-color: #fff !important;
+        border: 1px solid  rgba(43, 40, 54,0.2) !important;
+        box-shadow: 0px -2px 20px 2px #cccccc;
     border-radius: 10px;
     margin-right: 20px;
     margin-bottom: 20px;
@@ -2882,8 +2886,8 @@ input:-webkit-autofill:active,
 
     &:hover,
     &.active {
-      background: var(--theme-color);
-      color: #fff;
+      background: var(--theme-color) !important;
+      color: #fff !important;
 
       .hover-show {
         display: inline-block;
@@ -2910,7 +2914,7 @@ input:-webkit-autofill:active,
 
     .earning-price {
       font-weight: 700;
-      color: #fff;
+//       color: var(--site-secondary-color);
       font-size: 20px;
       word-break: break-all;
     }
@@ -3379,6 +3383,8 @@ html body .edit-image .ant-upload {
 //   background: #191720;
   background: var(--site--bgcolor);
   border-bottom: 1px solid var(--translucent-line);
+    background: var(--site-Bgcolor);
+    z-index:900;
 }
 
 .top-boxes.three-boxes .single-box {
@@ -3484,7 +3490,7 @@ html body .edit-image .ant-upload {
 }
 
 .site-modal .ant-modal-body {
-  background: #191720;
+  background: #fff;
   border-radius: 10px;
   padding: 35px;
   float: left;
@@ -6382,6 +6388,8 @@ html .ant-layout {
   }
   .main-pages .ant-layout-sider.ant-layout-sider-collapsed + .ant-layout,
   .main-pages .ant-layout-sider.ant-layout-sider-collapsed + .ant-layout .page-top-section {
+  background: var(--site-Bgcolor);
+  z-index:900;
     padding-left: 60px;
   }
 }
@@ -7114,9 +7122,13 @@ html .pagination-footer {
 .ant-dropdown-open {
   z-index: 99999999999;
 }
-
+.card-symbols{
+  color: inherit;
+}
 .anticon {
-  color: grey;
+}
+.ham-left-sidebar{
+color:var(--button-color);
 }
 
 .title {
@@ -7131,4 +7143,24 @@ html .pagination-footer {
 
 .title {
   color: var(--site-secondary-color);
+}
+
+.chart {
+  background: transparent !important;
+  background-color: #fff !important;
+  border: 1px solid rgba(43, 40, 54, 0.2) !important;
+  box-shadow: 0px -2px 20px 2px #cccccc;
+  border-radius: 5px;
+}
+
+.top-boxes .graph-box:hover{
+  background: #fff !important;
+  color: #000 !important;
+  background: transparent;
+  box-shadow: 0px -2px 20px 14px #cccccc !important;
+}
+
+.link:hover {
+  cursor: pointer;
+  color: #1890ff;
 }

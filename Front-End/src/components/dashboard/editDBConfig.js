@@ -8,10 +8,10 @@ import ApiUtils from '../../helpers/APIUtils';
 
 const api = msg => new ApiUtils(msg);
 
-const EditDBConfig = ({ visible, onCancel, getData, data }) => {
+const EditDBConfig = ({ visible, onCancel, getData, data, type }) => {
   const [fields, setFields] = useState({});
   const [errors, setErrors] = useState({});
-  const [isView, setIsView] = useState(true);
+  const [isView, setIsView] = useState(type === 'view');
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
 
   const [validator, showValidationMessage] = useSimpleReactValidator({}, {});
@@ -238,6 +238,7 @@ EditDBConfig.propTypes = {
   onCancel: PropTypes.func.isRequired,
   getData: PropTypes.func.isRequired,
   data: PropTypes.instanceOf(Object).isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default EditDBConfig;

@@ -20,7 +20,11 @@ class ApiUtils {
           if (appendAuth) {
             const { auth } = store.getState();
             if (auth.isAuthenticated) myConfig.headers.Authorization = `Bearer ${auth.token}`;
-            else myConfig.headers.Authorization = `Basic ${base64_encode('sm714486@dal.ca:12345')}`;
+            else if (myConfig.username) {
+              myConfig.headers.Authorization = `Basic ${base64_encode(
+                `${myConfig.username}:${myConfig.password}`
+              )}`;
+            }
           }
           console.debug('Request', config);
           return myConfig;
@@ -132,21 +136,21 @@ class ApiUtils {
   getDatabases = data =>
     this.axios({
       method: 'POST',
-      url: '/DbInfo/getDatabases',
+      url: '/database/schemas',
       data,
     });
 
   getTables = data =>
     this.axios({
       method: 'POST',
-      url: '/DbInfo/getTables',
+      url: '/database/schema/tables',
       data,
     });
 
   getColumns = data =>
     this.axios({
       method: 'POST',
-      url: '/DbInfo/getColumns',
+      url: '/database/schema/table/columns',
       data,
     });
 
@@ -154,6 +158,32 @@ class ApiUtils {
     this.axios({
       method: 'POST',
       url: '/visualization/save',
+      data,
+    });
+
+  previewGraph = data =>
+    this.axios({
+      method: 'POST',
+      url: '/graph/value',
+      data,
+    });
+
+  getAllGraphData = (id, pageNumber) =>
+    this.axios({
+      method: 'GET',
+      url: `/visualization/get/${id}/${pageNumber}`,
+    });
+
+  getGraphDataByID = id =>
+    this.axios({
+      method: 'GET',
+      url: `/visualization/values/${id}`,
+    });
+
+  editGraph = data =>
+    this.axios({
+      method: 'POST',
+      url: `/visualization/edit`,
       data,
     });
 }

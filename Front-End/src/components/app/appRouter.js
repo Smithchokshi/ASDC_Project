@@ -7,6 +7,7 @@ import Sidebar from '../../shared/sidebar/sidebar';
 const Dashboard = lazy(() => import('../dashboard/dashboard'));
 const VisulizationDashboard = lazy(() => import('../visulizationDashboard/visulizationDashboard'));
 const AddVisulization = lazy(() => import('../visulizationDashboard/addVisulization'));
+const Editvisulization = lazy(() => import('../visulizationDashboard/editVisuilization'));
 const ErrorPage = lazy(() => import('../../shared/404/error-page'));
 
 const Routing = () => {
@@ -34,6 +35,12 @@ const Routing = () => {
       path: '/visualization/add/:id',
       component: () => <AddVisulization />,
       title: 'Add Visualization',
+    },
+    {
+      exact: true,
+      path: '/visualization/edit/:id/:visulizationId',
+      component: () => <Editvisulization />,
+      title: 'Edit Visualization',
     },
     {
       exact: true,

@@ -12,7 +12,7 @@ const api = msg => new ApiUtils(msg);
 
 const { Content } = Layout;
 
-const AddVisulization = () => {
+const EditVisulization = () => {
   const history = useHistory();
   const location = useLocation();
   const { userId } = useSelector(state => state.auth.user);
@@ -29,6 +29,8 @@ const AddVisulization = () => {
   const [tableOptions, setTableOptions] = useState([]);
   const [columnXOptions, setColumnXOptions] = useState([]);
   const [columnYOptions, setColumnYOptions] = useState([]);
+  const [allColumnXOptions, setAllColumnXOptions] = useState([]);
+  const [allColumnYOptions, setAllColumnYOptions] = useState([]);
   const graphTypeOption = [
     {
       id: 1,
@@ -70,9 +72,8 @@ const AddVisulization = () => {
   const [selectedYTable, setSelectedYTable] = useState(null);
   const [xColumn, setXColumn] = useState(null);
   const [yColumn, setYColumn] = useState(null);
-  const [allColumnXOptions, setAllColumnXOptions] = useState([]);
-  const [allColumnYOptions, setAllColumnYOptions] = useState([]);
   const [name, setName] = useState(null);
+  const visuializationID = window.location.pathname.split('/')[4];
   const payloadObject = {
     connectionId: window.location.pathname.split('/')[3],
     schema: null,
@@ -81,7 +82,7 @@ const AddVisulization = () => {
 
   const [validator, showValidationMessage] = useSimpleReactValidator({}, {});
 
-  const createSelectObject = (res, keyword, column = null) => {
+  const createSelectObject = (res, keyword, column = null, selectedColum = null) => {
     const optionData = [];
 
     res?.data?.data.map((e, index) =>
@@ -96,17 +97,21 @@ const AddVisulization = () => {
     if (keyword === 'column') {
       if (column === 'x') {
         setAllColumnXOptions(optionData);
-        setColumnXOptions(optionData.filter(e => e.value !== yColumn));
+        setColumnXOptions(
+          optionData.filter(e => (e.value !== selectedColum ? selectedColum : yColumn))
+        );
       } else {
         setAllColumnYOptions(optionData);
-        setColumnYOptions(optionData.filter(e => e.value !== xColumn));
+        setColumnYOptions(
+          optionData.filter(e => (e.value !== selectedColum ? selectedColum : xColumn))
+        );
       }
     }
   };
 
   const handleCreateGraph = async data => {
     try {
-      const res = await api(true).createGraph(data);
+      const res = await api(true).editGraph(data);
 
       console.log(res?.data?.data);
 
@@ -141,6 +146,7 @@ const AddVisulization = () => {
 
         data.connectionId = parseInt(payloadObject.connectionId, 10);
         if (type === 'create') {
+          data.visualizationId = visuializationID;
           data.userId = parseInt(fields.userId, 10);
           data.name = name;
           data.chartType = selectedGraphType;
@@ -195,7 +201,7 @@ const AddVisulization = () => {
     }
   };
 
-  const getAllColumns = async (value, column) => {
+  const getAllColumns = async (value, column, selectedColumn = null) => {
     if (column === 'x') {
       setSelectedXTable(value);
       setXColumn(null);
@@ -211,12 +217,11 @@ const AddVisulization = () => {
     try {
       const data = payloadObject;
 
-      data.schema = selectedDatabase;
       data.table = value;
 
       const res = await api().getColumns(data);
 
-      createSelectObject(res, 'column', column);
+      createSelectObject(res, 'column', column, selectedColumn);
     } catch (e) {
       console.log(e);
     }
@@ -243,14 +248,36 @@ const AddVisulization = () => {
     }
   };
 
+  const getGraphData = async () => {
+    try {
+      const res = await api(true).getGraphDataByID(visuializationID);
+
+      console.log(res?.data?.data);
+
+      await getAllTables(res?.data?.data?.schema);
+      await getAllColumns(res?.data?.data?.tableOne, 'x', res?.data?.data?.columnY);
+      await getAllColumns(res?.data?.data?.tableTwo, 'y', res?.data?.data?.columnX);
+      setName(res?.data?.data?.name);
+      setXColumn(res?.data?.data?.columnX);
+      setYColumn(res?.data?.data?.columnY);
+      setSelectedGraphType(res?.data?.data?.graphType);
+      setSelectedDataType(res?.data?.data?.calculation);
+      setXAxis(res?.data?.data?.x);
+      setYAxis(res?.data?.data?.y);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     getData();
+    getGraphData();
   }, []);
 
   return (
     <Layout>
       <React.Fragment>
-        <TopHeader title="Add Dashboard" link={fields?.link} name={location.state.name} />
+        <TopHeader title="Edit Dashboard" link={fields?.link} name={location.state.name} />
         <Content>
           <div>
             <div className="site-layout-background">
@@ -501,4 +528,4 @@ const AddVisulization = () => {
   );
 };
 
-export default AddVisulization;
+export default EditVisulization;

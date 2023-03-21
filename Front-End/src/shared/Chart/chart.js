@@ -8,22 +8,32 @@ const Charts = ({ xaxis, yaxis, type }) => {
   const [series, setSeries] = useState([]);
 
   const handleChartData = () => {
-    const option = {
-      chart: {
-        id: 'apexchart-example',
-      },
-      xaxis: {
-        categories: xaxis,
-      },
-    };
-    const serie = [
-      {
-        name: 'series-1',
-        data: yaxis,
-      },
-    ];
-    setOptions(option);
-    setSeries(serie);
+    if (type === 'pie') {
+      setSeries(yaxis);
+      setOptions({
+        chart: {
+          type,
+        },
+        labels: xaxis,
+      });
+    } else {
+      const option = {
+        chart: {
+          id: 'apexchart-example',
+        },
+        xaxis: {
+          categories: xaxis,
+        },
+      };
+      const serie = [
+        {
+          name: 'series-1',
+          data: yaxis,
+        },
+      ];
+      setOptions(option);
+      setSeries(serie);
+    }
   };
 
   useEffect(() => {
@@ -31,7 +41,15 @@ const Charts = ({ xaxis, yaxis, type }) => {
     handleChartData();
   }, []);
 
-  return <ReactApexChart options={options} series={series} type={type} width={300} height={300} />;
+  return (
+    <ReactApexChart
+      options={options}
+      series={series}
+      type={type}
+      width={type === 'pie' ? 380 : 300}
+      height={300}
+    />
+  );
 };
 
 Charts.prototype = {
