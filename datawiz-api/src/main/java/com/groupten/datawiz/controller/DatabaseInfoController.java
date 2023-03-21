@@ -32,4 +32,10 @@ public class DatabaseInfoController extends Handler{
         Response response=new Response(dbInfoService.getColumns(dbInfo),HttpStatus.OK.value(), HttpStatus.OK.name());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PostMapping("/schema/table/integerColumns")
+    public ResponseEntity<Response> getIntegerColumns (@RequestBody DbInfoRequest dbInfo){
+        Response response=new Response(dbInfoService.getIntegerColumns(dbInfo),HttpStatus.OK.value(), HttpStatus.OK.name());
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

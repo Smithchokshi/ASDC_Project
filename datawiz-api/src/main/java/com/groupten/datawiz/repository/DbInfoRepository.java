@@ -9,4 +9,5 @@ public interface DbInfoRepository {
     List<String>  getDatabases(DbInfoRequest dbInfo, JdbcTemplate jdbcTemplate);
     List<String>  getTables(DbInfoRequest dbInfo, JdbcTemplate jdbcTemplate);
     List<String>  getColumns(DbInfoRequest dbInfo, JdbcTemplate jdbcTemplate);
+    List<String>  getIntegerColumns(DbInfoRequest dbInfo, JdbcTemplate jdbcTemplate);
 }
