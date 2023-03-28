@@ -2,6 +2,7 @@ package com.groupten.datawiz.service;
 
 import com.groupten.datawiz.model.Dashboard;
 import com.groupten.datawiz.protocol.DashboardResponse;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -17,7 +18,6 @@ public interface DashboardService {
 
     void deleteDashboard(int id);
 
-    List<Dashboard> getAllDashboards(int id, int pageNumber);
-
+    Page<Dashboard> getAllDashboards(int id, int pageNumber);
 
 }
