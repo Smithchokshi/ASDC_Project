@@ -33,7 +33,6 @@ public class DashboardController extends Handler{
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-
     @GetMapping("/graphs/values/{id}")
     public ResponseEntity<Response> getDashboardValues(@PathVariable("id") int id){
         Response response = new Response(dashboardService.getDashboardGraphs(id), HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
@@ -42,7 +41,14 @@ public class DashboardController extends Handler{
 
     @GetMapping("/get/{id}/{pageNumber}")
     public ResponseEntity<Response> getAllDashboards(@PathVariable("id") int id,@PathVariable("pageNumber") int pageNumber){
-        Response response = new Response(dashboardService.getAllDashboards(id, pageNumber), HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
+
+        var dashboards =dashboardService.getAllDashboards(id, pageNumber);
+        Response response = new Response(
+                dashboards.get().toList(),
+                HttpStatus.ACCEPTED.value(),
+                HttpStatus.ACCEPTED.name(),
+                dashboards.getTotalPages()
+        );
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 
@@ -54,4 +60,5 @@ public class DashboardController extends Handler{
         Response response = new Response(id, HttpStatus.OK.value(), HttpStatus.OK.name());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
 }

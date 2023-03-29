@@ -15,6 +15,7 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -74,7 +75,7 @@ public class VisualizationServiceImpl implements VisualizationService{
 
         List<GraphResponse> responses = new LinkedList<>();
 
-        visuals.forEach(visualization -> {
+        visuals.get().toList().forEach(visualization -> {
             var graphServiceResponse =graphService.getGraphValues(
                  new GraphRequest(
                         visualization.getSchemaName(),
@@ -101,6 +102,14 @@ public class VisualizationServiceImpl implements VisualizationService{
             responses.add(graphResponse);
         });
         return responses;
+    }
+
+    @Override
+    public int getTotalPages(int connectionId, int page) {
+        Pageable pageable =  PageRequest.of(page, 6, Sort.by("updatedAt"));
+        var visuals = visualizationRepository.findByConnectionIdAndDeletedAt(connectionId,null,pageable);
+
+        return visuals.getTotalPages();
     }
 
     @Override

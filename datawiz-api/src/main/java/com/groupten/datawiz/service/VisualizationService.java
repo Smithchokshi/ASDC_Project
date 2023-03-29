@@ -4,6 +4,7 @@ import com.groupten.datawiz.model.Visualization;
 import com.groupten.datawiz.protocol.GraphResponse;
 
 import java.util.List;
+import java.util.Map;
 
 public interface VisualizationService {
 
@@ -13,7 +14,9 @@ public interface VisualizationService {
 
     Visualization getVisualizationById(int id);
 
-    List<GraphResponse> getVisualizationsValuesByConnectionId(int connectionId, int page);
+    List<GraphResponse>  getVisualizationsValuesByConnectionId(int connectionId, int page);
+
+    int getTotalPages(int connectionId, int page);
 
     String deleteVisualization(int visualId);
     GraphResponse getData(int id);
