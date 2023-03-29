@@ -5,6 +5,7 @@ import com.groupten.datawiz.model.Visualization;
 import com.groupten.datawiz.protocol.DashboardResponse;
 import com.groupten.datawiz.protocol.GraphRequest;
 import com.groupten.datawiz.protocol.GraphResponse;
+import com.groupten.datawiz.protocol.VisualisationList;
 import com.groupten.datawiz.repository.DashboardRepository;
 import com.groupten.datawiz.repository.VisualizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,15 +84,13 @@ public class DashboardServiceImpl implements DashboardService{
         return new DashboardResponse(dashboard.getDashboardId(),dashboard.getName(), responses);
     }
 
-    @Autowired
-    VisualizationRepository VR;
 
     @Override
     public void deleteDashboard(int id) {
         dashboardRepository.deleteById(id);
     }
     public List<String> getSchemas(int userId){
-        List<Visualization> visualizations=VR.findByUserId(userId);
+        List<Visualization> visualizations=visualizationRepository.findByUserId(userId);
         List<String> schemas=new ArrayList<String>();
         for(Visualization x:visualizations){
             if(!schemas.contains(x.getSchemaName())){
@@ -101,13 +100,12 @@ public class DashboardServiceImpl implements DashboardService{
         return schemas;
     }
 
-    public List<Integer> getVisualisationIds(int userId,String schemaName){
-        List<Visualization> visualizations=VR.findByUserIdAndSchemaName(userId,schemaName);
-        List<Integer> visualisationIds=new ArrayList<Integer>();
+    public List<VisualisationList> getVisualisationIds(int userId, String schemaName){
+        List<Visualization> visualizations=visualizationRepository.findByUserIdAndSchemaName(userId,schemaName);
+        List<VisualisationList> visualisationIds=new ArrayList<VisualisationList>();
         for(Visualization x:visualizations){
-            if(!visualisationIds.contains(x.getVisualizationId())){
-                visualisationIds.add(x.getVisualizationId());
-            }
+                visualisationIds.add(new VisualisationList(x.getVisualizationId(),x.getName()));
+
         }
         return visualisationIds;
     }

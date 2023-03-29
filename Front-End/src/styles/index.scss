@@ -2960,7 +2960,7 @@ input:-webkit-autofill:active,
 
   .ant-table {
     background: transparent;
-    color: #fff;
+    color: #000000;
     @media (max-width: 700px) {
       width: 700px;
     }
@@ -3020,19 +3020,19 @@ input:-webkit-autofill:active,
 }
 
 .default-table.mt-20 {
-  margin-top: 25px;
+  margin-top: 50px;
 }
 
 .default-table .ant-table-tbody > tr.ant-table-row:hover > td .text-btn {
   border-color: #fff !important;
   box-shadow: none !important;
-  color: #fff !important;
+  color: #000000 !important;
 }
 
 .default-table .ant-table-tbody > tr.ant-table-expanded-row:hover > td .text-btn {
   border-color: #fff !important;
   box-shadow: none !important;
-  color: #fff !important;
+  color: #000000 !important;
 }
 
 .earnings-table .ant-table-tbody > tr > td:nth-child(3) {
@@ -3499,7 +3499,7 @@ html body .edit-image .ant-upload {
 }
 
 .site-modal .anticon {
-  color: #fff;
+  color: #000000;
   opacity: 0.7;
 }
 
@@ -7163,4 +7163,10 @@ color:var(--button-color);
 .link:hover {
   cursor: pointer;
   color: #1890ff;
+}
+
+.plus-icon {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: block !important;
 }

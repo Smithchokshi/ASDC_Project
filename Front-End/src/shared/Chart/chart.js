@@ -41,15 +41,7 @@ const Charts = ({ xaxis, yaxis, type }) => {
     handleChartData();
   }, []);
 
-  return (
-    <ReactApexChart
-      options={options}
-      series={series}
-      type={type}
-      width={type === 'pie' ? 380 : 300}
-      height={300}
-    />
-  );
+  return <ReactApexChart options={options} series={series} type={type} width={380} height={300} />;
 };
 
 Charts.prototype = {

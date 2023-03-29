@@ -183,7 +183,7 @@ const EditDBConfig = ({ visible, onCancel, getData, data, type }) => {
         <div className="full-width form-field">
           <div className="label">Password</div>
           {isView ? (
-            <p>{fields?.dbPassword}</p>
+            <p>*******</p>
           ) : (
             <React.Fragment>
               <Input.Password
