@@ -41,7 +41,14 @@ public class DashboardController extends Handler{
 
     @GetMapping("/get/{id}/{pageNumber}")
     public ResponseEntity<Response> getAllDashboards(@PathVariable("id") int id,@PathVariable("pageNumber") int pageNumber){
-        Response response = new Response(dashboardService.getAllDashboards(id, pageNumber), HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
+
+        var dashboards =dashboardService.getAllDashboards(id, pageNumber);
+        Response response = new Response(
+                dashboards.get().toList(),
+                HttpStatus.ACCEPTED.value(),
+                HttpStatus.ACCEPTED.name(),
+                dashboards.getTotalPages()
+        );
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 
