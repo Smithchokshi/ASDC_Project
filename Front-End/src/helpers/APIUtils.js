@@ -154,6 +154,13 @@ class ApiUtils {
       data,
     });
 
+  getYColumns = data =>
+    this.axios({
+      method: 'POST',
+      url: '/database/schema/table/integerColumns',
+      data,
+    });
+
   createGraph = data =>
     this.axios({
       method: 'POST',
@@ -216,6 +223,18 @@ class ApiUtils {
     this.axios({
       method: 'GET',
       url: `/dashboard/get/${userId}/${pageNumber}`,
+    });
+
+  getAllSchemas = userId =>
+    this.axios({
+      method: 'GET',
+      url: `/dashboard/getSchemas/${userId}`,
+    });
+
+  getAllGraphBySchema = (userId, schemaId) =>
+    this.axios({
+      method: 'GET',
+      url: `/dashboard/getVisualisationIds/${userId}/${schemaId}`,
     });
 }
 

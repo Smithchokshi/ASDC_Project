@@ -23,17 +23,16 @@ public class DashboardController extends Handler{
 
     @GetMapping("/getSchemas/{userId}")
     public ResponseEntity<Response> getSchemas(@PathVariable("userId") int userId){
-        Response response = new Response(ds.getSchemas(userId), HttpStatus.CREATED.value(), HttpStatus.CREATED.name());
+        Response response = new Response(dashboardService.getSchemas(userId), HttpStatus.CREATED.value(), HttpStatus.CREATED.name());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/getVisualisationIds/{userId}/{schema}")
     public ResponseEntity<Response> getVisualisationIds(@PathVariable("userId") int userId,@PathVariable("schema") String schema){
-        Response response = new Response(ds.getVisualisationIds(userId,schema), HttpStatus.CREATED.value(), HttpStatus.CREATED.name());
+        Response response = new Response(dashboardService.getVisualisationIds(userId,schema), HttpStatus.CREATED.value(), HttpStatus.CREATED.name());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-}
     @GetMapping("/graphs/values/{id}")
     public ResponseEntity<Response> getDashboardValues(@PathVariable("id") int id){
         Response response = new Response(dashboardService.getDashboardGraphs(id), HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name());
@@ -54,4 +53,6 @@ public class DashboardController extends Handler{
         Response response = new Response(id, HttpStatus.OK.value(), HttpStatus.OK.name());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
 }
+

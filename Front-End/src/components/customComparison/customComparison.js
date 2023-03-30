@@ -10,6 +10,7 @@ import ScrollAnimation from 'react-animate-on-scroll';
 import { FormMain } from '../authentication/authentication-style';
 import ApiUtils from '../../helpers/APIUtils';
 import TopHeader from '../../shared/top-header/top-header';
+import SelectGraph from './selectGraph';
 
 const api = msg => new ApiUtils(msg);
 
@@ -26,32 +27,37 @@ const AddVisulization = () => {
   };
   // const [errors, setErrors] = useState({});
   const [name, setName] = useState(null);
-  const [allData, setAllData] = useState([]);
+  const [addModel, setAddModel] = useState(false);
+  // const [allData, setAllData] = useState([]);
   const payloadObject = {
     dashboardId: window.location.pathname.split('/')[2],
   };
 
   // const [validator, showValidationMessage] = useSimpleReactValidator({}, {});
 
-  const handleAllData = values => {
-    if (values.length === 0) {
-      const tempData = [
-        {
-          id: 1,
-        },
-        {
-          id: 2,
-        },
-        {
-          id: 3,
-        },
-        {
-          id: 4,
-        },
-      ];
+  // const handleAllData = values => {
+  //   if (values.length === 0) {
+  //     const tempData = [
+  //       {
+  //         id: 1,
+  //       },
+  //       {
+  //         id: 2,
+  //       },
+  //       {
+  //         id: 3,
+  //       },
+  //       {
+  //         id: 4,
+  //       },
+  //     ];
+  //
+  //     setAllData(tempData);
+  //   } else setAllData(values);
+  // };
 
-      setAllData(tempData);
-    } else setAllData(values);
+  const handleModel = bool => {
+    setAddModel(bool);
   };
 
   const getData = async () => {
@@ -59,7 +65,7 @@ const AddVisulization = () => {
       const res = await api().getCustomDashboardByID(payloadObject.dashboardId);
 
       setName(res?.data?.data?.name);
-      handleAllData(res?.data?.data?.values);
+      // handleAllData(res?.data?.data?.values);
     } catch (e) {
       console.log(e);
     }
@@ -106,29 +112,86 @@ const AddVisulization = () => {
 
             <div className="site-layout-background">
               <div className="top-boxes full-width">
-                {allData.length > 0 &&
-                  allData.map((element, index) => (
-                    <ScrollAnimation
-                      animateOnce
-                      className="full-width single-box graph-box"
-                      animateIn="fadeInUp"
-                      delay={index * 300}
-                      style={{ width: '40%' }}
-                    >
-                      <div
-                        className="full-width"
-                        key={element.dashboardId}
-                        role="presentation"
-                        // onClick={() => handleModel(true, 'redirect', element)}
-                      >
-                        <div>
-                          <PlusOutlined className="plus-icon" />
-                        </div>
-                      </div>
-                    </ScrollAnimation>
-                  ))}
+                <ScrollAnimation
+                  animateOnce
+                  className="full-width single-box graph-box"
+                  animateIn="fadeInUp"
+                  style={{ width: '40%' }}
+                >
+                  <div
+                    className="full-width"
+                    key="1"
+                    role="presentation"
+                    onClick={() => handleModel(true)}
+                  >
+                    <div>
+                      <PlusOutlined className="plus-icon" />
+                    </div>
+                  </div>
+                </ScrollAnimation>
+
+                <ScrollAnimation
+                  animateOnce
+                  className="full-width single-box graph-box"
+                  animateIn="fadeInUp"
+                  style={{ width: '40%' }}
+                >
+                  <div
+                    className="full-width"
+                    key="2"
+                    role="presentation"
+                    // onClick={() => handleModel(true, 'redirect', element)}
+                  >
+                    <div>
+                      <PlusOutlined className="plus-icon" />
+                    </div>
+                  </div>
+                </ScrollAnimation>
               </div>
             </div>
+
+            <div className="site-layout-background">
+              <div className="top-boxes full-width">
+                <ScrollAnimation
+                  animateOnce
+                  className="full-width single-box graph-box"
+                  animateIn="fadeInUp"
+                  style={{ width: '40%' }}
+                >
+                  <div
+                    className="full-width"
+                    key="3"
+                    role="presentation"
+                    // onClick={() => handleModel(true, 'redirect', element)}
+                  >
+                    <div>
+                      <PlusOutlined className="plus-icon" />
+                    </div>
+                  </div>
+                </ScrollAnimation>
+
+                <ScrollAnimation
+                  animateOnce
+                  className="full-width single-box graph-box"
+                  animateIn="fadeInUp"
+                  style={{ width: '40%' }}
+                >
+                  <div
+                    className="full-width"
+                    key="4"
+                    role="presentation"
+                    // onClick={() => handleModel(true, 'redirect', element)}
+                  >
+                    <div>
+                      <PlusOutlined className="plus-icon" />
+                    </div>
+                  </div>
+                </ScrollAnimation>
+              </div>
+            </div>
+            {addModel && (
+              <SelectGraph visible={addModel} onCancel={handleModel} getData={getData} />
+            )}
           </div>
         </Content>
       </React.Fragment>
