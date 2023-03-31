@@ -18,6 +18,7 @@ const CustomDashboard = () => {
 
   const [loader, setLoader] = useState(false);
   const [addModel, setAddModel] = useState(false);
+  const [totalElement, setTotalElement] = useState(0);
   const [pageNumber, setPageNumber] = useState(0);
   const [allData, setAllData] = useState([]);
   const { userId } = useSelector(state => state.auth.user);
@@ -30,7 +31,7 @@ const CustomDashboard = () => {
     if (method === 'add') setAddModel(bool);
     else if (method === 'redirect') {
       history.push(`/customComparison/${data.dashboardId}`, {
-        name: data.name,
+        data,
       });
     }
   };
@@ -45,13 +46,21 @@ const CustomDashboard = () => {
 
       const res = await api.getAllCustomDashboards(bodyData);
 
-      console.log(res);
-
       setAllData(res?.data?.data);
+      setTotalElement(res?.data?.totalPages * 6);
 
       handleLoader(false);
     } catch (e) {
       handleLoader(false);
+    }
+  };
+
+  const handleDelete = async id => {
+    try {
+      await api.deleteCustomDashboard(id);
+      getData();
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -118,7 +127,7 @@ const CustomDashboard = () => {
                           <div className="earning-text full-width">{element.name}</div>
                         </div>
                         <span className="full-width icon-class">
-                          <Tooltip title="Delete">
+                          <Tooltip title="Delete" onClick={() => handleDelete(element.dashboardId)}>
                             <DeleteOutlined />
                           </Tooltip>
                         </span>
@@ -130,8 +139,9 @@ const CustomDashboard = () => {
                   <Pagination
                     style={{ marginTop: '15px' }}
                     defaultPageSize="6"
-                    defaultCurrent={pageNumber}
-                    onChange={e => setPageNumber(e)}
+                    defaultCurrent={pageNumber + 1}
+                    total={totalElement}
+                    onChange={e => setPageNumber(e - 1)}
                   />
                 </div>
                 {addModel && (

@@ -8,7 +8,7 @@ import ApiUtils from '../../helpers/APIUtils';
 
 const api = msg => new ApiUtils(msg);
 
-const SelectGraph = ({ visible, onCancel, getData }) => {
+const SelectGraph = ({ visible, onCancel, getGraphData, currentKey }) => {
   const { userId } = useSelector(state => state.auth.user);
 
   // const [fields, setFields] = useState({
@@ -18,19 +18,24 @@ const SelectGraph = ({ visible, onCancel, getData }) => {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [selectedDatabase, setSelectedDatabase] = useState(null);
   const [allSchemaOptions, setAllSchemaOptions] = useState([]);
+  const [selectedGraph, setSelectedGraph] = useState(null);
+  const [allGraphOptions, setAllGraphOptions] = useState([]);
 
   const [validator, showValidationMessage] = useSimpleReactValidator({}, {});
 
-  const createSelectObject = res => {
+  const createSelectObject = (res, type) => {
     const optionData = [];
 
-    res?.data?.data.map((e, index) =>
+    res.map((e, index) =>
       optionData.push({
         id: index,
-        label: e,
-        value: e,
+        label: type === 'schema' ? e : e.name,
+        value: type === 'schema' ? e : e.id,
       })
     );
+
+    if (type === 'schema') setAllSchemaOptions(optionData);
+    else setAllGraphOptions(optionData);
   };
 
   const getAllGraphs = async value => {
@@ -39,9 +44,7 @@ const SelectGraph = ({ visible, onCancel, getData }) => {
     try {
       const res = await api().getAllGraphBySchema(userId, value);
 
-      console.log('res', res.data);
-
-      createSelectObject(res);
+      createSelectObject(res.data.data, 'graph');
     } catch (e) {
       console.log(e);
     }
@@ -51,18 +54,7 @@ const SelectGraph = ({ visible, onCancel, getData }) => {
     try {
       const res = await api().getAllSchemas(userId);
 
-      const data = [];
-
-      // eslint-disable-next-line array-callback-return
-      res?.data?.data.map((e, index) => {
-        data.push({
-          id: index,
-          label: e,
-          value: e,
-        });
-      });
-
-      setAllSchemaOptions(data);
+      createSelectObject(res.data.data, 'schema');
     } catch (e) {
       console.log(e);
     }
@@ -75,8 +67,7 @@ const SelectGraph = ({ visible, onCancel, getData }) => {
       setIsSubmitLoading(true);
 
       try {
-        await api(true).addDBConfig(userId);
-        getData();
+        getGraphData(selectedGraph, currentKey);
 
         onCancel(false, 'add', null);
       } catch {
@@ -129,6 +120,32 @@ const SelectGraph = ({ visible, onCancel, getData }) => {
           {validator.message(`Scheme`, selectedDatabase, `required`)}
         </div>
 
+        <div className="full-width form-field">
+          <div className="label">Select Graph</div>
+          <Select
+            showSearch
+            style={{
+              backgroundColor: '#fff',
+              width: 200,
+            }}
+            value={selectedGraph}
+            placeholder="Search to Select"
+            optionFilterProp="children"
+            filterOption={(input, option) => (option?.label ?? '').includes(input)}
+            filterSort={(optionA, optionB) =>
+              (optionA?.label ?? '')
+                .toLowerCase()
+                .localeCompare((optionB?.label ?? '').toLowerCase())
+            }
+            onChange={newValue => {
+              setSelectedGraph(newValue);
+            }}
+            options={allGraphOptions}
+            classname={errors?.name ? 'invalid' : ''}
+          />
+          {validator.message(`Graph`, selectedGraph, `required`)}
+        </div>
+
         <div className="full-width form-field flex-center mb-0">
           <Button type="primary" htmlType="submit" className="submit-btn" loading={isSubmitLoading}>
             <span>Add</span>
@@ -142,7 +159,8 @@ const SelectGraph = ({ visible, onCancel, getData }) => {
 SelectGraph.propTypes = {
   visible: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
-  getData: PropTypes.func.isRequired,
+  getGraphData: PropTypes.func.isRequired,
+  currentKey: PropTypes.string.isRequired,
 };
 
 export default SelectGraph;
