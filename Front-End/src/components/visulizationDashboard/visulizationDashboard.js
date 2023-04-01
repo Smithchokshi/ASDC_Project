@@ -18,6 +18,7 @@ const VisulizationDashboard = () => {
   const title = location.state.name;
   const [loader, setLoader] = useState(false);
   const [allData, setAllData] = useState([]);
+  const [totalPages, setTotlaPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
   const payloadObject = {
     connectionId: window.location.pathname.split('/')[2],
@@ -37,6 +38,7 @@ const VisulizationDashboard = () => {
       console.log(res?.data?.data);
 
       setAllData(res?.data?.data);
+      setTotlaPages(res?.data?.totalPages * 6);
 
       handleLoader(false);
     } catch (e) {
@@ -116,8 +118,9 @@ const VisulizationDashboard = () => {
               <Pagination
                 style={{ marginTop: '15px' }}
                 defaultPageSize="6"
-                defaultCurrent={pageNumber}
-                onChange={e => setPageNumber(e)}
+                defaultCurrent={pageNumber + 1}
+                total={totalPages}
+                onChange={e => setPageNumber(e - 1)}
               />
             </div>
           </Content>

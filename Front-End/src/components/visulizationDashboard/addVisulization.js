@@ -210,11 +210,13 @@ const AddVisulization = () => {
 
     try {
       const data = payloadObject;
+      let res = null;
 
       data.schema = selectedDatabase;
       data.table = value;
 
-      const res = await api().getColumns(data);
+      if (column === 'x') res = await api().getColumns(data);
+      else res = await api().getYColumns(data);
 
       createSelectObject(res, 'column', column);
     } catch (e) {

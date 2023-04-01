@@ -3224,11 +3224,12 @@ html body .edit-image .ant-upload {
 
       &:hover {
         a {
-          color: #fff;
+          color: #000000;
 
           img {
             &.hover-show {
               display: inline-block;
+              color: black;
             }
 
             &.not-hover-show {
@@ -4744,7 +4745,7 @@ html body .mobile-profile-menu .ant-menu-sub li {
   }
   .left-sidebar ul.ant-menu > li.ant-menu-item-selected.mobile-profile-menu a {
     background: transparent !important;
-    color: #696c7b;
+    color: #17181c !important;
   }
   .left-sidebar
   ul.ant-menu
@@ -7169,4 +7170,9 @@ color:var(--button-color);
   margin-left: auto !important;
   margin-right: auto !important;
   display: block !important;
+}
+
+.apexcharts-toolbar {
+  top: 25px !important;;
+  right: 20px !important;
 }
